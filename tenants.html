@@ -640,6 +640,8 @@ html:not(.unlocked) .mobile-topbar {
       leases: [],
       rentPayments: [],
       maintenanceRequests: [],
+      expenses: [],
+      invoices: [],
       settings: Object.assign({}, DEFAULT_SETTINGS),
     };
   }
@@ -676,6 +678,8 @@ html:not(.unlocked) .mobile-topbar {
         leases: parsed.leases || [],
         rentPayments: parsed.rentPayments || [],
         maintenanceRequests: parsed.maintenanceRequests || [],
+        expenses: parsed.expenses || [],
+        invoices: parsed.invoices || [],
       });
     } catch (e) {
       console.warn("PMS: could not parse saved data, starting fresh.", e);
@@ -724,6 +728,8 @@ html:not(.unlocked) .mobile-topbar {
     data.leases = data.leases.filter(function (l) { return l.propertyId !== id; });
     data.rentPayments = data.rentPayments.filter(function (rp) { return leaseIds.indexOf(rp.leaseId) === -1; });
     data.maintenanceRequests = data.maintenanceRequests.filter(function (m) { return m.propertyId !== id; });
+    data.expenses = data.expenses.filter(function (e) { return e.propertyId !== id; });
+    data.invoices = data.invoices.filter(function (inv) { return inv.propertyId !== id; });
     persist();
   }
   function activeLeaseForProperty(propertyId) {
@@ -762,6 +768,12 @@ html:not(.unlocked) .mobile-topbar {
     l.endDate = todayISO();
     persist();
   }
+  function updateLease(id, patch) {
+    var l = data.leases.find(function (x) { return x.id === id; });
+    if (!l) return;
+    Object.assign(l, patch);
+    persist();
+  }
   function deleteLease(id) {
     data.leases = data.leases.filter(function (x) { return x.id !== id; });
     data.rentPayments = data.rentPayments.filter(function (rp) { return rp.leaseId !== id; });
@@ -795,6 +807,42 @@ html:not(.unlocked) .mobile-topbar {
   }
   function deleteMaintenanceRequest(id) {
     data.maintenanceRequests = data.maintenanceRequests.filter(function (x) { return x.id !== id; });
+    persist();
+  }
+
+  // ---------- expenses (insurance, levy, loan payments, etc.) ----------
+  function addExpense(input) {
+    var rec = Object.assign({}, input, { id: uid(), createdAt: nowISO() });
+    data.expenses.push(rec);
+    persist();
+    return rec;
+  }
+  function updateExpense(id, patch) {
+    var e = data.expenses.find(function (x) { return x.id === id; });
+    if (!e) return;
+    Object.assign(e, patch);
+    persist();
+  }
+  function deleteExpense(id) {
+    data.expenses = data.expenses.filter(function (x) { return x.id !== id; });
+    persist();
+  }
+
+  // ---------- tenant invoices ----------
+  function addInvoice(input) {
+    var rec = Object.assign({}, input, { id: uid(), createdAt: nowISO() });
+    data.invoices.push(rec);
+    persist();
+    return rec;
+  }
+  function updateInvoice(id, patch) {
+    var inv = data.invoices.find(function (x) { return x.id === id; });
+    if (!inv) return;
+    Object.assign(inv, patch);
+    persist();
+  }
+  function deleteInvoice(id) {
+    data.invoices = data.invoices.filter(function (x) { return x.id !== id; });
     persist();
   }
 
@@ -854,6 +902,11 @@ html:not(.unlocked) .mobile-topbar {
   // code -> [locale, symbol]. Locale mainly affects number grouping; the
   // symbol here is only used for the Settings dropdown preview and as a
   // fallback if Intl can't format a given code in this browser.
+  // Suggested expense categories — shown as autocomplete suggestions, but
+  // the field itself is free text so a landlord can type any category they
+  // want ("HOA Fees", "Pest Control", etc.) without it being a fixed list.
+  var EXPENSE_CATEGORIES = ["Maintenance", "Insurance", "Property Tax / Levy", "Bank Loan Payment", "Utility Bill", "Management Fee", "Other"];
+
   var CURRENCY_META = {
     USD: ["en-US", "$"], EUR: ["de-DE", "€"], GBP: ["en-GB", "£"], INR: ["en-IN", "₹"],
     AUD: ["en-AU", "$"], CAD: ["en-CA", "$"], NZD: ["en-NZ", "$"], SGD: ["en-SG", "$"],
@@ -910,6 +963,8 @@ html:not(.unlocked) .mobile-topbar {
         leases: parsed.leases || [],
         rentPayments: parsed.rentPayments || [],
         maintenanceRequests: parsed.maintenanceRequests || [],
+        expenses: parsed.expenses || [],
+        invoices: parsed.invoices || [],
       });
       persist();
       return { ok: true };
@@ -939,6 +994,7 @@ html:not(.unlocked) .mobile-topbar {
 
     addLease: addLease,
     endLease: endLease,
+    updateLease: updateLease,
     deleteLease: deleteLease,
 
     addRentPayment: addRentPayment,
@@ -947,6 +1003,14 @@ html:not(.unlocked) .mobile-topbar {
     addMaintenanceRequest: addMaintenanceRequest,
     updateMaintenanceRequest: updateMaintenanceRequest,
     deleteMaintenanceRequest: deleteMaintenanceRequest,
+
+    addExpense: addExpense,
+    updateExpense: updateExpense,
+    deleteExpense: deleteExpense,
+
+    addInvoice: addInvoice,
+    updateInvoice: updateInvoice,
+    deleteInvoice: deleteInvoice,
 
     updateSettings: updateSettings,
 
@@ -959,6 +1023,7 @@ html:not(.unlocked) .mobile-topbar {
     formatDate: formatDate,
     currencySymbol: currencySymbol,
     CURRENCY_CODES: Object.keys(CURRENCY_META),
+    EXPENSE_CATEGORIES: EXPENSE_CATEGORIES,
 
     exportData: exportData,
     importData: importData,
@@ -994,6 +1059,9 @@ html:not(.unlocked) .mobile-topbar {
     menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
     upload: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/></svg>',
     download: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 10l6 6 6-6"/><path d="M4 20h16"/></svg>',
+    finances: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="19" height="13" rx="2"/><path d="M2.5 10.5h19"/><path d="M6 15h4"/></svg>',
+    print: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="4" y="9" width="16" height="8" rx="1.5"/><path d="M6 17h12v5H6z"/></svg>',
+    fileText: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5h7l4 4v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-17a1 1 0 0 1 1-1Z"/><path d="M14 2.5v4h4"/><path d="M8.5 12.5h7M8.5 15.5h7M8.5 18h4"/></svg>',
   };
 
   var NAV_ITEMS = [
@@ -1002,6 +1070,7 @@ html:not(.unlocked) .mobile-topbar {
     { key: "tenants", label: "Tenants", href: "tenants.html", icon: ICONS.tenants },
     { key: "rent", label: "Rent", href: "rent.html", icon: ICONS.rent },
     { key: "maintenance", label: "Maintenance", href: "maintenance.html", icon: ICONS.maintenance },
+    { key: "finances", label: "Finances", href: "finances.html", icon: ICONS.finances },
     { key: "settings", label: "Settings", href: "settings.html", icon: ICONS.settings },
   ];
 
@@ -1128,6 +1197,70 @@ html:not(.unlocked) .mobile-topbar {
     });
   }
 
+  // ---------- lazy CDN script loading (used for optional heavy features
+  // like reading/writing Excel files, so pages that never touch them don't
+  // pay for the download) ----------
+  var XLSX_SCRIPT = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
+  var loadedScripts = {};
+  function loadScript(src) {
+    if (loadedScripts[src]) return loadedScripts[src];
+    loadedScripts[src] = new Promise(function (resolve, reject) {
+      var existing = document.querySelector('script[data-src="' + src + '"]');
+      if (existing) { existing.addEventListener("load", resolve); existing.addEventListener("error", reject); return; }
+      var s = document.createElement("script");
+      s.src = src;
+      s.setAttribute("data-src", src);
+      s.onload = resolve;
+      s.onerror = function () { reject(new Error("Failed to load " + src)); };
+      document.head.appendChild(s);
+    });
+    return loadedScripts[src];
+  }
+
+  // rows: array of plain objects — the keys of the FIRST row become the
+  // header row, in that order. Returns a Promise that resolves once the
+  // browser's file-save dialog has been triggered.
+  function downloadWorkbook(sheetName, rows, filename) {
+    return loadScript(XLSX_SCRIPT).then(function () {
+      var ws = global.XLSX.utils.json_to_sheet(rows);
+      var wb = global.XLSX.utils.book_new();
+      global.XLSX.utils.book_append_sheet(wb, ws, sheetName.slice(0, 31));
+      global.XLSX.writeFile(wb, filename);
+    });
+  }
+
+  // ---------- printable document window ----------
+  // Opens a new tab with a minimal, self-contained print-friendly page and
+  // triggers the browser's print dialog — this is how invoices/statements
+  // become PDFs, with no external library and no server needed ("Save as
+  // PDF" is a print destination in every modern browser).
+  function openPrintWindow(title, bodyHtml) {
+    var win = window.open("", "_blank");
+    if (!win) { toast("Your browser blocked the print window pop-up — allow pop-ups for this site and try again.", "error"); return; }
+    win.document.write(
+      "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>" + escapeHtml(title) + "</title>" +
+      "<style>" +
+      "body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#111;padding:36px;max-width:760px;margin:0 auto;}" +
+      "h1{font-size:20px;margin:0 0 4px;} h2{font-size:14px;margin:24px 0 8px;}" +
+      ".muted{color:#666;font-size:12.5px;} .row2{display:flex;justify-content:space-between;gap:24px;margin:18px 0;}" +
+      "table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;}" +
+      "th{text-align:left;padding:8px 10px;border-bottom:2px solid #111;font-size:11px;text-transform:uppercase;letter-spacing:.03em;}" +
+      "td{padding:8px 10px;border-bottom:1px solid #ddd;} td.num,th.num{text-align:right;}" +
+      ".total-row td{border-top:2px solid #111;border-bottom:none;font-weight:700;font-size:15px;padding-top:12px;}" +
+      "@media print{body{padding:0;}}" +
+      "</style></head><body>" + bodyHtml +
+      // Split across concatenated string pieces on purpose (and this
+      // comment avoids writing the literal tag text too): this whole file
+      // gets inlined into a real script element by the build step, and
+      // that exact closing-tag text appearing anywhere in this file's raw
+      // source (even in a string or comment) would make the HTML parser
+      // end ui.js's own script block early, truncating everything after.
+      "<" + "script>window.onload=function(){setTimeout(function(){window.print();},150);};" + "<" + "/script>" +
+      "</body></html>"
+    );
+    win.document.close();
+  }
+
   // ---------- small helpers ----------
   function escapeHtml(str) {
     return String(str == null ? "" : str).replace(/[&<>"']/g, function (c) {
@@ -1154,6 +1287,284 @@ html:not(.unlocked) .mobile-topbar {
     el: el,
     applyAccent: applyAccent,
     BUILD_DATE: BUILD_DATE,
+    loadScript: loadScript,
+    downloadWorkbook: downloadWorkbook,
+    openPrintWindow: openPrintWindow,
+  };
+})(window);
+
+</script>
+<script>
+/* =========================================================
+   Property Management System — Tenant Invoices & Statements
+   ---------------------------------------------------------
+   Two features, both reached from the Tenants page:
+   - Invoice: an itemized, editable bill (Rent + anything else
+     like Electricity or Water) that gets saved to this tenant's
+     history and can be printed / saved as PDF via the browser's
+     print dialog.
+   - Statement: a date-range ledger of every invoice charged and
+     every rent payment received for a tenant, with a running
+     balance — printable and exportable to Excel.
+   ========================================================= */
+(function (global) {
+  "use strict";
+
+  function tenantLease(data, tenantId) {
+    var active = data.leases.find(function (l) { return l.tenantId === tenantId && l.status === "active"; });
+    if (active) return active;
+    var ended = data.leases.filter(function (l) { return l.tenantId === tenantId; })
+      .sort(function (a, b) { return (b.startDate || "") < (a.startDate || "") ? -1 : 1; });
+    return ended[0] || null;
+  }
+
+  function money(amount, data) { return PMS.formatCurrency(amount, data.settings.currency); }
+
+  // ---------- Invoice ----------
+  function openInvoiceModal(tenantId) {
+    var data = PMS.getData();
+    var tenant = data.tenants.find(function (t) { return t.id === tenantId; });
+    if (!tenant) return;
+    var lease = tenantLease(data, tenantId);
+    if (!lease) { PMSUI.toast("This tenant needs a lease (assign them to a property first) before you can invoice them.", "error"); return; }
+    var property = data.properties.find(function (p) { return p.id === lease.propertyId; });
+
+    var lineId = 0;
+    var lines = [{ id: lineId++, description: "Rent — " + PMS.currentPeriodLabel(), amount: lease.rentAmount }];
+
+    function lineRowHtml(line) {
+      return (
+        '<div class="form-grid" data-line="' + line.id + '" style="grid-template-columns:1fr 130px 34px;gap:8px;align-items:end;margin-bottom:8px;">' +
+          '<div class="field" style="margin:0;"><label>Description</label><input class="input" data-desc value="' + PMSUI.escapeHtml(line.description) + '"/></div>' +
+          '<div class="field" style="margin:0;"><label>Amount</label><input class="input" type="number" min="0" data-amt value="' + line.amount + '"/></div>' +
+          '<button class="btn-icon" data-removeline="' + line.id + '" aria-label="Remove line" style="align-self:end;margin-bottom:1px;">' + PMSUI.ICONS.trash + "</button>" +
+        "</div>"
+      );
+    }
+
+    var body =
+      '<div class="form-grid">' +
+        '<div class="field"><label>Invoice date</label><input class="input" type="date" id="fDate" value="' + PMS.todayISO() + '"/></div>' +
+        '<div class="field"><label>Due date</label><input class="input" type="date" id="fDueDate" value="' + PMS.dueDateForCurrentPeriod(lease.dueDay) + '"/></div>' +
+      "</div>" +
+      '<div id="linesWrap">' + lines.map(lineRowHtml).join("") + "</div>" +
+      '<button class="btn btn-ghost btn-sm" id="addLineBtn" type="button">' + PMSUI.ICONS.plus + " Add Line</button>" +
+      '<div class="row" style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px;"><span class="title">Total</span><span class="title" id="invoiceTotal" style="font-weight:700;font-size:16px;"></span></div>' +
+      '<div class="field"><label>Note (shown on the invoice)</label><textarea class="input" id="fNote" rows="2" placeholder="Optional"></textarea></div>';
+
+    var modal = PMSUI.openModal({
+      title: "New Invoice — " + tenant.name,
+      wide: true,
+      body: body,
+      footer: '<button class="btn btn-ghost" id="cancelBtn">Cancel</button><button class="btn btn-primary" id="saveBtn">' + PMSUI.ICONS.print + " Save &amp; Print</button>",
+      onMount: function (root, close) {
+        function currentLines() {
+          return Array.prototype.slice.call(root.querySelectorAll("[data-line]")).map(function (row) {
+            return {
+              id: Number(row.getAttribute("data-line")),
+              description: row.querySelector("[data-desc]").value.trim(),
+              amount: Number(row.querySelector("[data-amt]").value) || 0,
+            };
+          });
+        }
+        function recalcTotal() {
+          var total = currentLines().reduce(function (s, l) { return s + l.amount; }, 0);
+          root.querySelector("#invoiceTotal").textContent = money(total, data);
+        }
+        function wireLineEvents() {
+          root.querySelectorAll("[data-desc], [data-amt]").forEach(function (input) {
+            input.addEventListener("input", recalcTotal);
+          });
+          root.querySelectorAll("[data-removeline]").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              var row = btn.closest("[data-line]");
+              if (root.querySelectorAll("[data-line]").length <= 1) { PMSUI.toast("An invoice needs at least one line.", "error"); return; }
+              row.remove();
+              recalcTotal();
+            });
+          });
+        }
+
+        root.querySelector("#cancelBtn").addEventListener("click", close);
+        root.querySelector("#addLineBtn").addEventListener("click", function () {
+          var wrap = root.querySelector("#linesWrap");
+          var div = document.createElement("div");
+          div.innerHTML = lineRowHtml({ id: lineId++, description: "", amount: 0 });
+          wrap.appendChild(div.firstElementChild);
+          wireLineEvents();
+        });
+
+        wireLineEvents();
+        recalcTotal();
+
+        root.querySelector("#saveBtn").addEventListener("click", function () {
+          var lineItems = currentLines().filter(function (l) { return l.description && l.amount > 0; });
+          if (!lineItems.length) { PMSUI.toast("Add at least one line with a description and amount.", "error"); return; }
+          var total = lineItems.reduce(function (s, l) { return s + l.amount; }, 0);
+          var invoiceDate = root.querySelector("#fDate").value || PMS.todayISO();
+          var dueDate = root.querySelector("#fDueDate").value || invoiceDate;
+          var note = root.querySelector("#fNote").value.trim();
+
+          var invoice = PMS.addInvoice({
+            tenantId: tenantId,
+            leaseId: lease.id,
+            propertyId: lease.propertyId,
+            date: invoiceDate,
+            dueDate: dueDate,
+            lineItems: lineItems,
+            total: total,
+            note: note,
+          });
+          PMSUI.toast("Invoice saved.");
+          close();
+          printInvoice(invoice, tenant, property, data);
+        });
+      },
+    });
+    return modal;
+  }
+
+  function printInvoice(invoice, tenant, property, data) {
+    var settings = data.settings;
+    var rowsHtml = invoice.lineItems.map(function (l) {
+      return "<tr><td>" + PMSUI.escapeHtml(l.description) + '</td><td class="num">' + money(l.amount, data) + "</td></tr>";
+    }).join("");
+
+    var html =
+      '<div class="row2"><div>' +
+        (settings.logoDataUrl ? '<img src="' + settings.logoDataUrl + '" style="max-height:48px;margin-bottom:8px;" />' : "") +
+        "<h1>" + PMSUI.escapeHtml(settings.landlordName || "Invoice") + "</h1>" +
+        (settings.address ? '<p class="muted">' + PMSUI.escapeHtml(settings.address) + "</p>" : "") +
+        (settings.email ? '<p class="muted">' + PMSUI.escapeHtml(settings.email) + "</p>" : "") +
+      "</div><div style='text-align:right;'>" +
+        "<h1>INVOICE</h1>" +
+        '<p class="muted">Date: ' + PMS.formatDate(invoice.date) + "</p>" +
+        '<p class="muted">Due: ' + PMS.formatDate(invoice.dueDate) + "</p>" +
+      "</div></div>" +
+      "<h2>Billed To</h2>" +
+      "<p>" + PMSUI.escapeHtml(tenant.name) + "<br/>" + (property ? PMSUI.escapeHtml(property.name) + (property.address ? "<br/>" + PMSUI.escapeHtml(property.address) : "") : "") + "</p>" +
+      "<table><thead><tr><th>Description</th><th class='num'>Amount</th></tr></thead><tbody>" +
+        rowsHtml +
+        '<tr class="total-row"><td>Total Due</td><td class="num">' + money(invoice.total, data) + "</td></tr>" +
+      "</tbody></table>" +
+      (invoice.note ? "<h2>Note</h2><p>" + PMSUI.escapeHtml(invoice.note) + "</p>" : "");
+
+    PMSUI.openPrintWindow("Invoice — " + tenant.name, html);
+  }
+
+  // ---------- Statement ----------
+  function openStatementModal(tenantId) {
+    var data = PMS.getData();
+    var tenant = data.tenants.find(function (t) { return t.id === tenantId; });
+    if (!tenant) return;
+    var lease = tenantLease(data, tenantId);
+    if (!lease) { PMSUI.toast("This tenant needs a lease before a statement can be generated.", "error"); return; }
+    var property = data.properties.find(function (p) { return p.id === lease.propertyId; });
+
+    var threeMonthsAgo = new Date();
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+    var defaultFrom = threeMonthsAgo.toISOString().slice(0, 10);
+
+    var body =
+      '<div class="form-grid">' +
+        '<div class="field"><label>From</label><input class="input" type="date" id="fFrom" value="' + defaultFrom + '"/></div>' +
+        '<div class="field"><label>To</label><input class="input" type="date" id="fTo" value="' + PMS.todayISO() + '"/></div>' +
+      "</div>" +
+      '<div id="statementResult"></div>';
+
+    function buildLedger(from, to) {
+      var tenantLeaseIds = data.leases.filter(function (l) { return l.tenantId === tenantId; }).map(function (l) { return l.id; });
+      var rows = [];
+      data.invoices.filter(function (inv) { return inv.tenantId === tenantId && inv.date >= from && inv.date <= to; })
+        .forEach(function (inv) {
+          rows.push({ date: inv.date, description: "Invoice — " + inv.lineItems.map(function (l) { return l.description; }).join(", "), charge: inv.total, payment: 0 });
+        });
+      data.rentPayments.filter(function (rp) { return tenantLeaseIds.indexOf(rp.leaseId) !== -1 && rp.date >= from && rp.date <= to; })
+        .forEach(function (rp) {
+          rows.push({ date: rp.date, description: "Payment received — " + (rp.method || "") + (rp.note ? " (" + rp.note + ")" : ""), charge: 0, payment: rp.amount });
+        });
+      rows.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+      var running = 0;
+      rows.forEach(function (r) { running += r.charge - r.payment; r.balance = running; });
+      return rows;
+    }
+
+    var modal = PMSUI.openModal({
+      title: "Statement — " + tenant.name,
+      wide: true,
+      body: body,
+      footer: '<button class="btn btn-ghost" id="closeBtn">Close</button><button class="btn btn-secondary" id="exportStBtn">' + PMSUI.ICONS.download + " Export to Excel</button><button class=\"btn btn-primary\" id=\"printStBtn\">" + PMSUI.ICONS.print + " Print</button>",
+      onMount: function (root, close) {
+        var currentRows = [];
+
+        function renderTable() {
+          var from = root.querySelector("#fFrom").value;
+          var to = root.querySelector("#fTo").value;
+          currentRows = buildLedger(from, to);
+          var totalCharged = currentRows.reduce(function (s, r) { return s + r.charge; }, 0);
+          var totalPaid = currentRows.reduce(function (s, r) { return s + r.payment; }, 0);
+
+          var tableHtml = currentRows.length === 0
+            ? '<p class="text-secondary" style="margin-top:12px;">No invoices or payments in this date range.</p>'
+            : '<div class="table-wrap" style="margin-top:14px;"><table class="data-table"><thead><tr><th>Date</th><th>Description</th><th>Charge</th><th>Payment</th><th>Balance</th></tr></thead><tbody>' +
+                currentRows.map(function (r) {
+                  return "<tr><td>" + PMS.formatDate(r.date) + "</td><td>" + PMSUI.escapeHtml(r.description) + "</td>" +
+                    "<td>" + (r.charge ? money(r.charge, data) : "—") + "</td>" +
+                    "<td>" + (r.payment ? money(r.payment, data) : "—") + "</td>" +
+                    "<td>" + money(r.balance, data) + "</td></tr>";
+                }).join("") +
+              "</tbody></table></div>" +
+              '<div class="import-summary" style="margin-top:12px;">Total charged: ' + money(totalCharged, data) + " · Total paid: " + money(totalPaid, data) +
+                " · Balance due: " + money(totalCharged - totalPaid, data) + "</div>";
+
+          root.querySelector("#statementResult").innerHTML = tableHtml;
+        }
+
+        root.querySelector("#fFrom").addEventListener("change", renderTable);
+        root.querySelector("#fTo").addEventListener("change", renderTable);
+        root.querySelector("#closeBtn").addEventListener("click", close);
+
+        root.querySelector("#exportStBtn").addEventListener("click", function () {
+          if (!currentRows.length) { PMSUI.toast("Nothing to export in this date range.", "error"); return; }
+          var rows = currentRows.map(function (r) {
+            return { Date: r.date, Description: r.description, Charge: r.charge || "", Payment: r.payment || "", Balance: r.balance };
+          });
+          PMSUI.toast("Preparing Excel file…", "info");
+          PMSUI.downloadWorkbook("Statement", rows, "statement_" + tenant.name.replace(/[^a-z0-9]+/gi, "_") + ".xlsx")
+            .catch(function () { PMSUI.toast("Couldn't load the Excel export library — check your internet connection and try again.", "error"); });
+        });
+
+        root.querySelector("#printStBtn").addEventListener("click", function () {
+          if (!currentRows.length) { PMSUI.toast("Nothing to print in this date range.", "error"); return; }
+          var from = root.querySelector("#fFrom").value, to = root.querySelector("#fTo").value;
+          var totalCharged = currentRows.reduce(function (s, r) { return s + r.charge; }, 0);
+          var totalPaid = currentRows.reduce(function (s, r) { return s + r.payment; }, 0);
+          var rowsHtml = currentRows.map(function (r) {
+            return "<tr><td>" + PMS.formatDate(r.date) + "</td><td>" + PMSUI.escapeHtml(r.description) + "</td>" +
+              "<td class='num'>" + (r.charge ? money(r.charge, data) : "—") + "</td>" +
+              "<td class='num'>" + (r.payment ? money(r.payment, data) : "—") + "</td>" +
+              "<td class='num'>" + money(r.balance, data) + "</td></tr>";
+          }).join("");
+          var html =
+            "<h1>" + PMSUI.escapeHtml(data.settings.landlordName || "Statement") + "</h1>" +
+            '<p class="muted">Statement of account for ' + PMSUI.escapeHtml(tenant.name) + (property ? " — " + PMSUI.escapeHtml(property.name) : "") + "</p>" +
+            '<p class="muted">' + PMS.formatDate(from) + " to " + PMS.formatDate(to) + "</p>" +
+            "<table><thead><tr><th>Date</th><th>Description</th><th class='num'>Charge</th><th class='num'>Payment</th><th class='num'>Balance</th></tr></thead><tbody>" +
+              rowsHtml +
+              '<tr class="total-row"><td colspan="4">Balance Due</td><td class="num">' + money(totalCharged - totalPaid, data) + "</td></tr>" +
+            "</tbody></table>";
+          PMSUI.openPrintWindow("Statement — " + tenant.name, html);
+        });
+
+        renderTable();
+      },
+    });
+    return modal;
+  }
+
+  global.PMSBilling = {
+    openInvoiceModal: openInvoiceModal,
+    openStatementModal: openStatementModal,
   };
 })(window);
 
@@ -1193,14 +1604,17 @@ html:not(.unlocked) .mobile-topbar {
 
     shell.contentEl.innerHTML = '<div class="card"><div class="divider-list">' + data.tenants.map(function (t) {
       var lease = activeLeaseFor(t.id);
+      var hasAnyLease = data.leases.some(function (l) { return l.tenantId === t.id; });
       return (
-        '<div class="row">' +
+        '<div class="row" style="flex-wrap:wrap;">' +
           '<div class="min-w-0">' +
             '<p class="title truncate">' + PMSUI.escapeHtml(t.name) + "</p>" +
             '<p class="meta">' + [t.email, t.phone].filter(Boolean).map(PMSUI.escapeHtml).join(" · ") + (t.email || t.phone ? "" : "No contact info") + "</p>" +
             (lease ? '<p class="meta" style="color:var(--accent-text);margin-top:3px;">Leasing ' + PMSUI.escapeHtml(propertyName(lease.propertyId)) + "</p>" : "") +
           "</div>" +
-          '<div style="display:flex;gap:6px;">' +
+          '<div style="display:flex;gap:6px;flex-wrap:wrap;">' +
+            '<button class="btn btn-secondary btn-sm" data-invoice="' + t.id + '"' + (hasAnyLease ? "" : " disabled") + ">Invoice</button>" +
+            '<button class="btn btn-secondary btn-sm" data-statement="' + t.id + '"' + (hasAnyLease ? "" : " disabled") + ">Statement</button>" +
             '<button class="btn btn-ghost btn-sm" data-edit="' + t.id + '">Edit</button>' +
             '<button class="btn-icon" data-delete="' + t.id + '" aria-label="Delete tenant">' + PMSUI.ICONS.trash + "</button>" +
           "</div>" +
@@ -1222,6 +1636,12 @@ html:not(.unlocked) .mobile-topbar {
     });
     shell.contentEl.querySelectorAll("[data-edit]").forEach(function (b) {
       b.addEventListener("click", function () { openEditModal(b.getAttribute("data-edit")); });
+    });
+    shell.contentEl.querySelectorAll("[data-invoice]").forEach(function (b) {
+      b.addEventListener("click", function () { PMSBilling.openInvoiceModal(b.getAttribute("data-invoice")); });
+    });
+    shell.contentEl.querySelectorAll("[data-statement]").forEach(function (b) {
+      b.addEventListener("click", function () { PMSBilling.openStatementModal(b.getAttribute("data-statement")); });
     });
   }
 

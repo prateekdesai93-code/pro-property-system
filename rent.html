@@ -640,6 +640,8 @@ html:not(.unlocked) .mobile-topbar {
       leases: [],
       rentPayments: [],
       maintenanceRequests: [],
+      expenses: [],
+      invoices: [],
       settings: Object.assign({}, DEFAULT_SETTINGS),
     };
   }
@@ -676,6 +678,8 @@ html:not(.unlocked) .mobile-topbar {
         leases: parsed.leases || [],
         rentPayments: parsed.rentPayments || [],
         maintenanceRequests: parsed.maintenanceRequests || [],
+        expenses: parsed.expenses || [],
+        invoices: parsed.invoices || [],
       });
     } catch (e) {
       console.warn("PMS: could not parse saved data, starting fresh.", e);
@@ -724,6 +728,8 @@ html:not(.unlocked) .mobile-topbar {
     data.leases = data.leases.filter(function (l) { return l.propertyId !== id; });
     data.rentPayments = data.rentPayments.filter(function (rp) { return leaseIds.indexOf(rp.leaseId) === -1; });
     data.maintenanceRequests = data.maintenanceRequests.filter(function (m) { return m.propertyId !== id; });
+    data.expenses = data.expenses.filter(function (e) { return e.propertyId !== id; });
+    data.invoices = data.invoices.filter(function (inv) { return inv.propertyId !== id; });
     persist();
   }
   function activeLeaseForProperty(propertyId) {
@@ -762,6 +768,12 @@ html:not(.unlocked) .mobile-topbar {
     l.endDate = todayISO();
     persist();
   }
+  function updateLease(id, patch) {
+    var l = data.leases.find(function (x) { return x.id === id; });
+    if (!l) return;
+    Object.assign(l, patch);
+    persist();
+  }
   function deleteLease(id) {
     data.leases = data.leases.filter(function (x) { return x.id !== id; });
     data.rentPayments = data.rentPayments.filter(function (rp) { return rp.leaseId !== id; });
@@ -795,6 +807,42 @@ html:not(.unlocked) .mobile-topbar {
   }
   function deleteMaintenanceRequest(id) {
     data.maintenanceRequests = data.maintenanceRequests.filter(function (x) { return x.id !== id; });
+    persist();
+  }
+
+  // ---------- expenses (insurance, levy, loan payments, etc.) ----------
+  function addExpense(input) {
+    var rec = Object.assign({}, input, { id: uid(), createdAt: nowISO() });
+    data.expenses.push(rec);
+    persist();
+    return rec;
+  }
+  function updateExpense(id, patch) {
+    var e = data.expenses.find(function (x) { return x.id === id; });
+    if (!e) return;
+    Object.assign(e, patch);
+    persist();
+  }
+  function deleteExpense(id) {
+    data.expenses = data.expenses.filter(function (x) { return x.id !== id; });
+    persist();
+  }
+
+  // ---------- tenant invoices ----------
+  function addInvoice(input) {
+    var rec = Object.assign({}, input, { id: uid(), createdAt: nowISO() });
+    data.invoices.push(rec);
+    persist();
+    return rec;
+  }
+  function updateInvoice(id, patch) {
+    var inv = data.invoices.find(function (x) { return x.id === id; });
+    if (!inv) return;
+    Object.assign(inv, patch);
+    persist();
+  }
+  function deleteInvoice(id) {
+    data.invoices = data.invoices.filter(function (x) { return x.id !== id; });
     persist();
   }
 
@@ -854,6 +902,11 @@ html:not(.unlocked) .mobile-topbar {
   // code -> [locale, symbol]. Locale mainly affects number grouping; the
   // symbol here is only used for the Settings dropdown preview and as a
   // fallback if Intl can't format a given code in this browser.
+  // Suggested expense categories — shown as autocomplete suggestions, but
+  // the field itself is free text so a landlord can type any category they
+  // want ("HOA Fees", "Pest Control", etc.) without it being a fixed list.
+  var EXPENSE_CATEGORIES = ["Maintenance", "Insurance", "Property Tax / Levy", "Bank Loan Payment", "Utility Bill", "Management Fee", "Other"];
+
   var CURRENCY_META = {
     USD: ["en-US", "$"], EUR: ["de-DE", "€"], GBP: ["en-GB", "£"], INR: ["en-IN", "₹"],
     AUD: ["en-AU", "$"], CAD: ["en-CA", "$"], NZD: ["en-NZ", "$"], SGD: ["en-SG", "$"],
@@ -910,6 +963,8 @@ html:not(.unlocked) .mobile-topbar {
         leases: parsed.leases || [],
         rentPayments: parsed.rentPayments || [],
         maintenanceRequests: parsed.maintenanceRequests || [],
+        expenses: parsed.expenses || [],
+        invoices: parsed.invoices || [],
       });
       persist();
       return { ok: true };
@@ -939,6 +994,7 @@ html:not(.unlocked) .mobile-topbar {
 
     addLease: addLease,
     endLease: endLease,
+    updateLease: updateLease,
     deleteLease: deleteLease,
 
     addRentPayment: addRentPayment,
@@ -947,6 +1003,14 @@ html:not(.unlocked) .mobile-topbar {
     addMaintenanceRequest: addMaintenanceRequest,
     updateMaintenanceRequest: updateMaintenanceRequest,
     deleteMaintenanceRequest: deleteMaintenanceRequest,
+
+    addExpense: addExpense,
+    updateExpense: updateExpense,
+    deleteExpense: deleteExpense,
+
+    addInvoice: addInvoice,
+    updateInvoice: updateInvoice,
+    deleteInvoice: deleteInvoice,
 
     updateSettings: updateSettings,
 
@@ -959,6 +1023,7 @@ html:not(.unlocked) .mobile-topbar {
     formatDate: formatDate,
     currencySymbol: currencySymbol,
     CURRENCY_CODES: Object.keys(CURRENCY_META),
+    EXPENSE_CATEGORIES: EXPENSE_CATEGORIES,
 
     exportData: exportData,
     importData: importData,
@@ -994,6 +1059,9 @@ html:not(.unlocked) .mobile-topbar {
     menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
     upload: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/></svg>',
     download: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 10l6 6 6-6"/><path d="M4 20h16"/></svg>',
+    finances: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="19" height="13" rx="2"/><path d="M2.5 10.5h19"/><path d="M6 15h4"/></svg>',
+    print: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="4" y="9" width="16" height="8" rx="1.5"/><path d="M6 17h12v5H6z"/></svg>',
+    fileText: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2.5h7l4 4v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-17a1 1 0 0 1 1-1Z"/><path d="M14 2.5v4h4"/><path d="M8.5 12.5h7M8.5 15.5h7M8.5 18h4"/></svg>',
   };
 
   var NAV_ITEMS = [
@@ -1002,6 +1070,7 @@ html:not(.unlocked) .mobile-topbar {
     { key: "tenants", label: "Tenants", href: "tenants.html", icon: ICONS.tenants },
     { key: "rent", label: "Rent", href: "rent.html", icon: ICONS.rent },
     { key: "maintenance", label: "Maintenance", href: "maintenance.html", icon: ICONS.maintenance },
+    { key: "finances", label: "Finances", href: "finances.html", icon: ICONS.finances },
     { key: "settings", label: "Settings", href: "settings.html", icon: ICONS.settings },
   ];
 
@@ -1128,6 +1197,70 @@ html:not(.unlocked) .mobile-topbar {
     });
   }
 
+  // ---------- lazy CDN script loading (used for optional heavy features
+  // like reading/writing Excel files, so pages that never touch them don't
+  // pay for the download) ----------
+  var XLSX_SCRIPT = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
+  var loadedScripts = {};
+  function loadScript(src) {
+    if (loadedScripts[src]) return loadedScripts[src];
+    loadedScripts[src] = new Promise(function (resolve, reject) {
+      var existing = document.querySelector('script[data-src="' + src + '"]');
+      if (existing) { existing.addEventListener("load", resolve); existing.addEventListener("error", reject); return; }
+      var s = document.createElement("script");
+      s.src = src;
+      s.setAttribute("data-src", src);
+      s.onload = resolve;
+      s.onerror = function () { reject(new Error("Failed to load " + src)); };
+      document.head.appendChild(s);
+    });
+    return loadedScripts[src];
+  }
+
+  // rows: array of plain objects — the keys of the FIRST row become the
+  // header row, in that order. Returns a Promise that resolves once the
+  // browser's file-save dialog has been triggered.
+  function downloadWorkbook(sheetName, rows, filename) {
+    return loadScript(XLSX_SCRIPT).then(function () {
+      var ws = global.XLSX.utils.json_to_sheet(rows);
+      var wb = global.XLSX.utils.book_new();
+      global.XLSX.utils.book_append_sheet(wb, ws, sheetName.slice(0, 31));
+      global.XLSX.writeFile(wb, filename);
+    });
+  }
+
+  // ---------- printable document window ----------
+  // Opens a new tab with a minimal, self-contained print-friendly page and
+  // triggers the browser's print dialog — this is how invoices/statements
+  // become PDFs, with no external library and no server needed ("Save as
+  // PDF" is a print destination in every modern browser).
+  function openPrintWindow(title, bodyHtml) {
+    var win = window.open("", "_blank");
+    if (!win) { toast("Your browser blocked the print window pop-up — allow pop-ups for this site and try again.", "error"); return; }
+    win.document.write(
+      "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>" + escapeHtml(title) + "</title>" +
+      "<style>" +
+      "body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#111;padding:36px;max-width:760px;margin:0 auto;}" +
+      "h1{font-size:20px;margin:0 0 4px;} h2{font-size:14px;margin:24px 0 8px;}" +
+      ".muted{color:#666;font-size:12.5px;} .row2{display:flex;justify-content:space-between;gap:24px;margin:18px 0;}" +
+      "table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;}" +
+      "th{text-align:left;padding:8px 10px;border-bottom:2px solid #111;font-size:11px;text-transform:uppercase;letter-spacing:.03em;}" +
+      "td{padding:8px 10px;border-bottom:1px solid #ddd;} td.num,th.num{text-align:right;}" +
+      ".total-row td{border-top:2px solid #111;border-bottom:none;font-weight:700;font-size:15px;padding-top:12px;}" +
+      "@media print{body{padding:0;}}" +
+      "</style></head><body>" + bodyHtml +
+      // Split across concatenated string pieces on purpose (and this
+      // comment avoids writing the literal tag text too): this whole file
+      // gets inlined into a real script element by the build step, and
+      // that exact closing-tag text appearing anywhere in this file's raw
+      // source (even in a string or comment) would make the HTML parser
+      // end ui.js's own script block early, truncating everything after.
+      "<" + "script>window.onload=function(){setTimeout(function(){window.print();},150);};" + "<" + "/script>" +
+      "</body></html>"
+    );
+    win.document.close();
+  }
+
   // ---------- small helpers ----------
   function escapeHtml(str) {
     return String(str == null ? "" : str).replace(/[&<>"']/g, function (c) {
@@ -1154,6 +1287,9 @@ html:not(.unlocked) .mobile-topbar {
     el: el,
     applyAccent: applyAccent,
     BUILD_DATE: BUILD_DATE,
+    loadScript: loadScript,
+    downloadWorkbook: downloadWorkbook,
+    openPrintWindow: openPrintWindow,
   };
 })(window);
 

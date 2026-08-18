@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Maintenance · Property Management System</title>
+<title>Finances · Property Management System</title>
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiMwMDAwMDAiLz4KICA8dGV4dCB4PSIzMiIgeT0iNDMiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLFNlZ29lIFVJLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzIiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlA8L3RleHQ+Cjwvc3ZnPgo=" type="image/svg+xml" />
 <style>
 /* =========================================================
@@ -516,7 +516,7 @@ html:not(.unlocked) .mobile-topbar {
 
 </style>
 </head>
-<body data-page="maintenance">
+<body data-page="finances">
 <div id="app-shell"></div>
 <div class="toast-root" id="toast-root"></div>
 <div id="modal-root"></div>
@@ -1295,159 +1295,199 @@ html:not(.unlocked) .mobile-topbar {
 
 </script>
 <script>
-/* Maintenance page */
+/* Finances page — expense log + per-property income/expense summary */
 (function () {
   "use strict";
 
-  var shell = PMSUI.renderShell("maintenance");
+  var shell = PMSUI.renderShell("finances");
   var data = PMS.getData();
-  var statusFilter = "all";
 
-  var PRIORITIES = ["low", "medium", "high", "urgent"];
-  var STATUSES = ["open", "in-progress", "resolved"];
-  var PRIORITY_TONE = { low: "pill-neutral", medium: "pill-neutral", high: "pill-warning", urgent: "pill-danger" };
-  var STATUS_TONE = { open: "pill-warning", "in-progress": "pill-accent", resolved: "pill-success" };
+  function firstOfMonthISO() {
+    var d = new Date();
+    return d.getFullYear() + "-" + (d.getMonth() < 9 ? "0" : "") + (d.getMonth() + 1) + "-01";
+  }
+
+  var filters = { propertyId: "all", from: firstOfMonthISO(), to: PMS.todayISO() };
+
+  shell.setTitle("Finances", "Income and spending across your portfolio.");
+  shell.setActions(
+    '<button class="btn btn-secondary" id="exportBtn">' + PMSUI.ICONS.download + '<span class="long">Export to Excel</span></button>' +
+    '<button class="btn btn-primary" id="addExpenseBtn"' + (data.properties.length === 0 ? " disabled" : "") + ">" + PMSUI.ICONS.plus + '<span class="long">Log Expense</span></button>'
+  );
 
   function propertyName(id) { var p = data.properties.find(function (x) { return x.id === id; }); return p ? p.name : "Unknown property"; }
-  function cap(s) { return s === "in-progress" ? "In Progress" : s.charAt(0).toUpperCase() + s.slice(1); }
+  function inRange(iso) { return iso >= filters.from && iso <= filters.to; }
+  function matchesProperty(propertyId) { return filters.propertyId === "all" || filters.propertyId === propertyId; }
+  function leasePropertyId(leaseId) {
+    var l = data.leases.find(function (x) { return x.id === leaseId; });
+    return l ? l.propertyId : null;
+  }
 
-  function refreshTitle() {
-    data = PMS.getData();
-    var openCount = data.maintenanceRequests.filter(function (m) { return m.status !== "resolved"; }).length;
-    shell.setTitle("Maintenance", openCount + " open requests");
+  // ---------- pull together everything in range, once per render ----------
+  function computeLedger() {
+    var rows = [];
+
+    data.rentPayments.forEach(function (rp) {
+      var propertyId = leasePropertyId(rp.leaseId);
+      if (!propertyId || !matchesProperty(propertyId) || !inRange(rp.date)) return;
+      rows.push({ date: rp.date, propertyId: propertyId, type: "Income", category: "Rent", description: rp.note || rp.periodLabel || "Rent payment", amount: rp.amount });
+    });
+
+    data.maintenanceRequests.forEach(function (m) {
+      var costDate = (m.createdAt || "").slice(0, 10);
+      if (!(m.cost > 0) || !matchesProperty(m.propertyId) || !inRange(costDate)) return;
+      rows.push({ date: costDate, propertyId: m.propertyId, type: "Expense", category: "Maintenance", description: m.title, amount: m.cost });
+    });
+
+    data.expenses.forEach(function (e) {
+      if (!matchesProperty(e.propertyId) || !inRange(e.date)) return;
+      rows.push({ date: e.date, propertyId: e.propertyId, type: "Expense", category: e.category || "Other", description: e.note || "", amount: e.amount });
+    });
+
+    rows.sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
+    return rows;
   }
 
   function render() {
     data = PMS.getData();
-    refreshTitle();
+    var ledger = computeLedger();
 
-    var filtered = data.maintenanceRequests
-      .filter(function (m) { return statusFilter === "all" || m.status === statusFilter; })
-      .sort(function (a, b) { return a.createdAt < b.createdAt ? 1 : -1; });
+    var income = ledger.filter(function (r) { return r.type === "Income"; }).reduce(function (s, r) { return s + r.amount; }, 0);
+    var expenseTotal = ledger.filter(function (r) { return r.type === "Expense"; }).reduce(function (s, r) { return s + r.amount; }, 0);
+    var net = income - expenseTotal;
 
-    var chips = ["all"].concat(STATUSES).map(function (s) {
-      return '<button class="chip' + (statusFilter === s ? " active" : "") + '" data-filter="' + s + '">' + (s === "all" ? "All" : cap(s)) + "</button>";
+    var categoryTotals = {};
+    ledger.filter(function (r) { return r.type === "Expense"; }).forEach(function (r) {
+      categoryTotals[r.category] = (categoryTotals[r.category] || 0) + r.amount;
+    });
+    var categoryRows = Object.keys(categoryTotals).sort(function (a, b) { return categoryTotals[b] - categoryTotals[a]; });
+
+    var propertyOptions = '<option value="all">All properties</option>' + data.properties.map(function (p) {
+      return '<option value="' + p.id + '"' + (filters.propertyId === p.id ? " selected" : "") + ">" + PMSUI.escapeHtml(p.name) + "</option>";
     }).join("");
 
-    var body;
-    if (data.maintenanceRequests.length === 0) {
-      body = PMSUI.emptyState(
-        "maintenance", "No maintenance requests",
-        data.properties.length === 0 ? "Add a property first, then log maintenance requests against it." : "Log a repair or maintenance issue to keep track of it.",
-        data.properties.length > 0 ? '<button class="btn btn-primary btn-sm" id="emptyAddBtn">' + PMSUI.ICONS.plus + " New Request</button>" : ""
-      );
-    } else if (filtered.length === 0) {
-      body = PMSUI.emptyState("maintenance", "No matches", "Try a different filter.");
-    } else {
-      body = '<div class="grid-auto">' + filtered.map(function (m) {
-        return (
-          '<div class="card" style="padding:18px;display:flex;flex-direction:column;gap:10px;">' +
-            '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">' +
-              '<div class="min-w-0"><p class="title truncate">' + PMSUI.escapeHtml(m.title) + "</p>" +
-              '<p class="meta truncate">' + PMSUI.escapeHtml(propertyName(m.propertyId)) + "</p></div>" +
-              '<button class="btn-icon" data-delete="' + m.id + '" aria-label="Delete request">' + PMSUI.ICONS.trash + "</button>" +
-            "</div>" +
-            (m.description ? '<p class="text-secondary" style="font-size:12.5px;">' + PMSUI.escapeHtml(m.description) + "</p>" : "") +
-            '<div class="chip-row" style="gap:8px;">' +
-              '<span class="pill ' + PRIORITY_TONE[m.priority] + '">' + cap(m.priority) + " priority</span>" +
-              '<span class="pill ' + STATUS_TONE[m.status] + '">' + cap(m.status) + "</span>" +
-            "</div>" +
-            (m.cost > 0 ? '<p class="title" style="font-size:13px;font-weight:650;">' + PMS.formatCurrency(m.cost, data.settings.currency) + " spent</p>" : "") +
-            '<p class="text-tertiary" style="font-size:11.5px;">Logged ' + PMS.formatDate((m.createdAt || "").slice(0, 10)) + "</p>" +
-            '<div style="border-top:1px solid var(--border);padding-top:12px;display:flex;gap:8px;">' +
-              '<button class="btn btn-secondary btn-sm" data-cycle="' + m.id + '">' +
-                (m.status === "open" ? "Start Work" : m.status === "in-progress" ? "Mark Resolved" : "Reopen") +
-              "</button>" +
-              '<button class="btn btn-ghost btn-sm" data-editreq="' + m.id + '">Edit</button>' +
-            "</div>" +
-          "</div>"
-        );
-      }).join("") + "</div>";
-    }
+    var filterBar =
+      '<div class="card" style="padding:16px;margin-bottom:20px;">' +
+        '<div class="form-grid" style="grid-template-columns:repeat(3,1fr);gap:12px;">' +
+          '<div class="field" style="margin:0;"><label>Property</label><select class="input" id="fFilterProperty">' + propertyOptions + "</select></div>" +
+          '<div class="field" style="margin:0;"><label>From</label><input class="input" type="date" id="fFrom" value="' + filters.from + '"/></div>' +
+          '<div class="field" style="margin:0;"><label>To</label><input class="input" type="date" id="fTo" value="' + filters.to + '"/></div>' +
+        "</div>" +
+      "</div>";
 
-    shell.contentEl.innerHTML = '<div class="chip-row mt-1" style="margin-bottom:16px;">' + chips + "</div>" + body;
+    var statGrid =
+      '<div class="stat-grid">' +
+        statCard(PMSUI.ICONS.download, PMS.formatCurrency(income, data.settings.currency), "Income (Rent Collected)", "") +
+        statCard(PMSUI.ICONS.upload, PMS.formatCurrency(expenseTotal, data.settings.currency), "Total Expenses", "tone-danger") +
+        statCard(PMSUI.ICONS.finances, PMS.formatCurrency(net, data.settings.currency), "Net", net >= 0 ? "tone-accent" : "tone-danger") +
+      "</div>";
 
-    shell.contentEl.querySelectorAll("[data-filter]").forEach(function (b) {
-      b.addEventListener("click", function () { statusFilter = b.getAttribute("data-filter"); render(); });
+    var breakdownHtml = categoryRows.length === 0
+      ? '<div class="card-body">' + PMSUI.emptyState("finances", "No expenses in this range", "Log an expense or widen the date range.") + "</div>"
+      : '<div class="divider-list">' + categoryRows.map(function (cat) {
+          return (
+            '<div class="row"><div class="min-w-0"><p class="title truncate">' + PMSUI.escapeHtml(cat) + "</p></div>" +
+            '<span class="title" style="font-weight:600;">' + PMS.formatCurrency(categoryTotals[cat], data.settings.currency) + "</span></div>"
+          );
+        }).join("") + "</div>";
+
+    var recentExpenses = data.expenses
+      .filter(function (e) { return matchesProperty(e.propertyId); })
+      .sort(function (a, b) { return a.date < b.date ? 1 : -1; })
+      .slice(0, 25);
+
+    var expensesHtml = recentExpenses.length === 0
+      ? '<div class="card-body">' + PMSUI.emptyState("finances", "No expenses logged yet", "Insurance, property tax, loan payments — log anything you spend per property here.") + "</div>"
+      : '<div class="divider-list">' + recentExpenses.map(function (e) {
+          return (
+            '<div class="row">' +
+              '<div class="min-w-0"><p class="title truncate">' + PMSUI.escapeHtml(e.category || "Other") + (e.note ? " — " + PMSUI.escapeHtml(e.note) : "") + "</p>" +
+              '<p class="meta">' + PMSUI.escapeHtml(propertyName(e.propertyId)) + " · " + PMS.formatDate(e.date) + "</p></div>" +
+              '<div style="display:flex;align-items:center;gap:10px;">' +
+                '<span class="title" style="font-weight:600;">' + PMS.formatCurrency(e.amount, data.settings.currency) + "</span>" +
+                '<button class="btn btn-ghost btn-sm" data-editexp="' + e.id + '">Edit</button>' +
+                '<button class="btn-icon" data-delexp="' + e.id + '" aria-label="Delete expense">' + PMSUI.ICONS.trash + "</button>" +
+              "</div>" +
+            "</div>"
+          );
+        }).join("") + "</div>";
+
+    shell.contentEl.innerHTML =
+      filterBar + statGrid +
+      '<div class="grid-2 mt-3">' +
+        '<div class="card"><div class="card-header"><h2>Expenses by Category</h2></div>' + breakdownHtml + "</div>" +
+        '<div class="card"><div class="card-header"><h2>Logged Expenses</h2></div>' + expensesHtml + "</div>" +
+      "</div>";
+
+    shell.contentEl.querySelector("#fFilterProperty").addEventListener("change", function (e) { filters.propertyId = e.target.value; render(); });
+    shell.contentEl.querySelector("#fFrom").addEventListener("change", function (e) { filters.from = e.target.value || filters.from; render(); });
+    shell.contentEl.querySelector("#fTo").addEventListener("change", function (e) { filters.to = e.target.value || filters.to; render(); });
+
+    shell.contentEl.querySelectorAll("[data-editexp]").forEach(function (b) {
+      b.addEventListener("click", function () { openExpenseModal(b.getAttribute("data-editexp")); });
     });
-    var eb = document.getElementById("emptyAddBtn");
-    if (eb) eb.addEventListener("click", openAddModal);
-    shell.contentEl.querySelectorAll("[data-delete]").forEach(function (b) {
+    shell.contentEl.querySelectorAll("[data-delexp]").forEach(function (b) {
       b.addEventListener("click", function () {
-        var id = b.getAttribute("data-delete");
+        var id = b.getAttribute("data-delexp");
         PMSUI.confirmDialog({
-          title: "Delete maintenance request?",
-          description: "This permanently removes the request.",
+          title: "Delete this expense?",
+          description: "This permanently removes it from your records.",
           confirmLabel: "Delete",
-          onConfirm: function () { PMS.deleteMaintenanceRequest(id); PMSUI.toast("Request deleted.", "info"); render(); },
+          onConfirm: function () { PMS.deleteExpense(id); PMSUI.toast("Expense deleted.", "info"); render(); },
         });
       });
     });
-    shell.contentEl.querySelectorAll("[data-cycle]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        var id = b.getAttribute("data-cycle");
-        var m = data.maintenanceRequests.find(function (x) { return x.id === id; });
-        if (!m) return;
-        var next = m.status === "open" ? "in-progress" : m.status === "in-progress" ? "resolved" : "open";
-        PMS.updateMaintenanceRequest(id, { status: next, resolvedAt: next === "resolved" ? PMS.todayISO() : null });
-        render();
-      });
-    });
-    shell.contentEl.querySelectorAll("[data-editreq]").forEach(function (b) {
-      b.addEventListener("click", function () { openFormModal(b.getAttribute("data-editreq")); });
-    });
   }
 
-  function openAddModal() { openFormModal(null); }
+  function statCard(icon, value, label, tone) {
+    return (
+      '<div class="stat-card ' + (tone || "") + '">' +
+        '<div class="icon-wrap">' + icon + "</div>" +
+        '<div class="value">' + PMSUI.escapeHtml(value) + "</div>" +
+        '<div class="label">' + PMSUI.escapeHtml(label) + "</div>" +
+      "</div>"
+    );
+  }
 
-  function openFormModal(existingId) {
+  function openExpenseModal(existingId) {
     if (data.properties.length === 0) { PMSUI.toast("Add a property first.", "error"); return; }
-    var existing = existingId ? data.maintenanceRequests.find(function (x) { return x.id === existingId; }) : null;
-    var propertyOptions = '<option value="">Select a property…</option>' + data.properties.map(function (p) {
-      return '<option value="' + p.id + '"' + (existing && existing.propertyId === p.id ? " selected" : "") + ">" + PMSUI.escapeHtml(p.name) + "</option>";
+    var existing = existingId ? data.expenses.find(function (x) { return x.id === existingId; }) : null;
+    var propertyOptions = data.properties.map(function (p) {
+      return '<option value="' + p.id + '"' + (existing ? existing.propertyId === p.id : filters.propertyId === p.id ? " selected" : "") + ">" + PMSUI.escapeHtml(p.name) + "</option>";
     }).join("");
+    var categoryDatalist = '<datalist id="categorySuggestions">' + PMS.EXPENSE_CATEGORIES.map(function (c) { return '<option value="' + c + '">'; }).join("") + "</datalist>";
 
     var body =
-      '<div class="field"><label>Property<span class="req">*</span></label><select class="input" id="fProperty">' + propertyOptions + "</select>" +
-      '<span class="error hidden" id="fPropertyErr">Select a property.</span></div>' +
-      '<div class="field"><label>Title<span class="req">*</span></label><input class="input" id="fTitle" placeholder="Leaking kitchen faucet" value="' + (existing ? PMSUI.escapeHtml(existing.title) : "") + '"/>' +
-      '<span class="error hidden" id="fTitleErr">Give this request a title.</span></div>' +
+      '<div class="field"><label>Property<span class="req">*</span></label><select class="input" id="fProperty">' + propertyOptions + "</select></div>" +
       '<div class="form-grid">' +
-        '<div class="field"><label>Priority</label><select class="input" id="fPriority">' +
-          PRIORITIES.map(function (p) { return '<option value="' + p + '"' + ((existing ? existing.priority : "medium") === p ? " selected" : "") + ">" + cap(p) + "</option>"; }).join("") +
-        "</select></div>" +
-        '<div class="field"><label>Cost (what you spent)</label><input class="input" type="number" min="0" id="fCost" placeholder="0" value="' + (existing && existing.cost ? existing.cost : "") + '"/></div>' +
+        '<div class="field"><label>Category<span class="req">*</span></label><input class="input" id="fCategory" list="categorySuggestions" placeholder="Insurance, Levy, Loan Payment…" value="' + (existing ? PMSUI.escapeHtml(existing.category) : "") + '"/>' +
+        '<span class="error hidden" id="fCategoryErr">Enter or pick a category.</span></div>' +
+        '<div class="field"><label>Amount<span class="req">*</span></label><input class="input" type="number" min="0" id="fAmount" value="' + (existing ? existing.amount : "") + '"/></div>' +
       "</div>" +
-      '<div class="field"><label>Description</label><textarea class="input" id="fDesc" rows="3">' + (existing ? PMSUI.escapeHtml(existing.description || "") : "") + "</textarea></div>";
+      categoryDatalist +
+      '<div class="field"><label>Date</label><input class="input" type="date" id="fDate" value="' + (existing ? existing.date : PMS.todayISO()) + '"/></div>' +
+      '<div class="field"><label>Note</label><input class="input" id="fNote" placeholder="Optional" value="' + (existing ? PMSUI.escapeHtml(existing.note || "") : "") + '"/></div>';
 
     PMSUI.openModal({
-      title: existing ? "Edit Maintenance Request" : "New Maintenance Request",
+      title: existing ? "Edit Expense" : "Log Expense",
       body: body,
-      footer: '<button class="btn btn-ghost" id="cancelBtn">Cancel</button><button class="btn btn-primary" id="saveBtn">' + (existing ? "Save Changes" : "Log Request") + "</button>",
+      footer: '<button class="btn btn-ghost" id="cancelBtn">Cancel</button><button class="btn btn-primary" id="saveBtn">' + (existing ? "Save Changes" : "Log Expense") + "</button>",
       onMount: function (root, close) {
         root.querySelector("#cancelBtn").addEventListener("click", close);
         root.querySelector("#saveBtn").addEventListener("click", function () {
-          var propertyId = root.querySelector("#fProperty").value;
-          var title = root.querySelector("#fTitle").value.trim();
-          var ok = true;
-          if (!propertyId) { root.querySelector("#fPropertyErr").classList.remove("hidden"); ok = false; }
-          if (!title) { root.querySelector("#fTitleErr").classList.remove("hidden"); ok = false; }
-          if (!ok) return;
+          var category = root.querySelector("#fCategory").value.trim();
+          var amount = Number(root.querySelector("#fAmount").value);
+          if (!category) { root.querySelector("#fCategoryErr").classList.remove("hidden"); return; }
+          if (!amount || amount <= 0) { PMSUI.toast("Enter a valid amount.", "error"); return; }
           var record = {
-            propertyId: propertyId,
-            title: title,
-            description: root.querySelector("#fDesc").value.trim(),
-            priority: root.querySelector("#fPriority").value,
-            cost: Number(root.querySelector("#fCost").value) || 0,
+            propertyId: root.querySelector("#fProperty").value,
+            category: category,
+            amount: amount,
+            date: root.querySelector("#fDate").value || PMS.todayISO(),
+            note: root.querySelector("#fNote").value.trim(),
           };
-          if (existing) {
-            PMS.updateMaintenanceRequest(existing.id, record);
-            PMSUI.toast("Request updated.");
-          } else {
-            record.status = "open";
-            PMS.addMaintenanceRequest(record);
-            PMSUI.toast("Maintenance request logged.");
-          }
+          if (existing) { PMS.updateExpense(existing.id, record); PMSUI.toast("Expense updated."); }
+          else { PMS.addExpense(record); PMSUI.toast("Expense logged."); }
           close();
           render();
         });
@@ -1455,8 +1495,26 @@ html:not(.unlocked) .mobile-topbar {
     });
   }
 
-  shell.setActions('<button class="btn btn-primary" id="addReqBtn"' + (data.properties.length === 0 ? " disabled" : "") + ">" + PMSUI.ICONS.plus + '<span class="long">New Request</span></button>');
-  document.getElementById("addReqBtn").addEventListener("click", openAddModal);
+  document.getElementById("addExpenseBtn").addEventListener("click", function () { openExpenseModal(null); });
+  document.getElementById("exportBtn").addEventListener("click", function () {
+    var ledger = computeLedger();
+    if (!ledger.length) { PMSUI.toast("Nothing to export in this date range.", "error"); return; }
+    var rows = ledger.map(function (r) {
+      return {
+        Date: r.date,
+        Property: propertyName(r.propertyId),
+        Type: r.type,
+        Category: r.category,
+        Description: r.description,
+        Amount: r.amount,
+        "Net Amount": r.type === "Income" ? r.amount : -r.amount,
+      };
+    });
+    PMSUI.toast("Preparing Excel file…", "info");
+    PMSUI.downloadWorkbook("Finances", rows, "finances_" + filters.from + "_to_" + filters.to + ".xlsx")
+      .catch(function () { PMSUI.toast("Couldn't load the Excel export library — check your internet connection and try again.", "error"); });
+  });
+
   render();
 })();
 
