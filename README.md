@@ -1,12 +1,13 @@
-# Property Management System (plain HTML version)
+# Property Management System (single-file pages)
 
 A premium, dark-mode dashboard for landlords — properties, tenants, leases,
-rent tracking with automatic reminders, and maintenance requests. Everything
-runs directly in the browser; there is **no build step, no npm, and no
-server**. Your data is saved privately on your own device using the
-browser's local storage.
+rent tracking with automatic reminders, and maintenance requests. Runs
+entirely in your browser. No build step, no npm, no server, and — this
+time — **no separate folders to lose during upload.**
 
-## Files in this folder
+## What's in this folder
+
+Just 6 files. That's the whole app:
 
 ```
 index.html          ← Dashboard (open this one first)
@@ -15,79 +16,67 @@ tenants.html         ← Tenant directory
 rent.html            ← This period's rent status + full payment history
 maintenance.html     ← Maintenance request tracker
 settings.html        ← Profile, currency, due-day defaults, accent color, backup
-
-css/styles.css        ← All styling (one file, easy to tweak colors/spacing)
-js/store.js           ← Data layer — reads/writes your data to local storage
-js/ui.js               ← Shared sidebar, modals, and toast notifications
-js/dashboard.js        ← Logic for index.html
-js/properties.js       ← Logic for properties.html
-js/tenants.js          ← Logic for tenants.html
-js/rent.js             ← Logic for rent.html
-js/maintenance.js      ← Logic for maintenance.html
-js/settings.js          ← Logic for settings.html
-
-assets/favicon.svg    ← The little icon shown in the browser tab
+README.md            ← This file
 ```
 
-Every page is a normal HTML file that loads `css/styles.css` and a couple of
-`.js` files with plain `<script>` tags — no bundler, no compiling, nothing
-to install. You can open `index.html` straight from your computer (double
-click it) and the whole app works.
+Each `.html` file is fully self-contained — its styling and code are built
+directly into the file itself (no `css/` or `js/` folder involved). That
+was the cause of the blank white page you saw last time: GitHub's upload
+box silently dropped the `css` and `js` folders, so the pages had no
+styling or code to run. That can't happen anymore, because there's nothing
+left to drop — every file carries everything it needs on its own.
 
 ## Try it on your computer right now
 
-Just double-click `index.html`. It opens in your browser and works
+Double-click `index.html`. It opens in your browser and works
 immediately — add a property, assign a tenant, record rent, everything
 saves automatically as you go.
 
-## Publish it for free on GitHub Pages (so you have a real web address to share)
+## Publish it for free on GitHub Pages
 
-1. Create a new, empty repository on GitHub (or use one you already have) —
-   for example `property-dashboard`.
-2. On the repository page, click **Add file → Upload files**, then drag
-   this entire folder's contents in (`index.html`, `properties.html`,
-   `css/`, `js/`, `assets/`, everything) and commit them to the `main`
-   branch.
-3. Go to **Settings → Pages**. Under "Build and deployment", set
-   **Source** to **Deploy from a branch**, choose branch **main** and
-   folder **/ (root)**, then click **Save**.
-4. Wait about a minute, then visit
+1. Open your repository on GitHub (the one you already made — e.g.
+   `pro-property-system`).
+2. If old files are still in there from before, delete them first: open
+   each old `css` or `js` folder link (if any exist) and remove it, or
+   just delete the whole repo and create a fresh one — either is fine.
+3. Click **Add file → Upload files**.
+4. Drag in all 6 files from this folder at once — `index.html`,
+   `properties.html`, `tenants.html`, `rent.html`, `maintenance.html`,
+   `settings.html`, and `README.md`. Make sure the box shows exactly 7
+   files listed before committing (6 `.html` + this `README.md`) — no
+   folders should appear this time, since there aren't any.
+5. Click **Commit changes**.
+6. Go to **Settings → Pages**. Under "Build and deployment", set
+   **Source** to **Deploy from a branch**, branch **main**, folder
+   **/ (root)**, then **Save**.
+7. Wait about a minute, then visit
    `https://<your-github-username>.github.io/<repository-name>/`.
 
-That's the whole process — no GitHub Actions, no build workflow, and no
-`docs/` folder needed. GitHub just serves the files exactly as you
-uploaded them, so whatever you see on your computer is exactly what your
-visitors will see.
-
-**To update the live site later:** edit the files, then upload the changed
-ones again (or drag the whole folder in again) and commit — GitHub Pages
-picks up the change automatically within a minute or so.
+**To update the site later:** edit a file, then drag that same file back
+into **Add file → Upload files** to replace it, and commit. GitHub Pages
+picks up the change within a minute or so.
 
 ## How rent reminders work
 
-Since there's no server running in the background, reminders work by
-checking, every time you open the app, whether each active lease's current
-rent period is due soon or overdue (based on the "Reminder lead time" you
-set in Settings). Anything that needs attention shows up on the Dashboard
-and Rent page, and a single click opens a pre-filled email to that tenant
-in your own email app.
+Every time you open the app, each active lease's current rent period is
+checked against today's date. Anything overdue or due within your
+configured lead time (Settings → Rent Defaults) shows up on the Dashboard
+and Rent page, where one click opens a pre-filled email to that tenant in
+your own email app.
 
 ## Data & privacy
 
 All data lives only in *your* browser's local storage — nothing is sent
-anywhere, and there is no account or login. That also means:
+anywhere, no account, no login.
 
 - Data does **not** sync between devices or browsers automatically.
-- Clearing your browser's site data/history for this page will erase it.
+- Clearing your browser's site data for this page will erase it.
 - Use **Settings → Backup & Restore** to download a `.json` backup
   regularly, and to restore it later or move it to another device.
 
 ## Customizing
 
-- **Colors / spacing:** everything is in `css/styles.css`, using plain CSS
-  custom properties (`--accent`, `--bg`, `--text`, etc.) near the top of
-  the file.
-- **App name / branding:** edit the `<title>` tag and the "Property
-  Manager" text near the top of `js/ui.js` (`renderShell` function).
-- **Currencies:** add more options to the `CURRENCIES` list in
-  `js/settings.js` and `CURRENCY_LOCALE` in `js/store.js`.
+Since everything is inline, each page's `<style>` block near the top
+holds all the colors and spacing, and the `<script>` blocks near the
+bottom hold the logic. Open any file in a text editor to tweak it — no
+tools required beyond a plain text editor.

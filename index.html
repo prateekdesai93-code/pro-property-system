@@ -5,16 +5,1070 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dashboard · Property Management System</title>
 <meta name="description" content="Track properties, tenants, rent, and maintenance requests in one dashboard." />
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-<link rel="stylesheet" href="css/styles.css" />
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzNiODJmNiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM5M2M1ZmQiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjE2IiBmaWxsPSJ1cmwoI2cpIi8+CiAgPHRleHQgeD0iMzIiIHk9IjQzIiBmb250LWZhbWlseT0iLWFwcGxlLXN5c3RlbSxTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5QPC90ZXh0Pgo8L3N2Zz4K" type="image/svg+xml" />
+<style>
+/* =========================================================
+   Property Management System — Design System
+   Premium dark-mode UI. No build step, no frameworks.
+   ========================================================= */
+
+:root {
+  --bg: #0a0e13;
+  --surface: #10161d;
+  --surface-2: #151d26;
+  --surface-hover: #1b2530;
+  --border: #202a35;
+  --border-strong: #2a3644;
+  --text: #eef3f8;
+  --text-secondary: #a1b1c2;
+  --text-tertiary: #6b7c8d;
+
+  --accent: #3b82f6;
+  --accent-soft: rgba(59, 130, 246, 0.15);
+  --accent-text: #82b4ff;
+
+  --success: #22c55e;
+  --success-soft: rgba(34, 197, 94, 0.15);
+  --warning: #f59e0b;
+  --warning-soft: rgba(245, 158, 11, 0.15);
+  --danger: #ef4444;
+  --danger-soft: rgba(239, 68, 68, 0.15);
+
+  --radius-lg: 16px;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 12px 32px -12px rgba(0, 0, 0, 0.55);
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --sidebar-w: 248px;
+}
+
+[data-accent="violet"] { --accent: #8b5cf6; --accent-soft: rgba(139, 92, 246, 0.15); --accent-text: #bda4ff; }
+[data-accent="amber"]  { --accent: #f59e0b; --accent-soft: rgba(245, 158, 11, 0.15); --accent-text: #ffc561; }
+[data-accent="emerald"]{ --accent: #10b981; --accent-soft: rgba(16, 185, 129, 0.15); --accent-text: #63e6bb; }
+[data-accent="rose"]   { --accent: #f43f5e; --accent-soft: rgba(244, 63, 94, 0.15); --accent-text: #ff9bab; }
+[data-accent="cyan"]   { --accent: #06b6d4; --accent-soft: rgba(6, 182, 212, 0.15); --accent-text: #6fe6fb; }
+[data-accent="blue"]   { --accent: #3b82f6; --accent-soft: rgba(59, 130, 246, 0.15); --accent-text: #82b4ff; }
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.5;
+}
+a { color: inherit; }
+button { font-family: inherit; }
+h1, h2, h3, p { margin: 0; }
+::selection { background: var(--accent-soft); color: var(--text); }
+
+img { max-width: 100%; display: block; }
+
+/* ---------- Layout ---------- */
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+  z-index: 40;
+  transition: transform 0.25s ease;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px 20px;
+}
+.brand-mark {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 60%, #fff));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 15px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px -4px var(--accent);
+}
+.brand-text { min-width: 0; }
+.brand-title { font-size: 13.5px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.brand-sub { font-size: 11px; color: var(--text-tertiary); }
+
+.nav { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.nav-link {
+  display: flex; align-items: center; gap: 11px;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.nav-link svg { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.9; }
+.nav-link:hover { background: var(--surface-hover); color: var(--text); }
+.nav-link.active { background: var(--accent-soft); color: var(--accent-text); }
+
+.sidebar-footer {
+  font-size: 10.5px;
+  color: var(--text-tertiary);
+  padding: 10px 12px 2px;
+  border-top: 1px solid var(--border);
+  margin-top: 10px;
+}
+
+.sidebar-backdrop {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 35;
+}
+
+.mobile-topbar {
+  display: none;
+  position: sticky; top: 0;
+  align-items: center; gap: 12px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  z-index: 30;
+}
+.mobile-menu-btn {
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+
+.main {
+  flex: 1;
+  margin-left: var(--sidebar-w);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 32px 0;
+}
+.topbar h1 { font-size: 20px; font-weight: 650; letter-spacing: -0.015em; }
+.topbar .sub { margin-top: 3px; font-size: 13px; color: var(--text-secondary); }
+.topbar-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+.content {
+  padding: 20px 32px 56px;
+  flex: 1;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+  white-space: nowrap;
+  padding: 8px 14px;
+}
+.btn svg { width: 15px; height: 15px; }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-primary { background: var(--accent); color: #fff; box-shadow: 0 6px 16px -8px var(--accent); }
+.btn-primary:hover:not(:disabled) { filter: brightness(1.08); }
+.btn-secondary { background: var(--surface-2); border-color: var(--border-strong); color: var(--text); }
+.btn-secondary:hover:not(:disabled) { background: var(--surface-hover); }
+.btn-ghost { background: transparent; color: var(--text-secondary); }
+.btn-ghost:hover:not(:disabled) { background: var(--surface-hover); color: var(--text); }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover:not(:disabled) { filter: brightness(1.08); }
+.btn-sm { padding: 6px 11px; font-size: 12.5px; }
+.btn-icon { padding: 7px; border-radius: var(--radius-sm); background: transparent; border: none; color: var(--text-secondary); cursor: pointer; display: inline-flex; }
+.btn-icon:hover { background: var(--danger-soft); color: var(--danger); }
+.btn-icon.neutral:hover { background: var(--surface-hover); color: var(--text); }
+
+/* ---------- Cards / stats ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+}
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.card-header h2 { font-size: 13.5px; font-weight: 650; }
+.card-link { font-size: 12px; font-weight: 600; color: var(--accent-text); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+.card-link:hover { text-decoration: underline; }
+.card-body { padding: 20px; }
+
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 18px 16px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.stat-card .icon-wrap {
+  width: 34px; height: 34px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface-2); color: var(--text-secondary);
+}
+.stat-card.tone-accent .icon-wrap { background: var(--accent-soft); color: var(--accent-text); }
+.stat-card.tone-danger .icon-wrap { background: var(--danger-soft); color: var(--danger); }
+.stat-card .value { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+.stat-card .label { font-size: 12.5px; color: var(--text-secondary); font-weight: 500; }
+.stat-card .sub { font-size: 11px; color: var(--text-tertiary); }
+
+/* ---------- Grid helpers ---------- */
+.grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.flex-col { display: flex; flex-direction: column; gap: 6px; }
+.divider-list > * + * { border-top: 1px solid var(--border); }
+
+/* ---------- List rows ---------- */
+.row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 20px;
+}
+.row .title { font-size: 13.5px; font-weight: 600; color: var(--text); }
+.row .meta { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+
+/* ---------- Pills ---------- */
+.pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 650;
+  border: 1px solid transparent;
+}
+.pill-success { background: var(--success-soft); color: var(--success); }
+.pill-warning { background: var(--warning-soft); color: var(--warning); }
+.pill-danger { background: var(--danger-soft); color: var(--danger); }
+.pill-neutral { background: var(--surface-2); color: var(--text-secondary); border-color: var(--border-strong); }
+.pill-accent { background: var(--accent-soft); color: var(--accent-text); }
+
+/* ---------- Forms ---------- */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 12.5px; font-weight: 600; color: var(--text-secondary); }
+.field label .req { color: var(--danger); margin-left: 2px; }
+.field .hint { font-size: 11px; color: var(--text-tertiary); }
+.field .error { font-size: 11.5px; color: var(--danger); }
+.input, select.input, textarea.input {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  font-size: 13.5px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.input.has-error { border-color: var(--danger); }
+textarea.input { resize: vertical; min-height: 72px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-grid.single { grid-template-columns: 1fr; }
+
+/* ---------- Filters / tabs ---------- */
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 6px 13px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.chip:hover { background: var(--surface-hover); }
+.chip.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-text); }
+
+/* ---------- Empty state ---------- */
+.empty {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: 8px; padding: 40px 20px;
+  color: var(--text-secondary);
+}
+.empty .icon-wrap {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--surface-2); color: var(--text-tertiary);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 6px;
+}
+.empty h3 { font-size: 14px; font-weight: 650; color: var(--text); }
+.empty p { font-size: 12.5px; max-width: 320px; }
+
+/* ---------- Modal ---------- */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(4, 7, 11, 0.6);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; padding: 20px;
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.15s ease;
+}
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  width: 100%; max-width: 480px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: var(--shadow-2);
+  animation: slideUp 0.18s ease;
+}
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+.modal-header h3 { font-size: 14.5px; font-weight: 650; }
+.modal-body { padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+.modal-footer { display: flex; justify-content: flex-end; gap: 8px; padding: 14px 20px; border-top: 1px solid var(--border); }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ---------- Toasts ---------- */
+.toast-root {
+  position: fixed; top: 16px; right: 16px; z-index: 200;
+  display: flex; flex-direction: column; gap: 8px;
+  max-width: 320px;
+}
+.toast {
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-left: 3px solid var(--accent);
+  color: var(--text);
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 500;
+  box-shadow: var(--shadow-2);
+  animation: slideUp 0.18s ease;
+}
+.toast.error { border-left-color: var(--danger); }
+.toast.info { border-left-color: var(--text-tertiary); }
+
+/* ---------- Accent swatches ---------- */
+.swatch-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.swatch {
+  width: 40px; height: 40px; border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+.swatch:hover { transform: scale(1.06); }
+.swatch.active { border-color: var(--text); }
+
+/* ---------- Skeleton ---------- */
+.skeleton { background: var(--surface-2); border-radius: var(--radius); animation: pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+/* ---------- Utility ---------- */
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+.mt-1 { margin-top: 4px; } .mt-2 { margin-top: 8px; } .mt-3 { margin-top: 14px; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.min-w-0 { min-width: 0; }
+.hidden { display: none !important; }
+.logo-preview {
+  width: 64px; height: 64px; border-radius: var(--radius);
+  border: 1px solid var(--border-strong); background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;
+}
+.logo-preview img { width: 100%; height: 100%; object-fit: contain; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); box-shadow: var(--shadow-2); }
+  body.sidebar-open .sidebar { transform: translateX(0); }
+  body.sidebar-open .sidebar-backdrop { display: block; }
+  .main { margin-left: 0; }
+  .mobile-topbar { display: flex; }
+  .topbar { padding: 18px 18px 0; flex-wrap: wrap; }
+  .content { padding: 16px 18px 48px; }
+  .topbar-actions .btn span.long { display: none; }
+}
+
+</style>
 </head>
 <body data-page="dashboard">
 <div id="app-shell"></div>
 <div class="toast-root" id="toast-root"></div>
 <div id="modal-root"></div>
 
-<script src="js/store.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/dashboard.js"></script>
+<script>
+/* =========================================================
+   Property Management System — Data Layer
+   Plain JavaScript, no build step. All data lives in this
+   browser's localStorage. Loaded before every other script.
+   ========================================================= */
+
+(function (global) {
+  "use strict";
+
+  var STORAGE_KEY = "pms_data_v1";
+  var SCHEMA_VERSION = 1;
+
+  var DEFAULT_SETTINGS = {
+    landlordName: "Your Company",
+    email: "",
+    phone: "",
+    address: "",
+    currency: "USD",
+    defaultDueDay: 1,
+    reminderLeadDays: 5,
+    accentColor: "blue",
+    logoDataUrl: null,
+  };
+
+  function emptyData() {
+    return {
+      version: SCHEMA_VERSION,
+      properties: [],
+      tenants: [],
+      leases: [],
+      rentPayments: [],
+      maintenanceRequests: [],
+      settings: Object.assign({}, DEFAULT_SETTINGS),
+    };
+  }
+
+  // ---- in-memory fallback in case localStorage is unavailable
+  // (private browsing, disabled storage, etc.)
+  var memoryFallback = null;
+
+  function safeGetItem() {
+    try {
+      return window.localStorage.getItem(STORAGE_KEY);
+    } catch (e) {
+      return memoryFallback;
+    }
+  }
+  function safeSetItem(value) {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, value);
+    } catch (e) {
+      memoryFallback = value;
+    }
+  }
+
+  function load() {
+    var raw = safeGetItem();
+    if (!raw) return emptyData();
+    try {
+      var parsed = JSON.parse(raw);
+      var base = emptyData();
+      return Object.assign({}, base, parsed, {
+        settings: Object.assign({}, DEFAULT_SETTINGS, parsed.settings || {}),
+        properties: parsed.properties || [],
+        tenants: parsed.tenants || [],
+        leases: parsed.leases || [],
+        rentPayments: parsed.rentPayments || [],
+        maintenanceRequests: parsed.maintenanceRequests || [],
+      });
+    } catch (e) {
+      console.warn("PMS: could not parse saved data, starting fresh.", e);
+      return emptyData();
+    }
+  }
+
+  var data = load();
+
+  function persist() {
+    safeSetItem(JSON.stringify(data));
+  }
+
+  // ---------- helpers ----------
+  function uid() {
+    if (window.crypto && window.crypto.randomUUID) return window.crypto.randomUUID();
+    return "id-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10);
+  }
+  function nowISO() {
+    return new Date().toISOString();
+  }
+  function todayISO() {
+    var d = new Date();
+    return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate());
+  }
+  function pad2(n) {
+    return n < 10 ? "0" + n : "" + n;
+  }
+
+  // ---------- properties ----------
+  function addProperty(input) {
+    var rec = Object.assign({}, input, { id: uid(), createdAt: nowISO() });
+    data.properties.push(rec);
+    persist();
+    return rec;
+  }
+  function updateProperty(id, patch) {
+    var p = data.properties.find(function (x) { return x.id === id; });
+    if (!p) return;
+    Object.assign(p, patch);
+    persist();
+  }
+  function deleteProperty(id) {
+    data.properties = data.properties.filter(function (x) { return x.id !== id; });
+    var leaseIds = data.leases.filter(function (l) { return l.propertyId === id; }).map(function (l) { return l.id; });
+    data.leases = data.leases.filter(function (l) { return l.propertyId !== id; });
+    data.rentPayments = data.rentPayments.filter(function (rp) { return leaseIds.indexOf(rp.leaseId) === -1; });
+    data.maintenanceRequests = data.maintenanceRequests.filter(function (m) { return m.propertyId !== id; });
+    persist();
+  }
+  function activeLeaseForProperty(propertyId) {
+    return data.leases.find(function (l) { return l.propertyId === propertyId && l.status === "active"; }) || null;
+  }
+
+  // ---------- tenants ----------
+  function addTenant(input) {
+    var rec = Object.assign({}, input, { id: uid(), createdAt: nowISO() });
+    data.tenants.push(rec);
+    persist();
+    return rec;
+  }
+  function updateTenant(id, patch) {
+    var t = data.tenants.find(function (x) { return x.id === id; });
+    if (!t) return;
+    Object.assign(t, patch);
+    persist();
+  }
+  function deleteTenant(id) {
+    data.tenants = data.tenants.filter(function (x) { return x.id !== id; });
+    persist();
+  }
+
+  // ---------- leases ----------
+  function addLease(input) {
+    var rec = Object.assign({}, input, { id: uid(), status: "active", createdAt: nowISO() });
+    data.leases.push(rec);
+    persist();
+    return rec;
+  }
+  function endLease(id) {
+    var l = data.leases.find(function (x) { return x.id === id; });
+    if (!l) return;
+    l.status = "ended";
+    l.endDate = todayISO();
+    persist();
+  }
+  function deleteLease(id) {
+    data.leases = data.leases.filter(function (x) { return x.id !== id; });
+    data.rentPayments = data.rentPayments.filter(function (rp) { return rp.leaseId !== id; });
+    persist();
+  }
+
+  // ---------- rent payments ----------
+  function addRentPayment(input) {
+    var rec = Object.assign({}, input, { id: uid(), createdAt: nowISO() });
+    data.rentPayments.push(rec);
+    persist();
+    return rec;
+  }
+  function deleteRentPayment(id) {
+    data.rentPayments = data.rentPayments.filter(function (x) { return x.id !== id; });
+    persist();
+  }
+
+  // ---------- maintenance ----------
+  function addMaintenanceRequest(input) {
+    var rec = Object.assign({}, input, { id: uid(), createdAt: nowISO() });
+    data.maintenanceRequests.push(rec);
+    persist();
+    return rec;
+  }
+  function updateMaintenanceRequest(id, patch) {
+    var m = data.maintenanceRequests.find(function (x) { return x.id === id; });
+    if (!m) return;
+    Object.assign(m, patch);
+    persist();
+  }
+  function deleteMaintenanceRequest(id) {
+    data.maintenanceRequests = data.maintenanceRequests.filter(function (x) { return x.id !== id; });
+    persist();
+  }
+
+  // ---------- settings ----------
+  function updateSettings(patch) {
+    data.settings = Object.assign({}, data.settings, patch);
+    persist();
+  }
+
+  // ---------- rent math ----------
+  function currentPeriodLabel(refISO) {
+    var d = refISO ? new Date(refISO + "T00:00:00") : new Date();
+    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    return months[d.getMonth()] + " " + d.getFullYear();
+  }
+  function periodKey(refISO) {
+    var d = refISO ? new Date(refISO + "T00:00:00") : new Date();
+    return d.getFullYear() + "-" + pad2(d.getMonth() + 1);
+  }
+  function daysInMonth(year, monthIndex) {
+    return new Date(year, monthIndex + 1, 0).getDate();
+  }
+  function dueDateForCurrentPeriod(dueDay, refISO) {
+    var ref = refISO ? new Date(refISO + "T00:00:00") : new Date();
+    var year = ref.getFullYear();
+    var month = ref.getMonth();
+    var clampedDay = Math.min(Math.max(dueDay || 1, 1), daysInMonth(year, month));
+    var due = new Date(year, month, clampedDay);
+    return due.getFullYear() + "-" + pad2(due.getMonth() + 1) + "-" + pad2(due.getDate());
+  }
+  function daysBetween(fromISO, toISO) {
+    var from = new Date(fromISO + "T00:00:00");
+    var to = new Date(toISO + "T00:00:00");
+    return Math.round((to.getTime() - from.getTime()) / 86400000);
+  }
+  function amountPaidForPeriod(leaseId, period) {
+    return data.rentPayments
+      .filter(function (rp) { return rp.leaseId === leaseId && rp.periodLabel === period; })
+      .reduce(function (sum, rp) { return sum + rp.amount; }, 0);
+  }
+  function computeLeaseRentInfo(lease, reminderLeadDays, todayOverride) {
+    var today = todayOverride || todayISO();
+    var period = currentPeriodLabel(today);
+    var dueDate = dueDateForCurrentPeriod(lease.dueDay, today);
+    var paid = amountPaidForPeriod(lease.id, period);
+    var balance = Math.max(lease.rentAmount - paid, 0);
+    var daysUntilDue = daysBetween(today, dueDate);
+    var status;
+    if (balance <= 0) status = "paid";
+    else if (daysUntilDue < 0) status = "overdue";
+    else if (daysUntilDue <= (reminderLeadDays || 0)) status = "due-soon";
+    else status = "upcoming";
+    return { lease: lease, period: period, dueDate: dueDate, daysUntilDue: daysUntilDue, paid: paid, balance: balance, status: status };
+  }
+
+  // ---------- formatting ----------
+  var CURRENCY_LOCALE = { USD: "en-US", EUR: "de-DE", GBP: "en-GB", INR: "en-IN", CAD: "en-CA", AUD: "en-AU" };
+  function formatCurrency(amount, currency) {
+    var cur = currency || "USD";
+    try {
+      return new Intl.NumberFormat(CURRENCY_LOCALE[cur] || "en-US", { style: "currency", currency: cur, maximumFractionDigits: 0 }).format(amount || 0);
+    } catch (e) {
+      return "$" + Math.round(amount || 0);
+    }
+  }
+  function formatDate(iso) {
+    if (!iso) return "—";
+    var d = new Date(iso + "T00:00:00");
+    if (isNaN(d.getTime())) return iso;
+    return d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+  }
+
+  // ---------- backup / restore ----------
+  function exportData() {
+    return JSON.stringify(data, null, 2);
+  }
+  function importData(json) {
+    try {
+      var parsed = JSON.parse(json);
+      if (!parsed || typeof parsed !== "object") return { ok: false, error: "That file doesn't look like a valid backup." };
+      var base = emptyData();
+      data = Object.assign({}, base, parsed, {
+        settings: Object.assign({}, DEFAULT_SETTINGS, parsed.settings || {}),
+        properties: parsed.properties || [],
+        tenants: parsed.tenants || [],
+        leases: parsed.leases || [],
+        rentPayments: parsed.rentPayments || [],
+        maintenanceRequests: parsed.maintenanceRequests || [],
+      });
+      persist();
+      return { ok: true };
+    } catch (e) {
+      return { ok: false, error: "Could not read that file. Make sure it's an unedited backup .json file." };
+    }
+  }
+  function resetAllData() {
+    data = emptyData();
+    persist();
+  }
+
+  global.PMS = {
+    getData: function () { return data; },
+    uid: uid,
+    nowISO: nowISO,
+    todayISO: todayISO,
+
+    addProperty: addProperty,
+    updateProperty: updateProperty,
+    deleteProperty: deleteProperty,
+    activeLeaseForProperty: activeLeaseForProperty,
+
+    addTenant: addTenant,
+    updateTenant: updateTenant,
+    deleteTenant: deleteTenant,
+
+    addLease: addLease,
+    endLease: endLease,
+    deleteLease: deleteLease,
+
+    addRentPayment: addRentPayment,
+    deleteRentPayment: deleteRentPayment,
+
+    addMaintenanceRequest: addMaintenanceRequest,
+    updateMaintenanceRequest: updateMaintenanceRequest,
+    deleteMaintenanceRequest: deleteMaintenanceRequest,
+
+    updateSettings: updateSettings,
+
+    currentPeriodLabel: currentPeriodLabel,
+    periodKey: periodKey,
+    dueDateForCurrentPeriod: dueDateForCurrentPeriod,
+    computeLeaseRentInfo: computeLeaseRentInfo,
+
+    formatCurrency: formatCurrency,
+    formatDate: formatDate,
+
+    exportData: exportData,
+    importData: importData,
+    resetAllData: resetAllData,
+  };
+})(window);
+
+</script>
+<script>
+/* =========================================================
+   Property Management System — Shared UI Shell
+   Renders the sidebar/topbar, and provides modal, toast,
+   and small render helpers used by every page script.
+   ========================================================= */
+
+(function (global) {
+  "use strict";
+
+  var BUILD_DATE = "2026-08-18";
+
+  var ICONS = {
+    dashboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
+    properties: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-6h6v6"/></svg>',
+    tenants: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5"/><circle cx="17.5" cy="7" r="2.6"/><path d="M15.8 13.6c2.6.5 4.6 2.7 4.7 5.9"/></svg>',
+    rent: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.7"/><path d="M6 6v0M18 18v0"/></svg>',
+    maintenance: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 1 5.4-5.4L21 6l-3-3-3.3 3.3z"/></svg>',
+    settings: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>',
+    plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>',
+    trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6h16Z"/></svg>',
+    mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>',
+    close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+    chevronRight: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>',
+    menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+    upload: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/></svg>',
+    download: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 10l6 6 6-6"/><path d="M4 20h16"/></svg>',
+  };
+
+  var NAV_ITEMS = [
+    { key: "dashboard", label: "Dashboard", href: "index.html", icon: ICONS.dashboard },
+    { key: "properties", label: "Properties", href: "properties.html", icon: ICONS.properties },
+    { key: "tenants", label: "Tenants", href: "tenants.html", icon: ICONS.tenants },
+    { key: "rent", label: "Rent", href: "rent.html", icon: ICONS.rent },
+    { key: "maintenance", label: "Maintenance", href: "maintenance.html", icon: ICONS.maintenance },
+    { key: "settings", label: "Settings", href: "settings.html", icon: ICONS.settings },
+  ];
+
+  function el(html) {
+    var t = document.createElement("template");
+    t.innerHTML = html.trim();
+    return t.content.firstElementChild;
+  }
+
+  function applyAccent() {
+    var accent = PMS.getData().settings.accentColor || "blue";
+    document.documentElement.setAttribute("data-accent", accent);
+  }
+
+  function renderShell(activeKey) {
+    applyAccent();
+    var navHtml = NAV_ITEMS.map(function (item) {
+      var isActive = item.key === activeKey;
+      return (
+        '<a class="nav-link' + (isActive ? " active" : "") + '" href="' + item.href + '">' +
+        item.icon + "<span>" + item.label + "</span></a>"
+      );
+    }).join("");
+
+    var shellHtml =
+      '<div class="mobile-topbar">' +
+        '<button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">' + ICONS.menu + "</button>" +
+        '<strong style="font-size:14px;">Property Management</strong>' +
+      "</div>" +
+      '<div class="app">' +
+        '<div class="sidebar-backdrop" id="sidebarBackdrop"></div>' +
+        '<aside class="sidebar" id="sidebar">' +
+          '<div class="brand"><div class="brand-mark">P</div><div class="brand-text"><div class="brand-title">Property Manager</div><div class="brand-sub">Landlord dashboard</div></div></div>' +
+          '<nav class="nav">' + navHtml + "</nav>" +
+          '<div class="sidebar-footer">Build ' + BUILD_DATE + " · Local data only</div>" +
+        "</aside>" +
+        '<div class="main">' +
+          '<header class="topbar">' +
+            '<div><h1 id="pageTitle"></h1><p class="sub" id="pageSub"></p></div>' +
+            '<div class="topbar-actions" id="topbarActions"></div>' +
+          "</header>" +
+          '<div class="content" id="pageContent"></div>' +
+        "</div>" +
+      "</div>";
+
+    var root = document.getElementById("app-shell");
+    root.innerHTML = shellHtml;
+
+    var menuBtn = document.getElementById("mobileMenuBtn");
+    var backdrop = document.getElementById("sidebarBackdrop");
+    function closeMenu() { document.body.classList.remove("sidebar-open"); }
+    if (menuBtn) menuBtn.addEventListener("click", function () { document.body.classList.toggle("sidebar-open"); });
+    if (backdrop) backdrop.addEventListener("click", closeMenu);
+    document.querySelectorAll(".nav-link").forEach(function (a) { a.addEventListener("click", closeMenu); });
+
+    return {
+      contentEl: document.getElementById("pageContent"),
+      setTitle: function (title, sub) {
+        document.getElementById("pageTitle").textContent = title;
+        document.getElementById("pageSub").textContent = sub || "";
+      },
+      setActions: function (html) {
+        document.getElementById("topbarActions").innerHTML = html;
+      },
+    };
+  }
+
+  // ---------- toast ----------
+  function toast(message, tone) {
+    var root = document.getElementById("toast-root");
+    if (!root) return;
+    var node = el('<div class="toast ' + (tone || "") + '">' + escapeHtml(message) + "</div>");
+    root.appendChild(node);
+    setTimeout(function () {
+      node.style.transition = "opacity 0.25s ease";
+      node.style.opacity = "0";
+      setTimeout(function () { node.remove(); }, 250);
+    }, 2600);
+  }
+
+  // ---------- modal ----------
+  function openModal(opts) {
+    var root = document.getElementById("modal-root");
+    var backdrop = el(
+      '<div class="modal-backdrop">' +
+        '<div class="modal" role="dialog" aria-modal="true">' +
+          '<div class="modal-header"><h3>' + escapeHtml(opts.title) + '</h3><button class="btn-icon neutral" id="modalCloseBtn" aria-label="Close">' + ICONS.close + "</button></div>" +
+          '<div class="modal-body" id="modalBody"></div>' +
+          '<div class="modal-footer" id="modalFooter"></div>' +
+        "</div>" +
+      "</div>"
+    );
+    root.appendChild(backdrop);
+    var bodyEl = backdrop.querySelector("#modalBody");
+    var footerEl = backdrop.querySelector("#modalFooter");
+    if (opts.body instanceof Node) bodyEl.appendChild(opts.body);
+    else bodyEl.innerHTML = opts.body || "";
+    if (opts.footer instanceof Node) footerEl.appendChild(opts.footer);
+    else footerEl.innerHTML = opts.footer || "";
+
+    function close() { backdrop.remove(); }
+    backdrop.addEventListener("click", function (e) { if (e.target === backdrop) close(); });
+    backdrop.querySelector("#modalCloseBtn").addEventListener("click", close);
+
+    if (opts.onMount) opts.onMount(backdrop, close);
+    return { close: close, el: backdrop };
+  }
+
+  function confirmDialog(opts) {
+    openModal({
+      title: opts.title,
+      body: '<p class="text-secondary">' + escapeHtml(opts.description) + "</p>",
+      footer:
+        '<button class="btn btn-ghost" id="cdCancel">Cancel</button>' +
+        '<button class="btn btn-danger" id="cdConfirm">' + escapeHtml(opts.confirmLabel || "Delete") + "</button>",
+      onMount: function (root, close) {
+        root.querySelector("#cdCancel").addEventListener("click", close);
+        root.querySelector("#cdConfirm").addEventListener("click", function () {
+          close();
+          opts.onConfirm();
+        });
+      },
+    });
+  }
+
+  // ---------- small helpers ----------
+  function escapeHtml(str) {
+    return String(str == null ? "" : str).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function emptyState(iconKey, title, desc, actionHtml) {
+    return (
+      '<div class="empty"><div class="icon-wrap">' + (ICONS[iconKey] || "") + "</div>" +
+      "<h3>" + escapeHtml(title) + "</h3><p>" + escapeHtml(desc) + "</p>" +
+      (actionHtml ? '<div class="mt-2">' + actionHtml + "</div>" : "") +
+      "</div>"
+    );
+  }
+
+  global.PMSUI = {
+    ICONS: ICONS,
+    renderShell: renderShell,
+    toast: toast,
+    openModal: openModal,
+    confirmDialog: confirmDialog,
+    escapeHtml: escapeHtml,
+    emptyState: emptyState,
+    el: el,
+    applyAccent: applyAccent,
+    BUILD_DATE: BUILD_DATE,
+  };
+})(window);
+
+</script>
+<script>
+/* Dashboard page */
+(function () {
+  "use strict";
+
+  var shell = PMSUI.renderShell("dashboard");
+  var data = PMS.getData();
+
+  shell.setTitle("Welcome back, " + (data.settings.landlordName || "there"), "Here's the state of your portfolio.");
+
+  function propertyName(id) {
+    var p = data.properties.find(function (x) { return x.id === id; });
+    return p ? p.name : "Unknown property";
+  }
+  function tenantName(id) {
+    var t = data.tenants.find(function (x) { return x.id === id; });
+    return t ? t.name : "Unknown tenant";
+  }
+  function tenantEmail(id) {
+    var t = data.tenants.find(function (x) { return x.id === id; });
+    return t ? t.email : null;
+  }
+
+  var activeLeases = data.leases.filter(function (l) { return l.status === "active"; });
+  var rentRoll = activeLeases.reduce(function (sum, l) { return sum + l.rentAmount; }, 0);
+
+  var attention = activeLeases
+    .map(function (l) { return PMS.computeLeaseRentInfo(l, data.settings.reminderLeadDays); })
+    .filter(function (info) { return info.status === "overdue" || info.status === "due-soon"; })
+    .sort(function (a, b) { return a.daysUntilDue - b.daysUntilDue; })
+    .slice(0, 6);
+
+  var openRequests = data.maintenanceRequests
+    .filter(function (m) { return m.status !== "resolved"; })
+    .sort(function (a, b) { return a.createdAt < b.createdAt ? 1 : -1; })
+    .slice(0, 5);
+
+  var overdueCount = attention.filter(function (a) { return a.status === "overdue"; }).length;
+
+  function sendReminder(tenantId, propertyId) {
+    var email = tenantEmail(tenantId);
+    if (!email) { PMSUI.toast("This tenant has no email on file.", "error"); return; }
+    var subject = encodeURIComponent("Rent reminder — " + propertyName(propertyId));
+    var body = encodeURIComponent(
+      "Hi " + tenantName(tenantId) + ",\n\nJust a reminder that rent for " + propertyName(propertyId) +
+      " is due soon.\n\nThank you,\n" + data.settings.landlordName
+    );
+    window.location.href = "mailto:" + email + "?subject=" + subject + "&body=" + body;
+  }
+
+  var statGrid =
+    '<div class="stat-grid">' +
+      statCard(PMSUI.ICONS.rent, PMS.formatCurrency(rentRoll, data.settings.currency), "Monthly Rent Roll", "tone-accent") +
+      statCard(PMSUI.ICONS.properties, activeLeases.length + "/" + data.properties.length, "Occupancy", "", "Occupied / total properties") +
+      statCard(PMSUI.ICONS.mail, String(overdueCount), "Rent Overdue", overdueCount > 0 ? "tone-danger" : "") +
+      statCard(PMSUI.ICONS.maintenance, String(openRequests.length), "Open Maintenance") +
+    "</div>";
+
+  function statCard(icon, value, label, tone, sub) {
+    return (
+      '<div class="stat-card ' + (tone || "") + '">' +
+        '<div class="icon-wrap">' + icon + "</div>" +
+        '<div class="value">' + PMSUI.escapeHtml(value) + "</div>" +
+        '<div class="label">' + PMSUI.escapeHtml(label) + "</div>" +
+        (sub ? '<div class="sub">' + PMSUI.escapeHtml(sub) + "</div>" : "") +
+      "</div>"
+    );
+  }
+
+  var attentionHtml = attention.length === 0
+    ? '<div class="card-body">' + PMSUI.emptyState("rent", "All rent is on track", "No payments are due soon or overdue.") + "</div>"
+    : '<div class="divider-list">' + attention.map(function (info) {
+        var tone = info.status === "overdue" ? "pill-danger" : "pill-warning";
+        var label = info.status === "overdue" ? Math.abs(info.daysUntilDue) + "d overdue" : "Due in " + info.daysUntilDue + "d";
+        return (
+          '<div class="row">' +
+            '<div class="min-w-0"><p class="title truncate">' + PMSUI.escapeHtml(propertyName(info.lease.propertyId)) + "</p>" +
+            '<p class="meta">' + PMSUI.escapeHtml(tenantName(info.lease.tenantId)) + " · Due " + PMS.formatDate(info.dueDate) + "</p></div>" +
+            '<div style="display:flex;align-items:center;gap:10px;">' +
+              '<span class="pill ' + tone + '">' + label + "</span>" +
+              '<button class="btn-icon neutral" data-remind="' + info.lease.tenantId + '|' + info.lease.propertyId + '" aria-label="Send rent reminder">' + PMSUI.ICONS.mail + "</button>" +
+            "</div>" +
+          "</div>"
+        );
+      }).join("") + "</div>";
+
+  var requestsHtml = openRequests.length === 0
+    ? '<div class="card-body">' + PMSUI.emptyState("maintenance", "Nothing open", "All maintenance requests are resolved.") + "</div>"
+    : '<div class="divider-list">' + openRequests.map(function (m) {
+        return (
+          '<div class="row" style="justify-content:flex-start;flex-direction:column;align-items:flex-start;gap:2px;">' +
+            '<p class="title truncate">' + PMSUI.escapeHtml(m.title) + "</p>" +
+            '<p class="meta">' + PMSUI.escapeHtml(propertyName(m.propertyId)) + "</p>" +
+          "</div>"
+        );
+      }).join("") + "</div>";
+
+  shell.contentEl.innerHTML =
+    statGrid +
+    '<div class="grid-2 mt-3">' +
+      '<div class="card">' +
+        '<div class="card-header"><h2>Rent Needing Attention</h2><a class="card-link" href="rent.html">View all ' + PMSUI.ICONS.chevronRight + "</a></div>" +
+        attentionHtml +
+      "</div>" +
+      '<div class="card">' +
+        '<div class="card-header"><h2>Open Requests</h2><a class="card-link" href="maintenance.html">View all ' + PMSUI.ICONS.chevronRight + "</a></div>" +
+        requestsHtml +
+      "</div>" +
+    "</div>";
+
+  shell.contentEl.querySelectorAll("[data-remind]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var parts = btn.getAttribute("data-remind").split("|");
+      sendReminder(parts[0], parts[1]);
+    });
+  });
+})();
+
+</script>
 </body>
 </html>
