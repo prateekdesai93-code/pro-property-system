@@ -1,11 +1,13 @@
 # Property Management System (single-file, black &amp; white, password-locked)
 
 A stark black-and-white dashboard for landlords — properties, tenants,
-leases with security deposits, rent tracking with automatic reminders and
-bank statement import, tenant invoices and statements, a finances tracker
-for every dollar spent per property, and maintenance requests. Runs
-entirely in the browser, no build step, no npm, no server. Locked behind a
-simple access code you set yourself.
+leases with security deposits and renewal reminders, rent tracking with
+automatic reminders and bank statement import, numbered tenant invoices
+and statements with paid/unpaid tracking, professional letterhead-style
+invoices/statements/receipts, a finances tracker for every dollar spent
+per property, full-portfolio and per-tenant Excel exports, and
+maintenance requests. Runs entirely in the browser, no build step, no
+npm, no server. Locked behind a simple access code you set yourself.
 
 ## What's in this folder
 
@@ -13,12 +15,12 @@ Just 7 files — no folders, nothing to lose during upload:
 
 ```
 index.html          ← Dashboard (open this one first)
-properties.html      ← Properties list, add/edit, assign tenants, deposits
-tenants.html         ← Tenant directory, invoices, statements
+properties.html      ← Properties list, add/edit, assign tenants, deposits, renewals
+tenants.html         ← Tenant directory, invoices, statements, per-tenant Excel export
 rent.html            ← This period's rent status, payment history, bank import
 maintenance.html     ← Maintenance request tracker (with cost tracking)
 finances.html        ← Expense log + income/expense summary per property
-settings.html         ← Profile, currency, theme, due-day defaults, backup
+settings.html         ← Profile, currency, theme, invoicing, lease renewals, backups
 README.md            ← This file
 ```
 
@@ -57,22 +59,54 @@ in. Don't put anything you'd consider truly sensitive behind it.
 - **Custom symbol override** — if your currency isn't listed, or you just
   want a different symbol, type it into "Custom symbol override" in
   Settings → Rent Defaults. Once set, it replaces the symbol everywhere in
-  the app, including invoices, statements, and the Finances page.
+  the app, including invoices, statements, receipts, and the Finances page.
 - **Theme** — Settings → Theme has two buttons: Dark (black background,
   the default) and Light (white background). Both are still pure black
   and white — just inverted — so pick whichever is easier to read.
 
-## Security deposits (Properties page)
+## Security deposits &amp; deposit receipts (Properties page)
 
 When you assign a tenant to a property, there's a "Security deposit"
 field. Once set, the property card shows **"Deposit held: [amount]"** for
 as long as the lease is active. Click **Edit Lease** any time to update
-the rent, due day, or deposit amount, or to check the box marking the
-deposit as **returned** (with the amount and date you gave back) — the
-card then shows "Deposit … returned [date]" instead. If a lease ends
-before you've marked the deposit returned, the property card keeps
-reminding you with a note like "Still owe [tenant] [amount] deposit back"
-even though the unit now shows vacant, so it doesn't get forgotten.
+the rent, due day, lease end date, or deposit amount, or to check the box
+marking the deposit as **returned** (with the amount and date you gave
+back) — the card then shows "Deposit … returned [date]" instead. If a
+lease ends before you've marked the deposit returned, the property card
+keeps reminding you with a note like "Still owe [tenant] [amount] deposit
+back" even though the unit now shows vacant, so it doesn't get forgotten.
+
+Whenever a lease has a deposit on it, the Edit Lease modal has a **Print
+Deposit Receipt** button — it prints a signed-and-dated-style receipt
+(with signature lines for you and the tenant) confirming either that you
+received the deposit, or, once you've checked "returned," that you gave
+it back. Good for handing to a tenant on move-in or move-out day.
+
+## Lease renewals (Properties &amp; Dashboard)
+
+Give a lease an optional **lease end date** — when you assign a tenant,
+or later via Edit Lease — and this app will start reminding you as that
+date approaches:
+
+- The property card shows **"Lease renews in N days"** once you're inside
+  the lead time, or a red **"Lease ended N days ago — still marked
+  active"** warning if the date has already passed and you haven't
+  renewed or ended it.
+- The Dashboard gets a **Renewals Due** stat and a **Leases Renewing
+  Soon** list.
+- How far ahead you get warned is configurable in Settings → Rent
+  Defaults → **Lease renewal lead time** (default 60 days).
+
+Leave the end date blank for a month-to-month lease with no fixed term —
+nothing renewal-related shows up for those, exactly as before.
+
+## Vacancy tracking (Properties &amp; Dashboard)
+
+Every vacant property card now shows **"Vacant · N days"** — counted from
+whenever its last lease ended (or since you added the property, if it's
+never been leased). The Dashboard adds a **Longest Vacancy** stat and a
+**Vacant Units** list so you can see at a glance which unit has been
+sitting empty the longest.
 
 ## Maintenance costs (Maintenance page)
 
@@ -82,7 +116,7 @@ any existing request to add or update it later. Costs you log here
 automatically show up on the Finances page under the "Maintenance"
 category, no extra data entry needed.
 
-## Finances (new page) — track spending per property
+## Finances (page) — track spending per property
 
 The **Finances** page is where every dollar in and out per property comes
 together:
@@ -105,22 +139,86 @@ together:
 
 ## Tenant invoices &amp; statements (Tenants page)
 
-Each tenant row now has two buttons (enabled once they have a lease):
+Each tenant row has these actions (Invoice/Statement enabled once they
+have a lease):
 
 - **Invoice** — opens an itemized invoice starting with a "Rent" line
   pre-filled from their lease. Add as many extra lines as you want —
   Electricity, Water, a late fee, anything — each with its own editable
-  description and amount, and remove any line you don't need. Saving it
-  records the invoice in that tenant's history and opens your browser's
-  print dialog with a clean, professional-looking invoice — choose "Save
-  as PDF" there to get a PDF you can email, or print it directly. No
-  external software or internet connection needed for this.
-- **Statement** — pick a date range and see every invoice charged and
-  every rent payment received for that tenant in that window, with a
-  running balance, plus totals for charged / paid / balance due. Use
-  **Print** the same way as invoices (browser print → Save as PDF), or
-  **Export to Excel** for a spreadsheet version (needs internet the first
-  time, same as the Finances export above).
+  description and amount, and remove any line you don't need. Every
+  invoice is automatically given a sequential **invoice number**
+  (`INV-0001`, `INV-0002`, …) — the modal shows you which number it'll be
+  before you save. Saving records the invoice in that tenant's history
+  and opens your browser's print dialog with a clean, professional
+  letterhead-style invoice — choose "Save as PDF" there to get a file to
+  email, or print it directly. No external software or internet
+  connection needed for this.
+- **Statement** — pick a date range and see every invoice charged (shown
+  with its invoice number) and every rent payment received for that
+  tenant in that window, with a running balance, plus totals for
+  charged / paid / balance due. Each invoice line has a **Paid / Unpaid**
+  pill you can click to toggle — a quick way to track which invoices are
+  settled without it affecting your recorded rent payments. Use **Print**
+  the same way as invoices (browser print → Save as PDF), or **Export to
+  Excel** for a spreadsheet version (needs internet the first time, same
+  as the Finances export above).
+- **Export (download icon)** — downloads a single Excel workbook with
+  this tenant's full profile, lease and deposit history, every rent
+  payment, and every invoice (with line items on their own sheet) — a
+  complete record for one tenant, separate from the date-ranged
+  statement above.
+
+### Invoiced rent amounts feed the Rent page
+
+If you invoice a tenant for the current period — say Rent plus an
+Electricity line — the Rent page and Dashboard now show that invoice's
+total as what's owed for the period, instead of just the flat lease rent.
+You'll see a small **"Amount from invoice"** note next to that period so
+it's clear where the number came from. Skip invoicing entirely and
+nothing changes — the flat lease rent is used exactly as before.
+
+### Invoice numbering (Settings → Invoicing)
+
+Invoice numbers are assigned automatically and never reused, even if you
+delete an invoice later — each one just gets the next number in line. In
+Settings you can:
+
+- Change the **prefix** (default `INV-`) — e.g. use your company initials
+  or a property code instead.
+- Set the **next invoice number** — useful if you're switching from paper
+  invoices or another tool and want to continue an existing sequence
+  instead of restarting at 1.
+
+One thing worth knowing: since all data lives in your browser only (see
+Data & privacy below), if you invoice tenants from more than one browser
+or computer, each keeps its own separate counter and could produce
+duplicate numbers. If that matters to you, invoice from one browser/
+computer, or export/import a backup to keep one running sequence.
+
+## Backups (Settings page)
+
+There are two different kinds of backup, for two different purposes:
+
+- **Export backup (.json)** — this is the one that matters for safety.
+  It's the exact copy of your data used to **restore** everything if you
+  clear your browser, switch computers, or something goes wrong. Download
+  this regularly and keep it somewhere safe.
+- **Export full backup (.xlsx)** — a human-readable Excel workbook of
+  your entire portfolio, with a cover sheet showing your company name and
+  the date it was generated, then a sheet each for Properties, Tenants,
+  Leases & Deposits, Rent Payments, Invoices, Invoice Line Items, and
+  Expenses. This is for opening in Excel or Google Sheets — to hand to an
+  accountant, a new property manager, or just to have a readable record.
+  **It is not used to restore data** — use the .json backup for that.
+
+Both need an internet connection the first time you generate an .xlsx
+file in a browser session (it loads a small spreadsheet library); the
+.json backup works fully offline. One honest limitation: the free
+spreadsheet library this app uses can't apply bold text or colored cells,
+so the .xlsx files are clean and well-organized with readable column
+widths, but not visually styled the way the printed invoices/statements/
+receipts are — those get the full letterhead treatment because they're
+built as plain HTML instead.
 
 ## Try it on your computer right now
 
@@ -169,7 +267,9 @@ is sent anywhere, no account, no login beyond the access code.
   person who unlocks the app has their own separate data.
 - Clearing browser site data erases it.
 - **Settings → Backup & Restore** downloads/restores a `.json` backup,
-  including deposits, expenses, and invoice history.
+  including deposits, lease end dates, expenses, invoice history (with
+  paid/unpaid status), and the invoice counter — see Backups above for
+  how this differs from the Excel export.
 - Any file you upload (bank statement, backup) is read entirely in your
   browser and never leaves it.
 

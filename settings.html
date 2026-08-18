@@ -277,6 +277,7 @@ svg { width: 16px; height: 16px; flex-shrink: 0; }
 }
 .stat-card.tone-accent .icon-wrap { background: var(--accent-soft); color: var(--accent-text); }
 .stat-card.tone-danger .icon-wrap { background: var(--danger-soft); color: var(--danger); }
+.stat-card.tone-warning .icon-wrap { background: var(--warning-soft); color: var(--warning); }
 .stat-card .value { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
 .stat-card .label { font-size: 12.5px; color: var(--text-secondary); font-weight: 500; }
 .stat-card .sub { font-size: 11px; color: var(--text-tertiary); }
@@ -630,6 +631,9 @@ html:not(.unlocked) .mobile-topbar {
     reminderLeadDays: 5,
     accentColor: "blue",
     logoDataUrl: null,
+    invoicePrefix: "INV-",
+    nextInvoiceNumber: 1,
+    leaseRenewalLeadDays: 60,
   };
 
   function emptyData() {
@@ -707,6 +711,11 @@ html:not(.unlocked) .mobile-topbar {
   }
   function pad2(n) {
     return n < 10 ? "0" + n : "" + n;
+  }
+  function pad4(n) {
+    var s = "" + n;
+    while (s.length < 4) s = "0" + s;
+    return s;
   }
 
   // ---------- properties ----------
@@ -829,9 +838,17 @@ html:not(.unlocked) .mobile-topbar {
   }
 
   // ---------- tenant invoices ----------
+  // Invoice numbers are assigned once, here, from a running counter kept in
+  // settings — never derived from the invoice list length, so deleting an
+  // invoice can never cause a later one to reuse its number.
+  function peekNextInvoiceNumber() {
+    return (data.settings.invoicePrefix || "") + pad4(data.settings.nextInvoiceNumber || 1);
+  }
   function addInvoice(input) {
-    var rec = Object.assign({}, input, { id: uid(), createdAt: nowISO() });
+    var invoiceNumber = peekNextInvoiceNumber();
+    var rec = Object.assign({}, input, { id: uid(), invoiceNumber: invoiceNumber, createdAt: nowISO() });
     data.invoices.push(rec);
+    data.settings.nextInvoiceNumber = (data.settings.nextInvoiceNumber || 1) + 1;
     persist();
     return rec;
   }
@@ -887,15 +904,47 @@ html:not(.unlocked) .mobile-topbar {
     var today = todayOverride || todayISO();
     var period = currentPeriodLabel(today);
     var dueDate = dueDateForCurrentPeriod(lease.dueDay, today);
+    // If this tenant has an invoice for the current period (e.g. rent plus
+    // an electricity line item), what they actually owe is the invoice
+    // total rather than the flat lease rent. With no invoice for the
+    // period this falls back to lease.rentAmount exactly as before, so
+    // landlords who never touch invoicing see no change in behavior.
+    var periodInvoices = data.invoices.filter(function (inv) { return inv.leaseId === lease.id && inv.periodLabel === period; });
+    var invoiced = periodInvoices.length > 0;
+    var amountOwed = invoiced ? periodInvoices.reduce(function (sum, inv) { return sum + inv.total; }, 0) : lease.rentAmount;
     var paid = amountPaidForPeriod(lease.id, period);
-    var balance = Math.max(lease.rentAmount - paid, 0);
+    var balance = Math.max(amountOwed - paid, 0);
     var daysUntilDue = daysBetween(today, dueDate);
     var status;
     if (balance <= 0) status = "paid";
     else if (daysUntilDue < 0) status = "overdue";
     else if (daysUntilDue <= (reminderLeadDays || 0)) status = "due-soon";
     else status = "upcoming";
-    return { lease: lease, period: period, dueDate: dueDate, daysUntilDue: daysUntilDue, paid: paid, balance: balance, status: status };
+    return { lease: lease, period: period, dueDate: dueDate, daysUntilDue: daysUntilDue, paid: paid, balance: balance, status: status, amountOwed: amountOwed, invoiced: invoiced };
+  }
+  // ---------- lease renewal ----------
+  function daysUntilLeaseEnd(lease, todayOverride) {
+    if (!lease.leaseEndDate) return null;
+    return daysBetween(todayOverride || todayISO(), lease.leaseEndDate);
+  }
+  function leaseRenewalCandidates(leadDays, todayOverride) {
+    return data.leases
+      .filter(function (l) { return l.status === "active" && l.leaseEndDate; })
+      .map(function (l) { return { lease: l, daysUntilEnd: daysUntilLeaseEnd(l, todayOverride) }; })
+      .filter(function (r) { return r.daysUntilEnd <= (leadDays || 0); })
+      .sort(function (a, b) { return a.daysUntilEnd - b.daysUntilEnd; });
+  }
+  // ---------- vacancy ----------
+  function vacancyInfo(propertyId, todayOverride) {
+    var active = activeLeaseForProperty(propertyId);
+    if (active) return { occupied: true, days: null, vacantSince: null };
+    var endedLeases = data.leases
+      .filter(function (l) { return l.propertyId === propertyId && l.status === "ended"; })
+      .sort(function (a, b) { return (b.endDate || "") < (a.endDate || "") ? -1 : 1; });
+    var property = data.properties.find(function (p) { return p.id === propertyId; });
+    var vacantSince = (endedLeases[0] && endedLeases[0].endDate) || (property && property.createdAt ? property.createdAt.slice(0, 10) : todayISO());
+    var days = daysBetween(vacantSince, todayOverride || todayISO());
+    return { occupied: false, days: days, vacantSince: vacantSince };
   }
 
   // ---------- formatting ----------
@@ -1011,6 +1060,7 @@ html:not(.unlocked) .mobile-topbar {
     addInvoice: addInvoice,
     updateInvoice: updateInvoice,
     deleteInvoice: deleteInvoice,
+    peekNextInvoiceNumber: peekNextInvoiceNumber,
 
     updateSettings: updateSettings,
 
@@ -1018,6 +1068,10 @@ html:not(.unlocked) .mobile-topbar {
     periodKey: periodKey,
     dueDateForCurrentPeriod: dueDateForCurrentPeriod,
     computeLeaseRentInfo: computeLeaseRentInfo,
+    daysUntilLeaseEnd: daysUntilLeaseEnd,
+    leaseRenewalCandidates: leaseRenewalCandidates,
+    vacancyInfo: vacancyInfo,
+    daysBetween: daysBetween,
 
     formatCurrency: formatCurrency,
     formatDate: formatDate,
@@ -1221,10 +1275,35 @@ html:not(.unlocked) .mobile-topbar {
   // header row, in that order. Returns a Promise that resolves once the
   // browser's file-save dialog has been triggered.
   function downloadWorkbook(sheetName, rows, filename) {
+    return downloadWorkbookMulti([{ name: sheetName, rows: rows }], filename);
+  }
+
+  // Fits a rough column width to each sheet's longest cell — SheetJS's free
+  // build has no cell styling (no bold, no fills), so readable columns are
+  // the one polish lever available for these exports.
+  function autoSizeColumns(rows) {
+    if (!rows.length) return undefined;
+    var keys = Object.keys(rows[0]);
+    return keys.map(function (k) {
+      var maxLen = rows.reduce(function (m, r) {
+        var v = r[k];
+        return Math.max(m, String(v == null ? "" : v).length);
+      }, k.length);
+      return { wch: Math.min(Math.max(maxLen + 2, 10), 48) };
+    });
+  }
+
+  // sheets: array of { name, rows } — each rows array's first-row keys
+  // become that sheet's header row.
+  function downloadWorkbookMulti(sheets, filename) {
     return loadScript(XLSX_SCRIPT).then(function () {
-      var ws = global.XLSX.utils.json_to_sheet(rows);
       var wb = global.XLSX.utils.book_new();
-      global.XLSX.utils.book_append_sheet(wb, ws, sheetName.slice(0, 31));
+      sheets.forEach(function (sheet) {
+        var rows = sheet.rows || [];
+        var ws = global.XLSX.utils.json_to_sheet(rows.length ? rows : [{}]);
+        if (rows.length) ws["!cols"] = autoSizeColumns(rows);
+        global.XLSX.utils.book_append_sheet(wb, ws, String(sheet.name).slice(0, 31));
+      });
       global.XLSX.writeFile(wb, filename);
     });
   }
@@ -1233,22 +1312,72 @@ html:not(.unlocked) .mobile-topbar {
   // Opens a new tab with a minimal, self-contained print-friendly page and
   // triggers the browser's print dialog — this is how invoices/statements
   // become PDFs, with no external library and no server needed ("Save as
-  // PDF" is a print destination in every modern browser).
+  // PDF" is a print destination in every modern browser). Styled as a
+  // proper letterhead document: serif display type for the identity block,
+  // a bold rule, zebra-striped tables, a highlighted total — kept strictly
+  // black/white/grey to match the app's own monochrome identity rather
+  // than introducing a color that would clash with it.
+  var PRINT_CSS =
+    "@media print{@page{margin:16mm 14mm;}}" +
+    "*{box-sizing:border-box;}" +
+    "body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1a1a1a;padding:44px;max-width:800px;margin:0 auto;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact;}" +
+    "h1{font-family:Georgia,'Times New Roman',serif;font-size:25px;font-weight:700;margin:0 0 3px;letter-spacing:-.01em;}" +
+    "h2{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#555;margin:26px 0 8px;}" +
+    ".muted{color:#666;font-size:12px;margin:1px 0;}" +
+    ".letterhead{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;}" +
+    ".company-block .logo{max-height:44px;max-width:220px;margin-bottom:10px;display:block;}" +
+    ".doc-block{text-align:right;min-width:180px;}" +
+    ".doc-type{font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:700;letter-spacing:.04em;margin-bottom:6px;}" +
+    ".doc-meta{font-size:12px;color:#444;margin:2px 0;}" +
+    ".doc-meta span{color:#888;display:inline-block;min-width:64px;}" +
+    ".doc-number{display:inline-block;font-weight:700;font-size:13px;background:#111;color:#fff;padding:3px 10px;border-radius:3px;letter-spacing:.02em;margin-bottom:6px;}" +
+    ".rule{border:none;border-top:2.5px solid #111;margin:20px 0 0;}" +
+    ".bill-to{background:#f6f6f6;border-radius:6px;padding:14px 16px;margin-top:22px;}" +
+    ".bill-to .label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:4px;}" +
+    ".bill-to .name{font-weight:700;font-size:14px;}" +
+    "table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;}" +
+    "thead tr{border-bottom:2px solid #111;}" +
+    "th{text-align:left;padding:9px 10px;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#333;}" +
+    "td{padding:10px;border-bottom:1px solid #eee;}" +
+    "tbody tr:nth-child(even){background:#fafafa;}" +
+    "td.num,th.num{text-align:right;}" +
+    ".total-row td{border-top:2px solid #111;border-bottom:none;font-weight:700;font-size:15px;padding-top:14px;background:#fff !important;}" +
+    ".total-box{margin-top:10px;display:flex;justify-content:flex-end;}" +
+    ".total-box .inner{background:#111;color:#fff;padding:12px 20px;border-radius:6px;min-width:220px;display:flex;justify-content:space-between;align-items:center;gap:20px;}" +
+    ".total-box .inner .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.75;}" +
+    ".total-box .inner .value{font-size:19px;font-weight:700;}" +
+    ".doc-footer{margin-top:36px;padding-top:14px;border-top:1px solid #ddd;display:flex;justify-content:space-between;gap:20px;}" +
+    ".doc-footer .thanks{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:13px;color:#333;}" +
+    ".doc-footer .stamp{font-size:10.5px;color:#999;text-align:right;}" +
+    ".sig-row{display:flex;gap:40px;margin-top:48px;}" +
+    ".sig-line{flex:1;border-top:1px solid #999;padding-top:6px;font-size:11px;color:#777;}" +
+    "@media print{body{padding:0;}}";
+
+  function printLetterhead(settings, docType, docNumber, metaLines) {
+    return (
+      '<div class="letterhead">' +
+        '<div class="company-block">' +
+          (settings.logoDataUrl ? '<img class="logo" src="' + settings.logoDataUrl + '" />' : "") +
+          "<h1>" + escapeHtml(settings.landlordName || "Property Management") + "</h1>" +
+          (settings.address ? '<p class="muted">' + escapeHtml(settings.address) + "</p>" : "") +
+          [settings.email, settings.phone].filter(Boolean).map(function (v) { return '<p class="muted">' + escapeHtml(v) + "</p>"; }).join("") +
+        "</div>" +
+        '<div class="doc-block">' +
+          '<div class="doc-type">' + escapeHtml(docType) + "</div>" +
+          (docNumber ? '<div class="doc-number">' + escapeHtml(docNumber) + "</div>" : "") +
+          metaLines.map(function (m) { return '<p class="doc-meta"><span>' + escapeHtml(m.label) + "</span>" + escapeHtml(m.value) + "</p>"; }).join("") +
+        "</div>" +
+      "</div>" +
+      '<hr class="rule"/>'
+    );
+  }
+
   function openPrintWindow(title, bodyHtml) {
     var win = window.open("", "_blank");
     if (!win) { toast("Your browser blocked the print window pop-up — allow pop-ups for this site and try again.", "error"); return; }
     win.document.write(
       "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>" + escapeHtml(title) + "</title>" +
-      "<style>" +
-      "body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#111;padding:36px;max-width:760px;margin:0 auto;}" +
-      "h1{font-size:20px;margin:0 0 4px;} h2{font-size:14px;margin:24px 0 8px;}" +
-      ".muted{color:#666;font-size:12.5px;} .row2{display:flex;justify-content:space-between;gap:24px;margin:18px 0;}" +
-      "table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;}" +
-      "th{text-align:left;padding:8px 10px;border-bottom:2px solid #111;font-size:11px;text-transform:uppercase;letter-spacing:.03em;}" +
-      "td{padding:8px 10px;border-bottom:1px solid #ddd;} td.num,th.num{text-align:right;}" +
-      ".total-row td{border-top:2px solid #111;border-bottom:none;font-weight:700;font-size:15px;padding-top:12px;}" +
-      "@media print{body{padding:0;}}" +
-      "</style></head><body>" + bodyHtml +
+      "<style>" + PRINT_CSS + "</style></head><body>" + bodyHtml +
       // Split across concatenated string pieces on purpose (and this
       // comment avoids writing the literal tag text too): this whole file
       // gets inlined into a real script element by the build step, and
@@ -1289,7 +1418,224 @@ html:not(.unlocked) .mobile-topbar {
     BUILD_DATE: BUILD_DATE,
     loadScript: loadScript,
     downloadWorkbook: downloadWorkbook,
+    downloadWorkbookMulti: downloadWorkbookMulti,
     openPrintWindow: openPrintWindow,
+    printLetterhead: printLetterhead,
+  };
+})(window);
+
+</script>
+<script>
+/* =========================================================
+   Property Management System — Excel Backups
+   ---------------------------------------------------------
+   Two exports, both real multi-sheet .xlsx workbooks (via
+   SheetJS, lazy-loaded — see PMSUI.downloadWorkbookMulti):
+   - Full company backup: every property, tenant, lease,
+     payment, invoice and expense, with a cover sheet carrying
+     the company name/address and the date it was generated.
+   - Single-tenant export: one tenant's full profile, lease
+     and deposit history, payments, and invoices.
+   These are a human-readable companion to the JSON backup on
+   the Settings page (which is the one used to actually restore
+   data) — built for opening in Excel/Sheets and handing to an
+   accountant, a new property manager, or the tenant themselves.
+   ========================================================= */
+(function (global) {
+  "use strict";
+
+  function money(amount, data) { return PMS.formatCurrency(amount || 0, data.settings.currency); }
+
+  function propertyName(data, id) {
+    var p = data.properties.find(function (x) { return x.id === id; });
+    return p ? p.name : "Unknown property";
+  }
+  function tenantName(data, id) {
+    var t = data.tenants.find(function (x) { return x.id === id; });
+    return t ? t.name : "Unknown tenant";
+  }
+
+  function coverSheetRows(data, reportTitle, scopeNote) {
+    var s = data.settings;
+    var rows = [
+      { Field: "Report", Value: reportTitle },
+      { Field: "Company", Value: s.landlordName || "" },
+    ];
+    if (s.address) rows.push({ Field: "Address", Value: s.address });
+    if (s.email) rows.push({ Field: "Email", Value: s.email });
+    if (s.phone) rows.push({ Field: "Phone", Value: s.phone });
+    rows.push({ Field: "Currency", Value: s.currency || "USD" });
+    rows.push({ Field: "Generated", Value: PMS.formatDate(PMS.todayISO()) });
+    if (scopeNote) rows.push({ Field: "Scope", Value: scopeNote });
+    return rows;
+  }
+
+  function leaseRow(data, l) {
+    return {
+      Property: propertyName(data, l.propertyId),
+      Tenant: tenantName(data, l.tenantId),
+      Status: l.status === "active" ? "Active" : "Ended",
+      "Start Date": PMS.formatDate(l.startDate),
+      "End Date": l.status === "ended" ? PMS.formatDate(l.endDate) : "",
+      "Monthly Rent": money(l.rentAmount, data),
+      "Due Day": l.dueDay,
+      "Security Deposit": l.securityDeposit ? money(l.securityDeposit, data) : "",
+      "Deposit Paid": l.depositPaidDate ? PMS.formatDate(l.depositPaidDate) : "",
+      "Deposit Returned": l.depositReturned ? "Yes" : (l.securityDeposit ? "No" : ""),
+      "Deposit Returned Amount": l.depositReturned ? money(l.depositReturnedAmount, data) : "",
+      "Deposit Returned Date": l.depositReturned ? PMS.formatDate(l.depositReturnedDate) : "",
+      "Lease End (renewal)": l.leaseEndDate ? PMS.formatDate(l.leaseEndDate) : "",
+    };
+  }
+
+  function paymentRow(data, rp) {
+    var lease = data.leases.find(function (l) { return l.id === rp.leaseId; });
+    return {
+      Date: PMS.formatDate(rp.date),
+      Property: lease ? propertyName(data, lease.propertyId) : "—",
+      Tenant: lease ? tenantName(data, lease.tenantId) : "—",
+      Period: rp.periodLabel || "",
+      Amount: money(rp.amount, data),
+      Method: rp.method || "",
+      Note: rp.note || "",
+    };
+  }
+
+  function invoiceRow(data, inv) {
+    return {
+      "Invoice #": inv.invoiceNumber || "",
+      Date: PMS.formatDate(inv.date),
+      "Due Date": PMS.formatDate(inv.dueDate),
+      Property: propertyName(data, inv.propertyId),
+      Tenant: tenantName(data, inv.tenantId),
+      Total: money(inv.total, data),
+      Status: inv.paid ? "Paid" : "Unpaid",
+      Note: inv.note || "",
+    };
+  }
+
+  function invoiceLineRows(data, invoices) {
+    var out = [];
+    invoices.forEach(function (inv) {
+      (inv.lineItems || []).forEach(function (li) {
+        out.push({
+          "Invoice #": inv.invoiceNumber || "",
+          Date: PMS.formatDate(inv.date),
+          Tenant: tenantName(data, inv.tenantId),
+          Description: li.description,
+          Amount: money(li.amount, data),
+        });
+      });
+    });
+    return out;
+  }
+
+  function expenseRows(data, expenses, maintenanceRequests) {
+    var rows = expenses.map(function (e) {
+      return { Date: PMS.formatDate(e.date), Property: propertyName(data, e.propertyId), Category: e.category || "Other", Amount: money(e.amount, data), Note: e.note || "" };
+    });
+    maintenanceRequests.filter(function (m) { return m.cost > 0; }).forEach(function (m) {
+      rows.push({ Date: PMS.formatDate(m.createdAt ? m.createdAt.slice(0, 10) : PMS.todayISO()), Property: propertyName(data, m.propertyId), Category: "Maintenance", Amount: money(m.cost, data), Note: m.title || "" });
+    });
+    rows.sort(function (a, b) { return a.Date < b.Date ? 1 : -1; });
+    return rows;
+  }
+
+  function safeFileFragment(str) {
+    return String(str || "export").replace(/[^a-z0-9]+/gi, "_").replace(/^_+|_+$/g, "");
+  }
+
+  // ---------- full company backup ----------
+  function exportFullWorkbook() {
+    var data = PMS.getData();
+    var sheets = [
+      { name: "Cover", rows: coverSheetRows(data, "Full Portfolio Backup", data.properties.length + " properties · " + data.tenants.length + " tenants") },
+      { name: "Properties", rows: data.properties.map(function (p) {
+        var lease = PMS.activeLeaseForProperty(p.id);
+        var vac = PMS.vacancyInfo(p.id);
+        return {
+          Name: p.name,
+          Address: p.address || "",
+          Status: lease ? "Occupied" : "Vacant",
+          "Current Tenant": lease ? tenantName(data, lease.tenantId) : "",
+          "Monthly Rent": lease ? money(lease.rentAmount, data) : "",
+          "Vacant Days": vac.occupied ? "" : vac.days,
+          Notes: p.notes || "",
+        };
+      }) },
+      { name: "Tenants", rows: data.tenants.map(function (t) {
+        var lease = data.leases.find(function (l) { return l.tenantId === t.id && l.status === "active"; });
+        return {
+          Name: t.name,
+          Email: t.email || "",
+          Phone: t.phone || "",
+          Property: lease ? propertyName(data, lease.propertyId) : "(none / past tenant)",
+          "Lease Status": lease ? "Active" : "No active lease",
+          Notes: t.notes || "",
+        };
+      }) },
+      { name: "Leases & Deposits", rows: data.leases.map(function (l) { return leaseRow(data, l); }) },
+      { name: "Rent Payments", rows: data.rentPayments.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).map(function (rp) { return paymentRow(data, rp); }) },
+      { name: "Invoices", rows: data.invoices.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).map(function (inv) { return invoiceRow(data, inv); }) },
+      { name: "Invoice Line Items", rows: invoiceLineRows(data, data.invoices) },
+      { name: "Expenses", rows: expenseRows(data, data.expenses, data.maintenanceRequests) },
+    ];
+    var filename = safeFileFragment(data.settings.landlordName) + "_full_backup_" + PMS.todayISO() + ".xlsx";
+    PMSUI.toast("Preparing Excel workbook…", "info");
+    return PMSUI.downloadWorkbookMulti(sheets, filename)
+      .catch(function () { PMSUI.toast("Couldn't load the Excel export library — check your internet connection and try again.", "error"); });
+  }
+
+  // ---------- single tenant export ----------
+  function exportTenantWorkbook(tenantId) {
+    var data = PMS.getData();
+    var tenant = data.tenants.find(function (t) { return t.id === tenantId; });
+    if (!tenant) return Promise.resolve();
+    var leases = data.leases.filter(function (l) { return l.tenantId === tenantId; });
+    var leaseIds = leases.map(function (l) { return l.id; });
+    var activeLease = leases.find(function (l) { return l.status === "active"; });
+    var payments = data.rentPayments.filter(function (rp) { return leaseIds.indexOf(rp.leaseId) !== -1; }).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    var invoices = data.invoices.filter(function (inv) { return inv.tenantId === tenantId; }).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+
+    var profileRows = [
+      { Field: "Name", Value: tenant.name },
+      { Field: "Email", Value: tenant.email || "" },
+      { Field: "Phone", Value: tenant.phone || "" },
+      { Field: "Current Property", Value: activeLease ? propertyName(data, activeLease.propertyId) : "(none)" },
+      { Field: "Lease Status", Value: activeLease ? "Active" : "No active lease" },
+    ];
+    if (activeLease) {
+      profileRows.push({ Field: "Monthly Rent", Value: money(activeLease.rentAmount, data) });
+      profileRows.push({ Field: "Due Day", Value: activeLease.dueDay });
+      if (activeLease.securityDeposit) {
+        profileRows.push({ Field: "Security Deposit Held", Value: money(activeLease.securityDeposit, data) });
+        profileRows.push({ Field: "Deposit Returned", Value: activeLease.depositReturned ? "Yes, " + PMS.formatDate(activeLease.depositReturnedDate) : "No" });
+      }
+      if (activeLease.leaseEndDate) profileRows.push({ Field: "Lease End Date", Value: PMS.formatDate(activeLease.leaseEndDate) });
+    }
+    if (tenant.notes) profileRows.push({ Field: "Notes", Value: tenant.notes });
+
+    var totalPaid = payments.reduce(function (s, rp) { return s + rp.amount; }, 0);
+    var totalInvoiced = invoices.reduce(function (s, inv) { return s + inv.total; }, 0);
+    profileRows.push({ Field: "Lifetime Paid", Value: money(totalPaid, data) });
+    profileRows.push({ Field: "Lifetime Invoiced", Value: money(totalInvoiced, data) });
+
+    var sheets = [
+      { name: "Profile", rows: coverSheetRows(data, "Tenant Record — " + tenant.name, tenant.name).concat([{ Field: "", Value: "" }]).concat(profileRows) },
+      { name: "Leases & Deposits", rows: leases.map(function (l) { return leaseRow(data, l); }) },
+      { name: "Payments", rows: payments.map(function (rp) { return paymentRow(data, rp); }) },
+      { name: "Invoices", rows: invoices.map(function (inv) { return invoiceRow(data, inv); }) },
+      { name: "Invoice Line Items", rows: invoiceLineRows(data, invoices) },
+    ];
+    var filename = safeFileFragment(tenant.name) + "_records_" + PMS.todayISO() + ".xlsx";
+    PMSUI.toast("Preparing Excel workbook…", "info");
+    return PMSUI.downloadWorkbookMulti(sheets, filename)
+      .catch(function () { PMSUI.toast("Couldn't load the Excel export library — check your internet connection and try again.", "error"); });
+  }
+
+  global.PMSBackup = {
+    exportFullWorkbook: exportFullWorkbook,
+    exportTenantWorkbook: exportTenantWorkbook,
   };
 })(window);
 
@@ -1341,7 +1687,19 @@ html:not(.unlocked) .mobile-topbar {
           '<div class="field"><label>Default due day of month</label><input class="input" type="number" min="1" max="31" id="sDueDay" value="' + s.defaultDueDay + '"/></div>' +
           '<div class="field"><label>Reminder lead time (days)</label><input class="input" type="number" min="0" id="sLead" value="' + s.reminderLeadDays + '"/>' +
           '<span class="hint">Rent shows as "Due Soon" this many days before it\'s due.</span></div>' +
+          '<div class="field"><label>Lease renewal lead time (days)</label><input class="input" type="number" min="0" id="sRenewalLead" value="' + (s.leaseRenewalLeadDays || 60) + '"/>' +
+          '<span class="hint">A lease with an end date shows as "renewing soon" this many days out.</span></div>' +
         "</div>" +
+      "</div>" +
+
+      '<div class="card" style="padding:20px;">' +
+        '<h2 style="font-size:13.5px;font-weight:650;margin-bottom:4px;">Invoicing</h2>' +
+        '<p class="text-secondary" style="font-size:12px;margin-bottom:14px;">Invoices get a number automatically — set the prefix, or bump the starting number if you\'re continuing an existing sequence.</p>' +
+        '<div class="form-grid">' +
+          '<div class="field"><label>Prefix</label><input class="input" id="sInvoicePrefix" placeholder="INV-" value="' + PMSUI.escapeHtml(s.invoicePrefix || "") + '"/></div>' +
+          '<div class="field"><label>Next invoice number</label><input class="input" type="number" min="1" id="sNextInvoiceNumber" value="' + (s.nextInvoiceNumber || 1) + '"/></div>' +
+        "</div>" +
+        '<p class="text-tertiary" style="font-size:11.5px;margin-top:4px;">Next invoice will be numbered <strong>' + PMSUI.escapeHtml(PMS.peekNextInvoiceNumber()) + "</strong>.</p>" +
       "</div>" +
 
       '<div class="card" style="padding:20px;">' +
@@ -1361,6 +1719,8 @@ html:not(.unlocked) .mobile-topbar {
           '<input type="file" accept="application/json" id="importInput" class="hidden"/>' +
           '<button class="btn btn-secondary btn-sm" id="importBtn">' + PMSUI.ICONS.upload + " Import backup</button>" +
         "</div>" +
+        '<p class="text-secondary" style="font-size:12px;margin:16px 0 10px;">The .json backup above is what you\'d use to restore your data. For a readable copy — to send an accountant, a new manager, or just to have — export everything as one Excel file with a sheet per record type.</p>' +
+        '<button class="btn btn-secondary btn-sm" id="exportExcelBtn">' + PMSUI.ICONS.download + " Export full backup (.xlsx)</button>" +
       "</div>" +
 
       '<div class="card" style="padding:20px;border-color:rgba(239,68,68,.25);">' +
@@ -1393,6 +1753,9 @@ html:not(.unlocked) .mobile-topbar {
     document.getElementById("sCustomSymbol").addEventListener("change", function (e) { save({ customSymbol: e.target.value.trim() }); PMSUI.toast("Saved."); });
     document.getElementById("sDueDay").addEventListener("change", function (e) { save({ defaultDueDay: Number(e.target.value) || 1 }); PMSUI.toast("Saved."); });
     document.getElementById("sLead").addEventListener("change", function (e) { save({ reminderLeadDays: Number(e.target.value) || 0 }); PMSUI.toast("Saved."); });
+    document.getElementById("sRenewalLead").addEventListener("change", function (e) { save({ leaseRenewalLeadDays: Number(e.target.value) || 0 }); PMSUI.toast("Saved."); });
+    document.getElementById("sInvoicePrefix").addEventListener("change", function (e) { save({ invoicePrefix: e.target.value.trim() }); PMSUI.toast("Saved."); render(); });
+    document.getElementById("sNextInvoiceNumber").addEventListener("change", function (e) { save({ nextInvoiceNumber: Math.max(1, Number(e.target.value) || 1) }); PMSUI.toast("Saved."); render(); });
 
     document.querySelectorAll("[data-theme]").forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -1430,6 +1793,10 @@ html:not(.unlocked) .mobile-topbar {
       a.click();
       URL.revokeObjectURL(url);
       PMSUI.toast("Backup downloaded.");
+    });
+
+    document.getElementById("exportExcelBtn").addEventListener("click", function () {
+      PMSBackup.exportFullWorkbook();
     });
 
     var importInput = document.getElementById("importInput");

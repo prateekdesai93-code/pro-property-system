@@ -277,6 +277,7 @@ svg { width: 16px; height: 16px; flex-shrink: 0; }
 }
 .stat-card.tone-accent .icon-wrap { background: var(--accent-soft); color: var(--accent-text); }
 .stat-card.tone-danger .icon-wrap { background: var(--danger-soft); color: var(--danger); }
+.stat-card.tone-warning .icon-wrap { background: var(--warning-soft); color: var(--warning); }
 .stat-card .value { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
 .stat-card .label { font-size: 12.5px; color: var(--text-secondary); font-weight: 500; }
 .stat-card .sub { font-size: 11px; color: var(--text-tertiary); }
@@ -630,6 +631,9 @@ html:not(.unlocked) .mobile-topbar {
     reminderLeadDays: 5,
     accentColor: "blue",
     logoDataUrl: null,
+    invoicePrefix: "INV-",
+    nextInvoiceNumber: 1,
+    leaseRenewalLeadDays: 60,
   };
 
   function emptyData() {
@@ -707,6 +711,11 @@ html:not(.unlocked) .mobile-topbar {
   }
   function pad2(n) {
     return n < 10 ? "0" + n : "" + n;
+  }
+  function pad4(n) {
+    var s = "" + n;
+    while (s.length < 4) s = "0" + s;
+    return s;
   }
 
   // ---------- properties ----------
@@ -829,9 +838,17 @@ html:not(.unlocked) .mobile-topbar {
   }
 
   // ---------- tenant invoices ----------
+  // Invoice numbers are assigned once, here, from a running counter kept in
+  // settings — never derived from the invoice list length, so deleting an
+  // invoice can never cause a later one to reuse its number.
+  function peekNextInvoiceNumber() {
+    return (data.settings.invoicePrefix || "") + pad4(data.settings.nextInvoiceNumber || 1);
+  }
   function addInvoice(input) {
-    var rec = Object.assign({}, input, { id: uid(), createdAt: nowISO() });
+    var invoiceNumber = peekNextInvoiceNumber();
+    var rec = Object.assign({}, input, { id: uid(), invoiceNumber: invoiceNumber, createdAt: nowISO() });
     data.invoices.push(rec);
+    data.settings.nextInvoiceNumber = (data.settings.nextInvoiceNumber || 1) + 1;
     persist();
     return rec;
   }
@@ -887,15 +904,47 @@ html:not(.unlocked) .mobile-topbar {
     var today = todayOverride || todayISO();
     var period = currentPeriodLabel(today);
     var dueDate = dueDateForCurrentPeriod(lease.dueDay, today);
+    // If this tenant has an invoice for the current period (e.g. rent plus
+    // an electricity line item), what they actually owe is the invoice
+    // total rather than the flat lease rent. With no invoice for the
+    // period this falls back to lease.rentAmount exactly as before, so
+    // landlords who never touch invoicing see no change in behavior.
+    var periodInvoices = data.invoices.filter(function (inv) { return inv.leaseId === lease.id && inv.periodLabel === period; });
+    var invoiced = periodInvoices.length > 0;
+    var amountOwed = invoiced ? periodInvoices.reduce(function (sum, inv) { return sum + inv.total; }, 0) : lease.rentAmount;
     var paid = amountPaidForPeriod(lease.id, period);
-    var balance = Math.max(lease.rentAmount - paid, 0);
+    var balance = Math.max(amountOwed - paid, 0);
     var daysUntilDue = daysBetween(today, dueDate);
     var status;
     if (balance <= 0) status = "paid";
     else if (daysUntilDue < 0) status = "overdue";
     else if (daysUntilDue <= (reminderLeadDays || 0)) status = "due-soon";
     else status = "upcoming";
-    return { lease: lease, period: period, dueDate: dueDate, daysUntilDue: daysUntilDue, paid: paid, balance: balance, status: status };
+    return { lease: lease, period: period, dueDate: dueDate, daysUntilDue: daysUntilDue, paid: paid, balance: balance, status: status, amountOwed: amountOwed, invoiced: invoiced };
+  }
+  // ---------- lease renewal ----------
+  function daysUntilLeaseEnd(lease, todayOverride) {
+    if (!lease.leaseEndDate) return null;
+    return daysBetween(todayOverride || todayISO(), lease.leaseEndDate);
+  }
+  function leaseRenewalCandidates(leadDays, todayOverride) {
+    return data.leases
+      .filter(function (l) { return l.status === "active" && l.leaseEndDate; })
+      .map(function (l) { return { lease: l, daysUntilEnd: daysUntilLeaseEnd(l, todayOverride) }; })
+      .filter(function (r) { return r.daysUntilEnd <= (leadDays || 0); })
+      .sort(function (a, b) { return a.daysUntilEnd - b.daysUntilEnd; });
+  }
+  // ---------- vacancy ----------
+  function vacancyInfo(propertyId, todayOverride) {
+    var active = activeLeaseForProperty(propertyId);
+    if (active) return { occupied: true, days: null, vacantSince: null };
+    var endedLeases = data.leases
+      .filter(function (l) { return l.propertyId === propertyId && l.status === "ended"; })
+      .sort(function (a, b) { return (b.endDate || "") < (a.endDate || "") ? -1 : 1; });
+    var property = data.properties.find(function (p) { return p.id === propertyId; });
+    var vacantSince = (endedLeases[0] && endedLeases[0].endDate) || (property && property.createdAt ? property.createdAt.slice(0, 10) : todayISO());
+    var days = daysBetween(vacantSince, todayOverride || todayISO());
+    return { occupied: false, days: days, vacantSince: vacantSince };
   }
 
   // ---------- formatting ----------
@@ -1011,6 +1060,7 @@ html:not(.unlocked) .mobile-topbar {
     addInvoice: addInvoice,
     updateInvoice: updateInvoice,
     deleteInvoice: deleteInvoice,
+    peekNextInvoiceNumber: peekNextInvoiceNumber,
 
     updateSettings: updateSettings,
 
@@ -1018,6 +1068,10 @@ html:not(.unlocked) .mobile-topbar {
     periodKey: periodKey,
     dueDateForCurrentPeriod: dueDateForCurrentPeriod,
     computeLeaseRentInfo: computeLeaseRentInfo,
+    daysUntilLeaseEnd: daysUntilLeaseEnd,
+    leaseRenewalCandidates: leaseRenewalCandidates,
+    vacancyInfo: vacancyInfo,
+    daysBetween: daysBetween,
 
     formatCurrency: formatCurrency,
     formatDate: formatDate,
@@ -1221,10 +1275,35 @@ html:not(.unlocked) .mobile-topbar {
   // header row, in that order. Returns a Promise that resolves once the
   // browser's file-save dialog has been triggered.
   function downloadWorkbook(sheetName, rows, filename) {
+    return downloadWorkbookMulti([{ name: sheetName, rows: rows }], filename);
+  }
+
+  // Fits a rough column width to each sheet's longest cell — SheetJS's free
+  // build has no cell styling (no bold, no fills), so readable columns are
+  // the one polish lever available for these exports.
+  function autoSizeColumns(rows) {
+    if (!rows.length) return undefined;
+    var keys = Object.keys(rows[0]);
+    return keys.map(function (k) {
+      var maxLen = rows.reduce(function (m, r) {
+        var v = r[k];
+        return Math.max(m, String(v == null ? "" : v).length);
+      }, k.length);
+      return { wch: Math.min(Math.max(maxLen + 2, 10), 48) };
+    });
+  }
+
+  // sheets: array of { name, rows } — each rows array's first-row keys
+  // become that sheet's header row.
+  function downloadWorkbookMulti(sheets, filename) {
     return loadScript(XLSX_SCRIPT).then(function () {
-      var ws = global.XLSX.utils.json_to_sheet(rows);
       var wb = global.XLSX.utils.book_new();
-      global.XLSX.utils.book_append_sheet(wb, ws, sheetName.slice(0, 31));
+      sheets.forEach(function (sheet) {
+        var rows = sheet.rows || [];
+        var ws = global.XLSX.utils.json_to_sheet(rows.length ? rows : [{}]);
+        if (rows.length) ws["!cols"] = autoSizeColumns(rows);
+        global.XLSX.utils.book_append_sheet(wb, ws, String(sheet.name).slice(0, 31));
+      });
       global.XLSX.writeFile(wb, filename);
     });
   }
@@ -1233,22 +1312,72 @@ html:not(.unlocked) .mobile-topbar {
   // Opens a new tab with a minimal, self-contained print-friendly page and
   // triggers the browser's print dialog — this is how invoices/statements
   // become PDFs, with no external library and no server needed ("Save as
-  // PDF" is a print destination in every modern browser).
+  // PDF" is a print destination in every modern browser). Styled as a
+  // proper letterhead document: serif display type for the identity block,
+  // a bold rule, zebra-striped tables, a highlighted total — kept strictly
+  // black/white/grey to match the app's own monochrome identity rather
+  // than introducing a color that would clash with it.
+  var PRINT_CSS =
+    "@media print{@page{margin:16mm 14mm;}}" +
+    "*{box-sizing:border-box;}" +
+    "body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1a1a1a;padding:44px;max-width:800px;margin:0 auto;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact;}" +
+    "h1{font-family:Georgia,'Times New Roman',serif;font-size:25px;font-weight:700;margin:0 0 3px;letter-spacing:-.01em;}" +
+    "h2{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#555;margin:26px 0 8px;}" +
+    ".muted{color:#666;font-size:12px;margin:1px 0;}" +
+    ".letterhead{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;}" +
+    ".company-block .logo{max-height:44px;max-width:220px;margin-bottom:10px;display:block;}" +
+    ".doc-block{text-align:right;min-width:180px;}" +
+    ".doc-type{font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:700;letter-spacing:.04em;margin-bottom:6px;}" +
+    ".doc-meta{font-size:12px;color:#444;margin:2px 0;}" +
+    ".doc-meta span{color:#888;display:inline-block;min-width:64px;}" +
+    ".doc-number{display:inline-block;font-weight:700;font-size:13px;background:#111;color:#fff;padding:3px 10px;border-radius:3px;letter-spacing:.02em;margin-bottom:6px;}" +
+    ".rule{border:none;border-top:2.5px solid #111;margin:20px 0 0;}" +
+    ".bill-to{background:#f6f6f6;border-radius:6px;padding:14px 16px;margin-top:22px;}" +
+    ".bill-to .label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:4px;}" +
+    ".bill-to .name{font-weight:700;font-size:14px;}" +
+    "table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;}" +
+    "thead tr{border-bottom:2px solid #111;}" +
+    "th{text-align:left;padding:9px 10px;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#333;}" +
+    "td{padding:10px;border-bottom:1px solid #eee;}" +
+    "tbody tr:nth-child(even){background:#fafafa;}" +
+    "td.num,th.num{text-align:right;}" +
+    ".total-row td{border-top:2px solid #111;border-bottom:none;font-weight:700;font-size:15px;padding-top:14px;background:#fff !important;}" +
+    ".total-box{margin-top:10px;display:flex;justify-content:flex-end;}" +
+    ".total-box .inner{background:#111;color:#fff;padding:12px 20px;border-radius:6px;min-width:220px;display:flex;justify-content:space-between;align-items:center;gap:20px;}" +
+    ".total-box .inner .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.75;}" +
+    ".total-box .inner .value{font-size:19px;font-weight:700;}" +
+    ".doc-footer{margin-top:36px;padding-top:14px;border-top:1px solid #ddd;display:flex;justify-content:space-between;gap:20px;}" +
+    ".doc-footer .thanks{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:13px;color:#333;}" +
+    ".doc-footer .stamp{font-size:10.5px;color:#999;text-align:right;}" +
+    ".sig-row{display:flex;gap:40px;margin-top:48px;}" +
+    ".sig-line{flex:1;border-top:1px solid #999;padding-top:6px;font-size:11px;color:#777;}" +
+    "@media print{body{padding:0;}}";
+
+  function printLetterhead(settings, docType, docNumber, metaLines) {
+    return (
+      '<div class="letterhead">' +
+        '<div class="company-block">' +
+          (settings.logoDataUrl ? '<img class="logo" src="' + settings.logoDataUrl + '" />' : "") +
+          "<h1>" + escapeHtml(settings.landlordName || "Property Management") + "</h1>" +
+          (settings.address ? '<p class="muted">' + escapeHtml(settings.address) + "</p>" : "") +
+          [settings.email, settings.phone].filter(Boolean).map(function (v) { return '<p class="muted">' + escapeHtml(v) + "</p>"; }).join("") +
+        "</div>" +
+        '<div class="doc-block">' +
+          '<div class="doc-type">' + escapeHtml(docType) + "</div>" +
+          (docNumber ? '<div class="doc-number">' + escapeHtml(docNumber) + "</div>" : "") +
+          metaLines.map(function (m) { return '<p class="doc-meta"><span>' + escapeHtml(m.label) + "</span>" + escapeHtml(m.value) + "</p>"; }).join("") +
+        "</div>" +
+      "</div>" +
+      '<hr class="rule"/>'
+    );
+  }
+
   function openPrintWindow(title, bodyHtml) {
     var win = window.open("", "_blank");
     if (!win) { toast("Your browser blocked the print window pop-up — allow pop-ups for this site and try again.", "error"); return; }
     win.document.write(
       "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>" + escapeHtml(title) + "</title>" +
-      "<style>" +
-      "body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#111;padding:36px;max-width:760px;margin:0 auto;}" +
-      "h1{font-size:20px;margin:0 0 4px;} h2{font-size:14px;margin:24px 0 8px;}" +
-      ".muted{color:#666;font-size:12.5px;} .row2{display:flex;justify-content:space-between;gap:24px;margin:18px 0;}" +
-      "table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;}" +
-      "th{text-align:left;padding:8px 10px;border-bottom:2px solid #111;font-size:11px;text-transform:uppercase;letter-spacing:.03em;}" +
-      "td{padding:8px 10px;border-bottom:1px solid #ddd;} td.num,th.num{text-align:right;}" +
-      ".total-row td{border-top:2px solid #111;border-bottom:none;font-weight:700;font-size:15px;padding-top:12px;}" +
-      "@media print{body{padding:0;}}" +
-      "</style></head><body>" + bodyHtml +
+      "<style>" + PRINT_CSS + "</style></head><body>" + bodyHtml +
       // Split across concatenated string pieces on purpose (and this
       // comment avoids writing the literal tag text too): this whole file
       // gets inlined into a real script element by the build step, and
@@ -1289,7 +1418,9 @@ html:not(.unlocked) .mobile-topbar {
     BUILD_DATE: BUILD_DATE,
     loadScript: loadScript,
     downloadWorkbook: downloadWorkbook,
+    downloadWorkbookMulti: downloadWorkbookMulti,
     openPrintWindow: openPrintWindow,
+    printLetterhead: printLetterhead,
   };
 })(window);
 
@@ -1308,6 +1439,9 @@ html:not(.unlocked) .mobile-topbar {
   function tenantName(id) {
     var t = data.tenants.find(function (x) { return x.id === id; });
     return t ? t.name : "Unknown tenant";
+  }
+  function tenantById(id) {
+    return data.tenants.find(function (x) { return x.id === id; }) || null;
   }
 
   function render() {
@@ -1340,6 +1474,23 @@ html:not(.unlocked) .mobile-topbar {
       } else if (unreturnedEndedLease) {
         depositLine = '<p class="meta" style="margin-top:2px;color:var(--warning);">Still owe ' + PMSUI.escapeHtml(tenantName(unreturnedEndedLease.tenantId)) + " " + PMS.formatCurrency(unreturnedEndedLease.securityDeposit, data.settings.currency) + " deposit back</p>";
       }
+
+      var vacancyLine = "";
+      if (!lease) {
+        var vac = PMS.vacancyInfo(p.id);
+        vacancyLine = '<p class="meta" style="margin-top:2px;">Vacant · ' + vac.days + (vac.days === 1 ? " day" : " days") + "</p>";
+      }
+
+      var renewalLine = "";
+      if (lease && lease.leaseEndDate) {
+        var daysLeft = PMS.daysUntilLeaseEnd(lease);
+        var leadDays = data.settings.leaseRenewalLeadDays || 60;
+        if (daysLeft <= leadDays) {
+          renewalLine = daysLeft < 0
+            ? '<p class="meta" style="margin-top:2px;color:var(--danger);">Lease ended ' + Math.abs(daysLeft) + (Math.abs(daysLeft) === 1 ? " day" : " days") + " ago — still marked active</p>"
+            : '<p class="meta" style="margin-top:2px;color:var(--warning);">Lease renews in ' + daysLeft + (daysLeft === 1 ? " day" : " days") + " (" + PMS.formatDate(lease.leaseEndDate) + ")</p>";
+        }
+      }
       return (
         '<div class="card" style="padding:18px;display:flex;flex-direction:column;gap:10px;">' +
           '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">' +
@@ -1353,6 +1504,8 @@ html:not(.unlocked) .mobile-topbar {
               ? '<span class="pill pill-success">Occupied</span> <span class="text-tertiary" style="font-size:12px;">' + PMSUI.escapeHtml(tenantName(lease.tenantId)) + " · " + PMS.formatCurrency(lease.rentAmount, data.settings.currency) + "/mo</span>"
               : '<span class="pill pill-neutral">Vacant</span>') +
             depositLine +
+            vacancyLine +
+            renewalLine +
           "</div>" +
           '<div style="display:flex;gap:8px;margin-top:6px;border-top:1px solid var(--border);padding-top:12px;flex-wrap:wrap;">' +
             (lease
@@ -1473,7 +1626,9 @@ html:not(.unlocked) .mobile-topbar {
       '<div class="form-grid">' +
         '<div class="field"><label>Lease start date</label><input class="input" type="date" id="fStart" value="' + PMS.todayISO() + '"/></div>' +
         '<div class="field"><label>Security deposit</label><input class="input" type="number" min="0" id="fDeposit" placeholder="0"/></div>' +
-      "</div>";
+      "</div>" +
+      '<div class="field"><label>Lease end date</label><input class="input" type="date" id="fLeaseEnd"/>' +
+      '<span class="hint">Optional. Set this to get a renewal reminder as the date approaches — leave blank for a month-to-month lease.</span></div>';
 
     PMSUI.openModal({
       title: "Assign Tenant",
@@ -1491,6 +1646,7 @@ html:not(.unlocked) .mobile-topbar {
             rentAmount: rent,
             dueDay: Number(root.querySelector("#fDueDay").value) || 1,
             startDate: root.querySelector("#fStart").value || PMS.todayISO(),
+            leaseEndDate: root.querySelector("#fLeaseEnd").value || null,
             securityDeposit: deposit,
             depositPaidDate: deposit > 0 ? PMS.todayISO() : null,
             depositReturned: false,
@@ -1513,13 +1669,16 @@ html:not(.unlocked) .mobile-topbar {
         '<div class="field"><label>Monthly rent<span class="req">*</span></label><input class="input" type="number" min="0" id="fRent" value="' + lease.rentAmount + '"/></div>' +
         '<div class="field"><label>Due day of month</label><input class="input" type="number" min="1" max="31" id="fDueDay" value="' + lease.dueDay + '"/></div>' +
       "</div>" +
+      '<div class="field"><label>Lease end date</label><input class="input" type="date" id="fLeaseEnd" value="' + (lease.leaseEndDate || "") + '"/>' +
+      '<span class="hint">Optional. Leave blank for a month-to-month lease.</span></div>' +
       '<div class="field"><label>Security deposit</label><input class="input" type="number" min="0" id="fDeposit" value="' + (lease.securityDeposit || 0) + '"/></div>' +
       (lease.securityDeposit > 0
         ? '<div class="field"><label style="display:flex;align-items:center;gap:8px;font-weight:500;"><input type="checkbox" id="fReturned" style="width:auto;"' + (lease.depositReturned ? " checked" : "") + " /> Deposit has been returned to the tenant</label></div>" +
           '<div class="form-grid" id="returnedFields" style="' + (lease.depositReturned ? "" : "display:none;") + '">' +
             '<div class="field"><label>Amount returned</label><input class="input" type="number" min="0" id="fReturnedAmount" value="' + (lease.depositReturnedAmount || lease.securityDeposit) + '"/></div>' +
             '<div class="field"><label>Date returned</label><input class="input" type="date" id="fReturnedDate" value="' + (lease.depositReturnedDate || PMS.todayISO()) + '"/></div>' +
-          "</div>"
+          "</div>" +
+          '<button class="btn btn-ghost btn-sm" id="printDepositBtn" type="button">' + PMSUI.ICONS.print + " Print Deposit Receipt</button>"
         : "");
 
     PMSUI.openModal({
@@ -1535,12 +1694,19 @@ html:not(.unlocked) .mobile-topbar {
             returnedFields.style.display = returnedCheckbox.checked ? "" : "none";
           });
         }
+        var printDepositBtn = root.querySelector("#printDepositBtn");
+        if (printDepositBtn) {
+          printDepositBtn.addEventListener("click", function () {
+            printDepositReceipt(lease);
+          });
+        }
         root.querySelector("#saveBtn").addEventListener("click", function () {
           var rent = Number(root.querySelector("#fRent").value);
           if (!rent || rent <= 0) { PMSUI.toast("Enter a valid monthly rent amount.", "error"); return; }
           var patch = {
             rentAmount: rent,
             dueDay: Number(root.querySelector("#fDueDay").value) || 1,
+            leaseEndDate: root.querySelector("#fLeaseEnd").value || null,
             securityDeposit: Number(root.querySelector("#fDeposit").value) || 0,
           };
           if (returnedCheckbox) {
@@ -1560,6 +1726,38 @@ html:not(.unlocked) .mobile-topbar {
         });
       },
     });
+  }
+
+  function printDepositReceipt(lease) {
+    var property = data.properties.find(function (p) { return p.id === lease.propertyId; });
+    var tenant = tenantById(lease.tenantId);
+    if (!tenant) return;
+    var isReturn = !!lease.depositReturned;
+    var docType = isReturn ? "DEPOSIT RETURN RECEIPT" : "DEPOSIT RECEIPT";
+    var amount = isReturn ? lease.depositReturnedAmount : lease.securityDeposit;
+    var whenDate = isReturn ? lease.depositReturnedDate : (lease.depositPaidDate || lease.startDate);
+    var metaLines = [{ label: "Date", value: PMS.formatDate(whenDate) }];
+
+    var bodyText = isReturn
+      ? "This confirms that " + PMSUI.escapeHtml(data.settings.landlordName || "the landlord") + " has returned the security deposit below to the tenant named, for the property listed, on the date above."
+      : "This confirms receipt of the security deposit below from the tenant named, held against the property listed for the duration of the tenancy, refundable per the terms of the lease agreement.";
+
+    var html =
+      PMSUI.printLetterhead(data.settings, docType, "", metaLines) +
+      '<div class="bill-to">' +
+        '<div class="label">' + (isReturn ? "Returned To" : "Received From") + "</div>" +
+        '<div class="name">' + PMSUI.escapeHtml(tenant.name) + "</div>" +
+        (property ? '<div class="muted" style="margin-top:2px;">' + PMSUI.escapeHtml(property.name) + (property.address ? ", " + PMSUI.escapeHtml(property.address) : "") + "</div>" : "") +
+      "</div>" +
+      "<p style='margin-top:20px;font-size:13px;line-height:1.6;'>" + bodyText + "</p>" +
+      '<div class="total-box"><div class="inner"><span class="label">' + (isReturn ? "Amount Returned" : "Deposit Amount") + '</span><span class="value">' + PMS.formatCurrency(amount, data.settings.currency) + "</span></div></div>" +
+      '<div class="sig-row">' +
+        '<div class="sig-line">' + PMSUI.escapeHtml(data.settings.landlordName || "Landlord") + " — Landlord</div>" +
+        '<div class="sig-line">' + PMSUI.escapeHtml(tenant.name) + " — Tenant</div>" +
+      "</div>" +
+      '<div class="doc-footer"><div class="thanks">Please retain this receipt for your records.</div><div class="stamp">Generated ' + PMS.formatDate(PMS.todayISO()) + "</div></div>";
+
+    PMSUI.openPrintWindow(docType + " — " + tenant.name, html);
   }
 
   document.getElementById("addPropertyBtn").addEventListener("click", openAddModal);
