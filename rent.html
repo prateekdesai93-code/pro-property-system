@@ -386,12 +386,25 @@ textarea.input { resize: vertical; min-height: 72px; }
   box-shadow: var(--shadow-2);
   animation: slideUp 0.18s ease;
 }
+.modal.modal-wide { max-width: 780px; }
 .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border); }
 .modal-header h3 { font-size: 14.5px; font-weight: 650; }
 .modal-body { padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
 .modal-footer { display: flex; justify-content: flex-end; gap: 8px; padding: 14px 20px; border-top: 1px solid var(--border); }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ---------- Data table (bank import review, etc.) ---------- */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); }
+table.data-table { width: 100%; min-width: 640px; border-collapse: collapse; text-align: left; font-size: 12.5px; }
+table.data-table thead tr { border-bottom: 1px solid var(--border); background: var(--surface-2); }
+table.data-table th { padding: 10px 12px; font-size: 11px; font-weight: 650; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap; }
+table.data-table td { padding: 10px 12px; border-top: 1px solid var(--border); color: var(--text-secondary); vertical-align: middle; }
+table.data-table tbody tr:hover { background: var(--surface-hover); }
+table.data-table tr.row-disabled { opacity: 0.45; }
+table.data-table select.input, table.data-table input.input { padding: 6px 8px; font-size: 12.5px; height: auto; }
+.import-summary { font-size: 12.5px; color: var(--text-secondary); background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
+.import-warning { font-size: 12px; color: var(--warning); background: var(--warning-soft); border: 1px solid var(--warning); border-radius: var(--radius-sm); padding: 8px 12px; }
 
 /* ---------- Toasts ---------- */
 .toast-root {
@@ -1075,7 +1088,7 @@ html:not(.unlocked) .mobile-topbar {
     var root = document.getElementById("modal-root");
     var backdrop = el(
       '<div class="modal-backdrop">' +
-        '<div class="modal" role="dialog" aria-modal="true">' +
+        '<div class="modal' + (opts.wide ? " modal-wide" : "") + '" role="dialog" aria-modal="true">' +
           '<div class="modal-header"><h3>' + escapeHtml(opts.title) + '</h3><button class="btn-icon neutral" id="modalCloseBtn" aria-label="Close">' + ICONS.close + "</button></div>" +
           '<div class="modal-body" id="modalBody"></div>' +
           '<div class="modal-footer" id="modalFooter"></div>' +
@@ -1146,6 +1159,495 @@ html:not(.unlocked) .mobile-topbar {
 
 </script>
 <script>
+/* =========================================================
+   Property Management System — Bank Statement Import
+   ---------------------------------------------------------
+   Lets a landlord upload a bank statement (CSV/Excel export,
+   or a text-based PDF) and suggests which tenant each incoming
+   deposit belongs to, based on the amount matching that
+   tenant's current rent balance and/or the tenant's name
+   appearing in the transaction description.
+
+   Nothing is ever marked paid automatically. Every suggestion
+   goes through a review screen the landlord must check and
+   confirm — this keeps a wrong guess (e.g. two tenants who pay
+   the same rent amount) from silently marking the wrong period
+   paid with no easy trail back.
+
+   CSV/Excel parsing runs entirely with plain JS + the SheetJS
+   library (loaded on demand, only if an Excel file is picked).
+   PDF parsing uses pdf.js (also loaded on demand) and is
+   best-effort: PDF bank statements vary enormously in layout,
+   so always double-check PDF-sourced rows before confirming.
+   ========================================================= */
+
+(function (global) {
+  "use strict";
+
+  var PDFJS_SCRIPT = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+  var PDFJS_WORKER = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  var XLSX_SCRIPT = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
+
+  var loadedScripts = {};
+  function loadScript(src) {
+    if (loadedScripts[src]) return loadedScripts[src];
+    loadedScripts[src] = new Promise(function (resolve, reject) {
+      var existing = document.querySelector('script[data-src="' + src + '"]');
+      if (existing) { existing.addEventListener("load", resolve); existing.addEventListener("error", reject); return; }
+      var s = document.createElement("script");
+      s.src = src;
+      s.setAttribute("data-src", src);
+      s.onload = resolve;
+      s.onerror = function () { reject(new Error("Failed to load " + src)); };
+      document.head.appendChild(s);
+    });
+    return loadedScripts[src];
+  }
+
+  // ---------- number / date parsing helpers ----------
+  function parseAmount(raw) {
+    if (raw == null) return NaN;
+    var s = String(raw).trim();
+    if (s === "") return NaN;
+    var negative = false;
+    if (/^\(.*\)$/.test(s)) { negative = true; s = s.slice(1, -1); }
+    if (/^-/.test(s)) { negative = true; }
+    s = s.replace(/[^0-9.\-]/g, "");
+    var n = parseFloat(s);
+    if (isNaN(n)) return NaN;
+    return negative ? -Math.abs(n) : n;
+  }
+
+  var MONTHS = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
+  function pad2(n) { return n < 10 ? "0" + n : "" + n; }
+
+  function normalizeDate(raw) {
+    if (!raw) return null;
+    var s = String(raw).trim();
+
+    // ISO-ish: 2026-08-17 or 2026/08/17
+    var iso = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+    if (iso) return iso[1] + "-" + pad2(Number(iso[2])) + "-" + pad2(Number(iso[3]));
+
+    // 08/17/2026 or 8-17-26 (assume US MM/DD/YYYY when first token <= 12; else DD/MM)
+    var slash = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
+    if (slash) {
+      var a = Number(slash[1]), b = Number(slash[2]), y = Number(slash[3]);
+      if (y < 100) y += y < 70 ? 2000 : 1900;
+      var month = a, day = b;
+      if (a > 12 && b <= 12) { month = b; day = a; }
+      return y + "-" + pad2(month) + "-" + pad2(day);
+    }
+
+    // "Aug 17, 2026" / "Aug 17" — the (?!\d) guards stop \d{1,2} from
+    // grabbing just the first digits of a longer number like a 4-digit year.
+    var monWord = s.match(/([A-Za-z]{3,})\.?\s+(\d{1,2})(?!\d)(?:,?\s*(\d{4})(?!\d))?/);
+    if (monWord) {
+      var mKey = monWord[1].slice(0, 3).toLowerCase();
+      if (MONTHS.hasOwnProperty(mKey)) {
+        var yr = monWord[3] ? Number(monWord[3]) : new Date().getFullYear();
+        return yr + "-" + pad2(MONTHS[mKey] + 1) + "-" + pad2(Number(monWord[2]));
+      }
+    }
+    // "17 Aug 2026" / "17 Aug"
+    var dayMonWord = s.match(/(\d{1,2})(?!\d)\s+([A-Za-z]{3,})\.?(?:\s+(\d{4})(?!\d))?/);
+    if (dayMonWord) {
+      var mKey2 = dayMonWord[2].slice(0, 3).toLowerCase();
+      if (MONTHS.hasOwnProperty(mKey2)) {
+        var yr2 = dayMonWord[3] ? Number(dayMonWord[3]) : new Date().getFullYear();
+        return yr2 + "-" + pad2(MONTHS[mKey2] + 1) + "-" + pad2(Number(dayMonWord[1]));
+      }
+    }
+    return null;
+  }
+
+  // ---------- CSV parsing (RFC4180-ish, handles quoted fields) ----------
+  function parseCSVText(text) {
+    var rows = [];
+    var row = [];
+    var field = "";
+    var inQuotes = false;
+    for (var i = 0; i < text.length; i++) {
+      var c = text[i];
+      if (inQuotes) {
+        if (c === '"') {
+          if (text[i + 1] === '"') { field += '"'; i++; }
+          else { inQuotes = false; }
+        } else {
+          field += c;
+        }
+      } else if (c === '"') {
+        inQuotes = true;
+      } else if (c === ",") {
+        row.push(field); field = "";
+      } else if (c === "\r") {
+        // skip; \n (or end) closes the row
+      } else if (c === "\n") {
+        row.push(field); rows.push(row); row = []; field = "";
+      } else {
+        field += c;
+      }
+    }
+    if (field.length || row.length) { row.push(field); rows.push(row); }
+    return rows.filter(function (r) { return r.some(function (c) { return String(c).trim() !== ""; }); });
+  }
+
+  // ---------- turn a header row + data rows into transactions ----------
+  function findCol(headers, keywords) {
+    for (var k = 0; k < keywords.length; k++) {
+      for (var i = 0; i < headers.length; i++) {
+        if (String(headers[i] || "").toLowerCase().indexOf(keywords[k]) !== -1) return i;
+      }
+    }
+    return -1;
+  }
+
+  function rowsToTransactions(rows) {
+    if (!rows.length) return [];
+    var headers = rows[0].map(function (h) { return String(h == null ? "" : h); });
+    var dateCol = findCol(headers, ["transaction date", "trans date", "date"]);
+    var descCol = findCol(headers, ["description", "memo", "payee", "narrative", "details", "particulars"]);
+    var creditCol = findCol(headers, ["credit", "deposit", "money in"]);
+    var debitCol = findCol(headers, ["debit", "withdrawal", "money out"]);
+    var amountCol = findCol(headers, ["amount"]);
+
+    // If we can't even find a date + (amount or credit) column, this isn't a
+    // transaction table we can parse — bail out so the caller can say so.
+    if (dateCol === -1 || (amountCol === -1 && creditCol === -1)) return null;
+
+    var out = [];
+    for (var r = 1; r < rows.length; r++) {
+      var row = rows[r];
+      var rawDate = row[dateCol];
+      var iso = normalizeDate(rawDate);
+      if (!iso) continue;
+
+      var amt;
+      if (creditCol !== -1) {
+        amt = parseAmount(row[creditCol]);
+        if (!(amt > 0)) continue; // blank/zero credit — not an incoming payment on this row
+      } else {
+        amt = parseAmount(row[amountCol]);
+        if (!(amt > 0)) continue; // negative/zero — money out, ignore
+      }
+
+      var desc = descCol !== -1 ? String(row[descCol] || "").trim() : "";
+      out.push({ date: iso, description: desc || "(no description)", amount: amt });
+    }
+    return out;
+  }
+
+  function parseCSVFile(text) {
+    var rows = parseCSVText(text);
+    var tx = rowsToTransactions(rows);
+    if (tx === null) throw new Error("Couldn't find a date and amount column in this CSV. Make sure the file's first row is the column headers.");
+    return tx;
+  }
+
+  function parseXLSXFile(arrayBuffer) {
+    return loadScript(XLSX_SCRIPT).then(function () {
+      var wb = global.XLSX.read(arrayBuffer, { type: "array" });
+      var firstSheet = wb.SheetNames[0];
+      var rows = global.XLSX.utils.sheet_to_json(wb.Sheets[firstSheet], { header: 1, raw: false });
+      var tx = rowsToTransactions(rows);
+      if (tx === null) throw new Error("Couldn't find a date and amount column in this spreadsheet. Make sure the first row is the column headers.");
+      return tx;
+    });
+  }
+
+  // ---------- PDF parsing (best effort) ----------
+  function parsePDFFile(arrayBuffer) {
+    return loadScript(PDFJS_SCRIPT).then(function () {
+      global.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+      return global.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    }).then(function (pdf) {
+      var pagePromises = [];
+      for (var p = 1; p <= pdf.numPages; p++) {
+        pagePromises.push(pdf.getPage(p).then(function (page) { return page.getTextContent(); }));
+      }
+      return Promise.all(pagePromises);
+    }).then(function (textContents) {
+      var lines = [];
+      textContents.forEach(function (content) {
+        var buckets = {}; // rounded-y -> [{x, str}]
+        content.items.forEach(function (item) {
+          var y = Math.round(item.transform[5] / 3) * 3;
+          if (!buckets[y]) buckets[y] = [];
+          buckets[y].push({ x: item.transform[4], str: item.str });
+        });
+        var ys = Object.keys(buckets).map(Number).sort(function (a, b) { return b - a; });
+        ys.forEach(function (y) {
+          var lineItems = buckets[y].sort(function (a, b) { return a.x - b.x; });
+          var lineText = lineItems.map(function (it) { return it.str; }).join(" ").replace(/\s+/g, " ").trim();
+          if (lineText) lines.push(lineText);
+        });
+      });
+
+      var dateRe = /(\d{4}-\d{1,2}-\d{1,2}|\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|[A-Za-z]{3,9}\.?\s+\d{1,2}(?:,?\s*\d{2,4})?|\d{1,2}\s+[A-Za-z]{3,9}\.?\s*\d{0,4})/;
+      var amountRe = /\(?-?\$?\s?[\d,]+\.\d{2}\)?/g;
+
+      var tx = [];
+      lines.forEach(function (line) {
+        var dm = line.match(dateRe);
+        if (!dm) return;
+        var iso = normalizeDate(dm[0]);
+        if (!iso) return;
+        var amounts = line.match(amountRe);
+        if (!amounts || !amounts.length) return;
+        // Convention: first number after the date is the transaction amount;
+        // a second/third number is usually a running balance — ignored.
+        var amt = parseAmount(amounts[0]);
+        if (!(amt > 0)) return;
+        var desc = line.replace(dm[0], "").replace(amounts[0], "");
+        if (amounts[1]) desc = desc.replace(amounts[1], "");
+        desc = desc.replace(/\s+/g, " ").trim();
+        tx.push({ date: iso, description: desc || "(no description)", amount: amt, fromPDF: true });
+      });
+      return tx;
+    });
+  }
+
+  // ---------- matching ----------
+  function normalizeWords(str) {
+    return String(str || "").toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(function (w) { return w.length >= 3; });
+  }
+  function nameInDescription(name, description) {
+    var nameWords = normalizeWords(name);
+    if (!nameWords.length) return false;
+    var descNorm = " " + String(description || "").toLowerCase().replace(/[^a-z0-9\s]/g, " ") + " ";
+    return nameWords.some(function (w) { return descNorm.indexOf(" " + w) !== -1; });
+  }
+
+  function isDuplicate(data, leaseId, periodLabel, amount) {
+    return data.rentPayments.some(function (p) {
+      return p.leaseId === leaseId && p.periodLabel === periodLabel && Math.abs(p.amount - amount) < 0.01;
+    });
+  }
+
+  function buildSuggestions(transactions) {
+    var data = PMS.getData();
+    var infos = data.leases
+      .filter(function (l) { return l.status === "active"; })
+      .map(function (l) { return PMS.computeLeaseRentInfo(l, data.settings.reminderLeadDays); })
+      .filter(function (info) { return info.balance > 0; });
+
+    function tenantOf(info) { return data.tenants.find(function (t) { return t.id === info.lease.tenantId; }); }
+
+    var suggestions = [];
+    var skipped = 0;
+
+    transactions.forEach(function (tx) {
+      var nameMatches = infos.filter(function (info) {
+        var t = tenantOf(info);
+        return t && t.name && nameInDescription(t.name, tx.description);
+      });
+      var amountMatches = infos.filter(function (info) { return Math.abs(info.balance - tx.amount) < 0.01; });
+
+      var chosen = null, confidence = null, candidates = [];
+      if (nameMatches.length === 1) {
+        chosen = nameMatches[0];
+        confidence = Math.abs(chosen.balance - tx.amount) < 0.01 ? "high" : "medium";
+      } else if (nameMatches.length > 1) {
+        candidates = nameMatches; confidence = "ambiguous";
+      } else if (amountMatches.length === 1) {
+        chosen = amountMatches[0];
+        confidence = "medium";
+      } else if (amountMatches.length > 1) {
+        candidates = amountMatches; confidence = "ambiguous";
+      } else {
+        skipped++;
+        return;
+      }
+
+      var effectiveList = chosen ? [chosen] : candidates;
+      suggestions.push({
+        date: tx.date,
+        description: tx.description,
+        amount: tx.amount,
+        fromPDF: !!tx.fromPDF,
+        confidence: confidence,
+        leaseId: chosen ? chosen.lease.id : null,
+        period: chosen ? chosen.period : null,
+        alreadyRecorded: chosen ? isDuplicate(data, chosen.lease.id, chosen.period, tx.amount) : false,
+        options: effectiveList.map(function (info) {
+          var t = tenantOf(info);
+          var prop = data.properties.find(function (p) { return p.id === info.lease.propertyId; });
+          return {
+            leaseId: info.lease.id,
+            period: info.period,
+            label: (t ? t.name : "Unknown tenant") + " — " + (prop ? prop.name : "Unknown property"),
+          };
+        }),
+      });
+    });
+
+    return { suggestions: suggestions, skippedCount: skipped, totalCount: transactions.length };
+  }
+
+  // ---------- review UI ----------
+  function confidenceBadge(row) {
+    if (row.alreadyRecorded) return '<span class="pill pill-neutral">Already recorded</span>';
+    if (row.confidence === "high") return '<span class="pill pill-success">Strong match</span>';
+    if (row.confidence === "medium") return '<span class="pill pill-warning">Likely match</span>';
+    return '<span class="pill pill-danger">Needs your pick</span>';
+  }
+
+  function renderReview(root, close, result, data, refresh) {
+    var body = root.querySelector("#modalBody");
+    var footer = root.querySelector("#modalFooter");
+    var s = result.suggestions;
+
+    var summaryBits = [];
+    summaryBits.push(result.totalCount + " incoming transaction" + (result.totalCount === 1 ? "" : "s") + " found");
+    summaryBits.push(s.length + " matched to a tenant");
+    if (result.skippedCount) summaryBits.push(result.skippedCount + " didn't match any tenant's rent amount and " + (result.skippedCount === 1 ? "was" : "were") + " skipped");
+
+    var pdfWarning = s.some(function (r) { return r.fromPDF; })
+      ? '<div class="import-warning">This came from a PDF, which is best-effort — double-check every row below (dates, amounts, and the right tenant) before confirming.</div>'
+      : "";
+
+    var rowsHtml = s.map(function (row, idx) {
+      var disabled = row.alreadyRecorded;
+      var ambiguous = row.options.length > 1;
+      var defaultChecked = !disabled && !ambiguous;
+      var selectHtml = ambiguous
+        ? '<select class="input" data-assign="' + idx + '"><option value="">Pick tenant…</option>' +
+            row.options.map(function (o, oi) { return '<option value="' + oi + '">' + PMSUI.escapeHtml(o.label) + "</option>"; }).join("") +
+          "</select>"
+        : PMSUI.escapeHtml(row.options[0] ? row.options[0].label : "—");
+
+      return (
+        '<tr class="' + (disabled ? "row-disabled" : "") + '" data-row="' + idx + '">' +
+          '<td><input type="checkbox" data-check="' + idx + '"' + (defaultChecked ? " checked" : "") + (disabled || (ambiguous) ? " disabled" : "") + " /></td>" +
+          "<td>" + PMS.formatDate(row.date) + "</td>" +
+          '<td style="max-width:220px;">' + PMSUI.escapeHtml(row.description) + "</td>" +
+          "<td>" + PMS.formatCurrency(row.amount, data.settings.currency) + "</td>" +
+          "<td>" + selectHtml + "</td>" +
+          "<td>" + confidenceBadge(row) + "</td>" +
+        "</tr>"
+      );
+    }).join("");
+
+    body.innerHTML =
+      '<div class="import-summary">' + summaryBits.join(" · ") + ".</div>" +
+      pdfWarning +
+      (s.length
+        ? '<div class="table-wrap"><table class="data-table"><thead><tr>' +
+            "<th></th><th>Date</th><th>Description</th><th>Amount</th><th>Apply to</th><th>Confidence</th>" +
+          "</tr></thead><tbody>" + rowsHtml + "</tbody></table></div>"
+        : '<p class="text-secondary">No transactions in this file matched an active tenant\'s rent amount, so there\'s nothing to import.</p>');
+
+    footer.innerHTML =
+      '<button class="btn btn-ghost" id="reviewCancel">Cancel</button>' +
+      (s.length ? '<button class="btn btn-primary" id="reviewConfirm">Confirm & Record Payments</button>' : "");
+
+    footer.querySelector("#reviewCancel").addEventListener("click", close);
+
+    body.querySelectorAll("[data-assign]").forEach(function (sel) {
+      sel.addEventListener("change", function () {
+        var idx = Number(sel.getAttribute("data-assign"));
+        var checkbox = body.querySelector('[data-check="' + idx + '"]');
+        if (sel.value === "") { checkbox.checked = false; checkbox.disabled = true; }
+        else { checkbox.disabled = false; checkbox.checked = true; }
+      });
+    });
+
+    var confirmBtn = footer.querySelector("#reviewConfirm");
+    if (confirmBtn) {
+      confirmBtn.addEventListener("click", function () {
+        var recorded = 0;
+        s.forEach(function (row, idx) {
+          var checkbox = body.querySelector('[data-check="' + idx + '"]');
+          if (!checkbox || !checkbox.checked) return;
+          var leaseId = row.leaseId, period = row.period;
+          if (!leaseId) {
+            var sel = body.querySelector('[data-assign="' + idx + '"]');
+            var chosenOpt = sel && sel.value !== "" ? row.options[Number(sel.value)] : null;
+            if (!chosenOpt) return;
+            leaseId = chosenOpt.leaseId; period = chosenOpt.period;
+          }
+          PMS.addRentPayment({
+            leaseId: leaseId,
+            amount: row.amount,
+            date: row.date,
+            method: "Bank Transfer",
+            note: "Imported from bank statement" + (row.description ? " — " + row.description : ""),
+            periodLabel: period,
+          });
+          recorded++;
+        });
+        close();
+        if (recorded > 0) PMSUI.toast(recorded + " payment" + (recorded === 1 ? "" : "s") + " recorded from bank import.");
+        else PMSUI.toast("Nothing selected — no payments were recorded.", "info");
+        if (refresh) refresh();
+      });
+    }
+  }
+
+  // ---------- entry point ----------
+  function openImportModal(refresh) {
+    var body =
+      '<p class="text-secondary" style="margin:0 0 4px;">Upload a bank statement export and this will suggest which tenant each deposit belongs to, based on the amount and description. Nothing is marked paid until you review and confirm.</p>' +
+      '<div class="field"><label>Statement file</label><input type="file" class="input" id="bankFile" accept=".csv,.xlsx,.xls,.pdf" /></div>' +
+      '<p class="text-secondary" style="margin:0;font-size:12px;">Best results: a CSV or Excel export from your bank\'s online portal. A text-based PDF statement also works but needs closer review — scanned/photographed statements can\'t be read.</p>' +
+      '<div id="bankImportStatus"></div>';
+
+    var modal = PMSUI.openModal({
+      title: "Import Bank Statement",
+      wide: true,
+      body: body,
+      footer: '<button class="btn btn-ghost" id="bankCancel">Cancel</button>',
+      onMount: function (root, close) {
+        root.querySelector("#bankCancel").addEventListener("click", close);
+        var fileInput = root.querySelector("#bankFile");
+        var statusEl = root.querySelector("#bankImportStatus");
+
+        fileInput.addEventListener("change", function () {
+          var file = fileInput.files[0];
+          if (!file) return;
+          statusEl.innerHTML = '<p class="text-secondary">Reading ' + PMSUI.escapeHtml(file.name) + "…</p>";
+          fileInput.disabled = true;
+
+          var name = file.name.toLowerCase();
+          var isPDF = /\.pdf$/.test(name);
+          var isXLSX = /\.xlsx?$/.test(name);
+
+          var work;
+          if (isPDF) {
+            work = file.arrayBuffer().then(parsePDFFile);
+          } else if (isXLSX) {
+            work = file.arrayBuffer().then(parseXLSXFile);
+          } else {
+            work = file.text().then(parseCSVFile);
+          }
+
+          work.then(function (transactions) {
+            var data = PMS.getData();
+            var result = buildSuggestions(transactions);
+            renderReview(root, close, result, data, refresh);
+          }).catch(function (err) {
+            statusEl.innerHTML = '<div class="import-warning">' + PMSUI.escapeHtml(err && err.message ? err.message : "Couldn't read that file.") + "</div>";
+            fileInput.disabled = false;
+          });
+        });
+      },
+    });
+    return modal;
+  }
+
+  global.PMSBankImport = {
+    openImportModal: openImportModal,
+    // exposed for testing
+    _parseCSVText: parseCSVText,
+    _rowsToTransactions: rowsToTransactions,
+    _normalizeDate: normalizeDate,
+    _parseAmount: parseAmount,
+    _nameInDescription: nameInDescription,
+  };
+})(window);
+
+</script>
+<script>
 /* Rent page */
 (function () {
   "use strict";
@@ -1155,6 +1657,10 @@ html:not(.unlocked) .mobile-topbar {
   var expandedId = null;
 
   shell.setTitle("Rent", "This period's status for every active lease, and full payment history.");
+  shell.setActions('<button class="btn btn-secondary" id="importBankBtn">' + PMSUI.ICONS.upload + '<span class="long">Import Bank Statement</span></button>');
+  document.getElementById("importBankBtn").addEventListener("click", function () {
+    PMSBankImport.openImportModal(function () { render(); });
+  });
 
   var STATUS_TONE = { paid: "pill-success", "due-soon": "pill-warning", overdue: "pill-danger", upcoming: "pill-neutral" };
   var STATUS_LABEL = { paid: "Paid", "due-soon": "Due Soon", overdue: "Overdue", upcoming: "Upcoming" };

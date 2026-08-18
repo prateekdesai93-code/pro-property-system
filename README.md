@@ -1,9 +1,9 @@
 # Property Management System (single-file, black &amp; white, password-locked)
 
 A stark black-and-white dashboard for landlords — properties, tenants,
-leases, rent tracking with automatic reminders, and maintenance requests.
-Runs entirely in the browser, no build step, no npm, no server. Locked
-behind a simple access code you set yourself.
+leases, rent tracking with automatic reminders, bank statement import, and
+maintenance requests. Runs entirely in the browser, no build step, no npm,
+no server. Locked behind a simple access code you set yourself.
 
 ## What's in this folder
 
@@ -13,9 +13,9 @@ Just 6 files — no folders, nothing to lose during upload:
 index.html          ← Dashboard (open this one first)
 properties.html      ← Properties list, add/edit, assign tenants
 tenants.html         ← Tenant directory
-rent.html            ← This period's rent status + full payment history
+rent.html            ← This period's rent status, payment history, bank import
 maintenance.html     ← Maintenance request tracker
-settings.html        ← Profile, currency, theme, due-day defaults, backup
+settings.html         ← Profile, currency, theme, due-day defaults, backup
 README.md            ← This file
 ```
 
@@ -61,6 +61,53 @@ in. Don't put anything you'd consider truly sensitive behind it.
   and white — just inverted — so pick whichever is easier to read. This
   is a per-browser setting stored with the rest of your data.
 
+## Importing a bank statement to fill in rent (Rent page)
+
+Click **Import Bank Statement** at the top of the Rent page and upload a
+file exported from your bank. The app looks through it for deposits and
+suggests which tenant each one belongs to — **it never marks anything
+paid on its own**. You always see a review screen first and have to click
+"Confirm & Record Payments" before anything is saved.
+
+**What to upload:**
+
+- **CSV or Excel export** (recommended, most reliable) — almost every
+  bank's online portal has a "Download transactions" or "Export" button
+  that produces one of these. The app looks for a date column, a
+  description/memo column, and either an "Amount" column or separate
+  "Credit"/"Debit" columns — it's flexible about exact column names and
+  order, as long as the first row is the headers.
+- **PDF statement** — works too, but PDF layouts vary wildly bank to
+  bank, so treat every row it finds as a rough guess and double-check the
+  date, amount, and tenant before confirming. It cannot read a scanned or
+  photographed statement — only a real, text-based PDF export.
+
+**How matching works:**
+
+- A deposit is suggested for a tenant when either the tenant's name shows
+  up in the transaction description, or the deposit amount exactly
+  matches that tenant's current rent balance and no other active tenant
+  shares that same balance.
+- If a deposit's amount matches more than one tenant and there's no name
+  to go on, it's marked **"Needs your pick"** — pick the right tenant
+  from the dropdown in that row before it can be applied. This is on
+  purpose: guessing wrong on a same-amount collision would silently mark
+  the wrong tenant's rent as paid.
+- Anything already recorded (matching tenant, period, and amount) shows as
+  **"Already recorded"** and is skipped automatically, so re-uploading
+  the same statement twice by mistake won't double-count a payment.
+  Deposits that don't match any active tenant's rent amount at all are
+  simply left out of the review list (the summary line at the top tells
+  you how many were skipped).
+- Every payment you confirm shows up in the normal Payment History list
+  below, tagged "Bank Transfer" with a note that it came from an import,
+  exactly like one you'd record by hand.
+
+The CSV/Excel path runs with plain JavaScript already in this file. The
+PDF path loads a PDF-reading library from a CDN the first time you pick a
+PDF file, so it needs an internet connection (the CSV/Excel path does
+not).
+
 ## Try it on your computer right now
 
 Double-click `index.html`, type `property2026` (or whatever you changed
@@ -98,6 +145,9 @@ is sent anywhere, no account, no login beyond the access code.
   person who unlocks the app has their own separate data.
 - Clearing browser site data erases it.
 - **Settings → Backup & Restore** downloads/restores a `.json` backup.
+- The bank statement file you upload is read entirely in your browser and
+  never leaves it — only the matched transactions you confirm are saved,
+  into the same local storage as everything else.
 
 ## Customizing
 

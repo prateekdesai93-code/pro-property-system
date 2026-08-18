@@ -386,12 +386,25 @@ textarea.input { resize: vertical; min-height: 72px; }
   box-shadow: var(--shadow-2);
   animation: slideUp 0.18s ease;
 }
+.modal.modal-wide { max-width: 780px; }
 .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border); }
 .modal-header h3 { font-size: 14.5px; font-weight: 650; }
 .modal-body { padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
 .modal-footer { display: flex; justify-content: flex-end; gap: 8px; padding: 14px 20px; border-top: 1px solid var(--border); }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ---------- Data table (bank import review, etc.) ---------- */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); }
+table.data-table { width: 100%; min-width: 640px; border-collapse: collapse; text-align: left; font-size: 12.5px; }
+table.data-table thead tr { border-bottom: 1px solid var(--border); background: var(--surface-2); }
+table.data-table th { padding: 10px 12px; font-size: 11px; font-weight: 650; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap; }
+table.data-table td { padding: 10px 12px; border-top: 1px solid var(--border); color: var(--text-secondary); vertical-align: middle; }
+table.data-table tbody tr:hover { background: var(--surface-hover); }
+table.data-table tr.row-disabled { opacity: 0.45; }
+table.data-table select.input, table.data-table input.input { padding: 6px 8px; font-size: 12.5px; height: auto; }
+.import-summary { font-size: 12.5px; color: var(--text-secondary); background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
+.import-warning { font-size: 12px; color: var(--warning); background: var(--warning-soft); border: 1px solid var(--warning); border-radius: var(--radius-sm); padding: 8px 12px; }
 
 /* ---------- Toasts ---------- */
 .toast-root {
@@ -1075,7 +1088,7 @@ html:not(.unlocked) .mobile-topbar {
     var root = document.getElementById("modal-root");
     var backdrop = el(
       '<div class="modal-backdrop">' +
-        '<div class="modal" role="dialog" aria-modal="true">' +
+        '<div class="modal' + (opts.wide ? " modal-wide" : "") + '" role="dialog" aria-modal="true">' +
           '<div class="modal-header"><h3>' + escapeHtml(opts.title) + '</h3><button class="btn-icon neutral" id="modalCloseBtn" aria-label="Close">' + ICONS.close + "</button></div>" +
           '<div class="modal-body" id="modalBody"></div>' +
           '<div class="modal-footer" id="modalFooter"></div>' +
