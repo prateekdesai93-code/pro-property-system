@@ -39,8 +39,39 @@
   --radius-sm: 8px;
   --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.6);
   --shadow-2: 0 16px 40px -14px rgba(0, 0, 0, 0.85);
+  --accent-glow: rgba(255, 255, 255, 0.28);
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
   --sidebar-w: 248px;
+}
+
+/* Light theme — still pure black & white, just inverted. Toggle in
+   Settings → Theme sets data-theme="light" on <html>. */
+html[data-theme="light"] {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f2f2f2;
+  --surface-hover: #e6e6e6;
+  --border: #dcdcdc;
+  --border-strong: #bfbfbf;
+  --text: #000000;
+  --text-secondary: #4d4d4d;
+  --text-tertiary: #767676;
+
+  --accent: #000000;
+  --accent-soft: rgba(0, 0, 0, 0.08);
+  --accent-text: #000000;
+  --accent-contrast: #ffffff;
+
+  --success: #15803d;
+  --success-soft: rgba(21, 128, 61, 0.12);
+  --warning: #b45309;
+  --warning-soft: rgba(180, 83, 9, 0.12);
+  --danger: #b91c1c;
+  --danger-soft: rgba(185, 28, 28, 0.12);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-2: 0 16px 40px -14px rgba(0, 0, 0, 0.2);
+  --accent-glow: rgba(0, 0, 0, 0.18);
 }
 
 * { box-sizing: border-box; }
@@ -93,7 +124,7 @@ img { max-width: 100%; display: block; }
   display: flex; align-items: center; justify-content: center;
   color: var(--accent-contrast); font-weight: 700; font-size: 15px;
   flex-shrink: 0;
-  box-shadow: 0 4px 16px -4px rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 16px -4px var(--accent-glow);
 }
 .brand-text { min-width: 0; }
 .brand-title { font-size: 13.5px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -183,11 +214,25 @@ img { max-width: 100%; display: block; }
   transition: transform 0.08s ease, background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
   white-space: nowrap;
   padding: 8px 14px;
+  text-decoration: none;
 }
-.btn svg { width: 15px; height: 15px; }
+.btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+/* Safety net: any inline SVG icon not covered by a more specific rule
+   below still needs an explicit size, or Chromium can collapse it to
+   0x0 inside auto-sized flex containers (a real, confirmed bug — not
+   theoretical). Specific rules after this one win via normal cascade
+   order/specificity, so this only fills gaps. */
+svg { width: 16px; height: 16px; flex-shrink: 0; }
+.mobile-menu-btn svg { width: 20px; height: 20px; }
+.btn-icon svg { width: 16px; height: 16px; }
+.card-link svg { width: 14px; height: 14px; }
+.stat-card .icon-wrap svg { width: 18px; height: 18px; }
+.empty .icon-wrap svg { width: 22px; height: 22px; }
+.lock-mark svg { width: 20px; height: 20px; }
 .btn:active { transform: translateY(1px); }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.btn-primary { background: var(--accent); color: var(--accent-contrast); box-shadow: 0 6px 18px -8px rgba(255, 255, 255, 0.3); }
+.btn-primary { background: var(--accent); color: var(--accent-contrast); box-shadow: 0 6px 18px -8px var(--accent-glow); }
 .btn-primary:hover:not(:disabled) { filter: brightness(0.9); }
 .btn-secondary { background: var(--surface-2); border-color: var(--border-strong); color: var(--text); }
 .btn-secondary:hover:not(:disabled) { background: var(--surface-hover); }
@@ -474,7 +519,7 @@ html:not(.unlocked) .mobile-topbar {
    in EVERY .html file if you're using the single-file
    version — see the README for the one-line find & replace).
    ========================================================= */
-  var ACCESS_CODE = "changeme-2026";
+  var ACCESS_CODE = "property2026";
 /* =========================================================
    IMPORTANT — read this before you rely on it:
    This is a simple front-door lock, not real security. This
@@ -566,6 +611,8 @@ html:not(.unlocked) .mobile-topbar {
     phone: "",
     address: "",
     currency: "USD",
+    customSymbol: "",
+    theme: "dark",
     defaultDueDay: 1,
     reminderLeadDays: 5,
     accentColor: "blue",
@@ -791,13 +838,40 @@ html:not(.unlocked) .mobile-topbar {
   }
 
   // ---------- formatting ----------
-  var CURRENCY_LOCALE = { USD: "en-US", EUR: "de-DE", GBP: "en-GB", INR: "en-IN", CAD: "en-CA", AUD: "en-AU" };
+  // code -> [locale, symbol]. Locale mainly affects number grouping; the
+  // symbol here is only used for the Settings dropdown preview and as a
+  // fallback if Intl can't format a given code in this browser.
+  var CURRENCY_META = {
+    USD: ["en-US", "$"], EUR: ["de-DE", "€"], GBP: ["en-GB", "£"], INR: ["en-IN", "₹"],
+    AUD: ["en-AU", "$"], CAD: ["en-CA", "$"], NZD: ["en-NZ", "$"], SGD: ["en-SG", "$"],
+    HKD: ["en-HK", "$"], JPY: ["ja-JP", "¥"], CNY: ["zh-CN", "¥"], KRW: ["ko-KR", "₩"],
+    CHF: ["de-CH", "CHF"], SEK: ["sv-SE", "kr"], NOK: ["nb-NO", "kr"], DKK: ["da-DK", "kr"],
+    PLN: ["pl-PL", "zł"], CZK: ["cs-CZ", "Kč"], HUF: ["hu-HU", "Ft"], RON: ["ro-RO", "lei"],
+    TRY: ["tr-TR", "₺"], RUB: ["ru-RU", "₽"], ZAR: ["en-ZA", "R"], NGN: ["en-NG", "₦"],
+    EGP: ["ar-EG", "E£"], KES: ["en-KE", "KSh"], AED: ["ar-AE", "د.إ"], SAR: ["ar-SA", "﷼"],
+    QAR: ["ar-QA", "﷼"], KWD: ["ar-KW", "د.ك"], ILS: ["he-IL", "₪"], THB: ["th-TH", "฿"],
+    IDR: ["id-ID", "Rp"], MYR: ["ms-MY", "RM"], PHP: ["en-PH", "₱"], VND: ["vi-VN", "₫"],
+    PKR: ["en-PK", "₨"], BDT: ["bn-BD", "৳"], LKR: ["en-LK", "₨"], NPR: ["ne-NP", "₨"],
+    BRL: ["pt-BR", "R$"], MXN: ["es-MX", "$"], ARS: ["es-AR", "$"], CLP: ["es-CL", "$"],
+    COP: ["es-CO", "$"], PEN: ["es-PE", "S/"], TWD: ["zh-TW", "NT$"],
+  };
+  function currencySymbol(code) {
+    var meta = CURRENCY_META[code];
+    return meta ? meta[1] : code;
+  }
   function formatCurrency(amount, currency) {
+    var amt = amount || 0;
+    var customSymbol = data.settings && data.settings.customSymbol;
+    if (customSymbol) {
+      var numStr = Math.abs(amt).toLocaleString(undefined, { maximumFractionDigits: 0 });
+      return (amt < 0 ? "-" : "") + customSymbol + numStr;
+    }
     var cur = currency || "USD";
+    var meta = CURRENCY_META[cur];
     try {
-      return new Intl.NumberFormat(CURRENCY_LOCALE[cur] || "en-US", { style: "currency", currency: cur, maximumFractionDigits: 0 }).format(amount || 0);
+      return new Intl.NumberFormat((meta && meta[0]) || "en-US", { style: "currency", currency: cur, maximumFractionDigits: 0 }).format(amt);
     } catch (e) {
-      return "$" + Math.round(amount || 0);
+      return currencySymbol(cur) + Math.round(amt).toLocaleString();
     }
   }
   function formatDate(iso) {
@@ -870,6 +944,8 @@ html:not(.unlocked) .mobile-topbar {
 
     formatCurrency: formatCurrency,
     formatDate: formatDate,
+    currencySymbol: currencySymbol,
+    CURRENCY_CODES: Object.keys(CURRENCY_META),
 
     exportData: exportData,
     importData: importData,
@@ -923,8 +999,9 @@ html:not(.unlocked) .mobile-topbar {
   }
 
   function applyAccent() {
-    var accent = PMS.getData().settings.accentColor || "blue";
-    document.documentElement.setAttribute("data-accent", accent);
+    var settings = PMS.getData().settings;
+    document.documentElement.setAttribute("data-accent", settings.accentColor || "blue");
+    document.documentElement.setAttribute("data-theme", settings.theme || "dark");
   }
 
   function renderShell(activeKey) {

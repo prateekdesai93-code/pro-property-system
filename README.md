@@ -15,48 +15,56 @@ properties.html      ← Properties list, add/edit, assign tenants
 tenants.html         ← Tenant directory
 rent.html            ← This period's rent status + full payment history
 maintenance.html     ← Maintenance request tracker
-settings.html        ← Profile, currency, due-day defaults, backup
+settings.html        ← Profile, currency, theme, due-day defaults, backup
 README.md            ← This file
 ```
 
-## Setting your customer's access code — do this before you hand it over
+## The access code for this app
 
-Every visitor has to type a code before they can see anything. Right now
-that code is set to `changeme-2026`, and you need to change it before
-publishing, or anyone who has this README can get in.
+Right now every page in this folder is set to the code **`property2026`**.
+Give this code to whoever you're sharing this app with. If you want a
+different code (recommended — especially before selling to a real
+customer), see below.
+
+### Changing it
 
 1. Open `index.html` in a plain text editor (Notepad, TextEdit, VS Code —
    anything works).
-2. Press Ctrl+F / Cmd+F and search for `changeme-2026`.
-3. Replace it with whatever code you want to give this customer — for
-   example `"smith-jan-2026"`. Keep the quote marks around it.
-4. **Repeat this in all 6 `.html` files** — each page checks its own copy
-   of the code, so if you skip one, that page will still ask for the old
-   code. (This is quick to do with your editor's "Find in Folder / Replace
-   in Files" feature if it has one — search for `changeme-2026` across all
-   6 files at once and replace every occurrence.)
+2. Press Ctrl+F / Cmd+F and search for `property2026`.
+3. Replace it with your new code — for example `"smith-jan-2026"`. Keep
+   the quote marks around it.
+4. **Repeat this in all 6 `.html` files** — each page checks its own copy,
+   so if you skip one, that page keeps asking for the old code. Most text
+   editors have a "Find in Folder / Replace in Files" feature — use it to
+   change all 6 files in one go.
 5. Save all 6 files, then upload them to GitHub as normal.
-
-Give your customer the web address plus the code you chose. The first
-time they visit, they'll see an "Enter Access Code" screen; once they type
-it correctly, that browser stays unlocked (it won't ask again on that
-device unless they clear their browser data).
 
 **Be honest with yourself about what this does and doesn't do:** this app
 has no server, so the code lives right inside the page. Anyone who opens
 their browser's "View Page Source" can read it in plain text. It's a real
 deterrent against a customer sharing the link casually or a stranger
 stumbling onto it — not a lock that would stop someone determined to get
-in. Don't put anything you'd consider truly sensitive behind it. If you
-ever want a version that can't be bypassed this way, that needs a small
-server component (a real login) — let me know and I can help you plan
-that out.
+in. Don't put anything you'd consider truly sensitive behind it.
+
+## Currency &amp; theme (Settings page)
+
+- **Currency** — the dropdown now lists 47 currencies, each showing its
+  symbol right in the list (e.g. "INR (₹)", "EUR (€)") so you can see what
+  you're picking.
+- **Custom symbol override** — if your currency isn't listed, or you just
+  want a different symbol, type it into "Custom symbol override" in
+  Settings → Rent Defaults. Once set, it replaces the symbol everywhere in
+  the app. Leave it blank to use the standard symbol for whatever currency
+  you picked above.
+- **Theme** — Settings → Theme has two buttons: Dark (black background,
+  the default) and Light (white background). Both are still pure black
+  and white — just inverted — so pick whichever is easier to read. This
+  is a per-browser setting stored with the rest of your data.
 
 ## Try it on your computer right now
 
-Double-click `index.html`, type in whatever code is currently set (the
-default is `changeme-2026` until you change it per the steps above), and
-you're in.
+Double-click `index.html`, type `property2026` (or whatever you changed
+it to), and you're in.
 
 ## Publish it for free on GitHub Pages
 
