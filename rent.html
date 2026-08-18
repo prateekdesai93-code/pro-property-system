@@ -4,50 +4,44 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Rent · Property Management System</title>
-<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzNiODJmNiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM5M2M1ZmQiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjE2IiBmaWxsPSJ1cmwoI2cpIi8+CiAgPHRleHQgeD0iMzIiIHk9IjQzIiBmb250LWZhbWlseT0iLWFwcGxlLXN5c3RlbSxTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5QPC90ZXh0Pgo8L3N2Zz4K" type="image/svg+xml" />
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiMwMDAwMDAiLz4KICA8dGV4dCB4PSIzMiIgeT0iNDMiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLFNlZ29lIFVJLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzIiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlA8L3RleHQ+Cjwvc3ZnPgo=" type="image/svg+xml" />
 <style>
 /* =========================================================
    Property Management System — Design System
-   Premium dark-mode UI. No build step, no frameworks.
+   Pure black & white. No build step, no frameworks, no blue.
    ========================================================= */
 
 :root {
-  --bg: #0a0e13;
-  --surface: #10161d;
-  --surface-2: #151d26;
-  --surface-hover: #1b2530;
-  --border: #202a35;
-  --border-strong: #2a3644;
-  --text: #eef3f8;
-  --text-secondary: #a1b1c2;
-  --text-tertiary: #6b7c8d;
+  --bg: #000000;
+  --surface: #000000;
+  --surface-2: #0e0e0e;
+  --surface-hover: #1a1a1a;
+  --border: #262626;
+  --border-strong: #404040;
+  --text: #ffffff;
+  --text-secondary: #a8a8a8;
+  --text-tertiary: #707070;
 
-  --accent: #3b82f6;
-  --accent-soft: rgba(59, 130, 246, 0.15);
-  --accent-text: #82b4ff;
+  --accent: #ffffff;
+  --accent-soft: rgba(255, 255, 255, 0.1);
+  --accent-text: #ffffff;
+  --accent-contrast: #000000;
 
-  --success: #22c55e;
-  --success-soft: rgba(34, 197, 94, 0.15);
-  --warning: #f59e0b;
-  --warning-soft: rgba(245, 158, 11, 0.15);
-  --danger: #ef4444;
-  --danger-soft: rgba(239, 68, 68, 0.15);
+  --success: #4ade80;
+  --success-soft: rgba(74, 222, 128, 0.14);
+  --warning: #facc15;
+  --warning-soft: rgba(250, 204, 21, 0.14);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.14);
 
   --radius-lg: 16px;
   --radius: 12px;
   --radius-sm: 8px;
-  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35);
-  --shadow-2: 0 12px 32px -12px rgba(0, 0, 0, 0.55);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.6);
+  --shadow-2: 0 16px 40px -14px rgba(0, 0, 0, 0.85);
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
   --sidebar-w: 248px;
 }
-
-[data-accent="violet"] { --accent: #8b5cf6; --accent-soft: rgba(139, 92, 246, 0.15); --accent-text: #bda4ff; }
-[data-accent="amber"]  { --accent: #f59e0b; --accent-soft: rgba(245, 158, 11, 0.15); --accent-text: #ffc561; }
-[data-accent="emerald"]{ --accent: #10b981; --accent-soft: rgba(16, 185, 129, 0.15); --accent-text: #63e6bb; }
-[data-accent="rose"]   { --accent: #f43f5e; --accent-soft: rgba(244, 63, 94, 0.15); --accent-text: #ff9bab; }
-[data-accent="cyan"]   { --accent: #06b6d4; --accent-soft: rgba(6, 182, 212, 0.15); --accent-text: #6fe6fb; }
-[data-accent="blue"]   { --accent: #3b82f6; --accent-soft: rgba(59, 130, 246, 0.15); --accent-text: #82b4ff; }
 
 * { box-sizing: border-box; }
 html, body { height: 100%; }
@@ -95,11 +89,11 @@ img { max-width: 100%; display: block; }
 .brand-mark {
   width: 34px; height: 34px;
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 60%, #fff));
+  background: var(--accent);
   display: flex; align-items: center; justify-content: center;
-  color: #fff; font-weight: 700; font-size: 15px;
+  color: var(--accent-contrast); font-weight: 700; font-size: 15px;
   flex-shrink: 0;
-  box-shadow: 0 4px 14px -4px var(--accent);
+  box-shadow: 0 4px 16px -4px rgba(255, 255, 255, 0.25);
 }
 .brand-text { min-width: 0; }
 .brand-title { font-size: 13.5px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -193,8 +187,8 @@ img { max-width: 100%; display: block; }
 .btn svg { width: 15px; height: 15px; }
 .btn:active { transform: translateY(1px); }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.btn-primary { background: var(--accent); color: #fff; box-shadow: 0 6px 16px -8px var(--accent); }
-.btn-primary:hover:not(:disabled) { filter: brightness(1.08); }
+.btn-primary { background: var(--accent); color: var(--accent-contrast); box-shadow: 0 6px 18px -8px rgba(255, 255, 255, 0.3); }
+.btn-primary:hover:not(:disabled) { filter: brightness(0.9); }
 .btn-secondary { background: var(--surface-2); border-color: var(--border-strong); color: var(--text); }
 .btn-secondary:hover:not(:disabled) { background: var(--surface-hover); }
 .btn-ghost { background: transparent; color: var(--text-secondary); }
@@ -404,6 +398,46 @@ textarea.input { resize: vertical; min-height: 72px; }
 }
 .logo-preview img { width: 100%; height: 100%; object-fit: contain; }
 
+/* ---------- Lock screen (access-code gate) ---------- */
+html:not(.unlocked) #app-shell,
+html:not(.unlocked) .mobile-topbar {
+  display: none !important;
+}
+.lock-screen {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 500;
+  padding: 20px;
+}
+.lock-card {
+  width: 100%; max-width: 360px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  text-align: center;
+  display: flex; flex-direction: column; gap: 14px;
+  box-shadow: var(--shadow-2);
+}
+.lock-mark {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 18px;
+  margin: 0 auto 4px;
+}
+.lock-card h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+.lock-card p.lock-sub { font-size: 12.5px; color: var(--text-secondary); margin-top: -8px; }
+.lock-card .lock-error {
+  display: none;
+  font-size: 12px;
+  color: var(--danger);
+  margin-top: -6px;
+}
+.lock-card .lock-error.show { display: block; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
   .stat-grid { grid-template-columns: repeat(2, 1fr); }
@@ -429,6 +463,90 @@ textarea.input { resize: vertical; min-height: 72px; }
 <div class="toast-root" id="toast-root"></div>
 <div id="modal-root"></div>
 
+<script>
+/* =========================================================
+   Property Management System — Access Code Gate
+   ---------------------------------------------------------
+   HOW TO SET YOUR OWN PASSWORD:
+   Change the text between the quotes on the next line to
+   whatever code you want to give this customer, then save
+   this file and re-upload it (this exact edit must be made
+   in EVERY .html file if you're using the single-file
+   version — see the README for the one-line find & replace).
+   ========================================================= */
+  var ACCESS_CODE = "changeme-2026";
+/* =========================================================
+   IMPORTANT — read this before you rely on it:
+   This is a simple front-door lock, not real security. This
+   app has no server, so the code above lives inside the page
+   itself — anyone who opens their browser's "View Page
+   Source" or Developer Tools can read it. It's enough to stop
+   casual visitors and people who don't have the code you gave
+   them, but do not use it to protect anything truly sensitive,
+   and assume a technical person could bypass it if they tried.
+   ========================================================= */
+
+(function () {
+  "use strict";
+
+  var STORAGE_KEY = "app_unlocked_v1";
+
+  function isUnlocked() {
+    try { return window.localStorage.getItem(STORAGE_KEY) === "1"; } catch (e) { return false; }
+  }
+  function markUnlocked() {
+    document.documentElement.classList.add("unlocked");
+    try { window.localStorage.setItem(STORAGE_KEY, "1"); } catch (e) {}
+  }
+
+  function showLockScreen() {
+    var overlay = document.createElement("div");
+    overlay.className = "lock-screen";
+    overlay.innerHTML =
+      '<div class="lock-card">' +
+        '<div class="lock-mark">&#128274;</div>' +
+        "<h1>Enter Access Code</h1>" +
+        '<p class="lock-sub">Ask whoever set you up with this app for your access code.</p>' +
+        '<input type="password" class="input" id="gateInput" placeholder="Access code" autocomplete="off" />' +
+        '<p class="lock-error" id="gateError">That code isn\'t right. Try again.</p>' +
+        '<button class="btn btn-primary" id="gateBtn" style="width:100%;justify-content:center;">Unlock</button>' +
+      "</div>";
+    document.body.appendChild(overlay);
+
+    var input = overlay.querySelector("#gateInput");
+    var err = overlay.querySelector("#gateError");
+
+    function attempt() {
+      if (input.value === ACCESS_CODE) {
+        markUnlocked();
+        overlay.remove();
+      } else {
+        err.classList.add("show");
+        input.value = "";
+        input.focus();
+      }
+    }
+
+    overlay.querySelector("#gateBtn").addEventListener("click", attempt);
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") attempt();
+    });
+    setTimeout(function () { input.focus(); }, 60);
+  }
+
+  if (isUnlocked()) {
+    document.documentElement.classList.add("unlocked");
+  } else {
+    document.documentElement.classList.remove("unlocked");
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", showLockScreen);
+    } else {
+      showLockScreen();
+    }
+  }
+})();
+
+</script>
 <script>
 /* =========================================================
    Property Management System — Data Layer
