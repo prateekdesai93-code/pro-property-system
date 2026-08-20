@@ -635,6 +635,18 @@ html:not(.unlocked) .mobile-topbar {
     invoicePrefix: "INV-",
     nextInvoiceNumber: 1,
     leaseRenewalLeadDays: 60,
+    // Preset invoice line items a landlord bills often (rent, utilities,
+    // etc.) with a fixed unit price, so invoicing doesn't mean re-typing
+    // the same description and rate every time. Fully editable in
+    // Settings — this is just a sensible starting point for a new
+    // portfolio, not a fixed list.
+    chargeItems: [
+      { id: "preset-rental", description: "Rental", unitPrice: 0 },
+      { id: "preset-electricity", description: "Electricity", unitPrice: 0 },
+      { id: "preset-water", description: "Water", unitPrice: 0 },
+      { id: "preset-refuse", description: "Refuse", unitPrice: 0 },
+      { id: "preset-sewerage", description: "Sewerage", unitPrice: 0 },
+    ],
   };
 
   function emptyData() {
@@ -647,6 +659,7 @@ html:not(.unlocked) .mobile-topbar {
       maintenanceRequests: [],
       expenses: [],
       invoices: [],
+      creditNotes: [],
       settings: Object.assign({}, DEFAULT_SETTINGS),
     };
   }
@@ -685,6 +698,7 @@ html:not(.unlocked) .mobile-topbar {
         maintenanceRequests: parsed.maintenanceRequests || [],
         expenses: parsed.expenses || [],
         invoices: parsed.invoices || [],
+        creditNotes: parsed.creditNotes || [],
       });
     } catch (e) {
       console.warn("PMS: could not parse saved data, starting fresh.", e);
@@ -740,6 +754,7 @@ html:not(.unlocked) .mobile-topbar {
     data.maintenanceRequests = data.maintenanceRequests.filter(function (m) { return m.propertyId !== id; });
     data.expenses = data.expenses.filter(function (e) { return e.propertyId !== id; });
     data.invoices = data.invoices.filter(function (inv) { return inv.propertyId !== id; });
+    data.creditNotes = data.creditNotes.filter(function (cn) { return cn.propertyId !== id; });
     persist();
   }
   function activeLeaseForProperty(propertyId) {
@@ -864,9 +879,54 @@ html:not(.unlocked) .mobile-topbar {
     persist();
   }
 
+  // ---------- credit notes ----------
+  // A credit note reduces what a tenant owes without being cash received --
+  // a deposit refund, a discount, a billing correction, a bad-debt write-off.
+  // Distinct from a rentPayment (money actually received) and from an
+  // invoice (a new charge). Shows up on that tenant's Statement as a credit
+  // against their balance.
+  function addCreditNote(input) {
+    var rec = Object.assign({}, input, { id: uid(), createdAt: nowISO() });
+    data.creditNotes.push(rec);
+    persist();
+    return rec;
+  }
+  function updateCreditNote(id, patch) {
+    var cn = data.creditNotes.find(function (x) { return x.id === id; });
+    if (!cn) return;
+    Object.assign(cn, patch);
+    persist();
+  }
+  function deleteCreditNote(id) {
+    data.creditNotes = data.creditNotes.filter(function (x) { return x.id !== id; });
+    persist();
+  }
+
   // ---------- settings ----------
   function updateSettings(patch) {
     data.settings = Object.assign({}, data.settings, patch);
+    persist();
+  }
+
+  // ---------- charge item presets (Settings) ----------
+  // Stored on settings.chargeItems. These functions always build new
+  // arrays/objects rather than mutating in place, so a fresh install's
+  // default presets (shared object literal in DEFAULT_SETTINGS) are never
+  // accidentally edited through a live data reference.
+  function addChargeItem(input) {
+    var rec = Object.assign({}, input, { id: uid() });
+    data.settings.chargeItems = (data.settings.chargeItems || []).concat([rec]);
+    persist();
+    return rec;
+  }
+  function updateChargeItem(id, patch) {
+    data.settings.chargeItems = (data.settings.chargeItems || []).map(function (x) {
+      return x.id === id ? Object.assign({}, x, patch) : x;
+    });
+    persist();
+  }
+  function deleteChargeItem(id) {
+    data.settings.chargeItems = (data.settings.chargeItems || []).filter(function (x) { return x.id !== id; });
     persist();
   }
 
@@ -957,6 +1017,10 @@ html:not(.unlocked) .mobile-topbar {
   // want ("HOA Fees", "Pest Control", etc.) without it being a fixed list.
   var EXPENSE_CATEGORIES = ["Maintenance", "Insurance", "Property Tax / Levy", "Bank Loan Payment", "Utility Bill", "Management Fee", "Other"];
 
+  // Suggested credit note reasons -- same free-text-with-suggestions pattern
+  // as expense categories above.
+  var CREDIT_NOTE_REASONS = ["Deposit Refund", "Discount", "Refund", "Billing Correction", "Write-off", "Needs Review", "Other"];
+
   var CURRENCY_META = {
     USD: ["en-US", "$"], EUR: ["de-DE", "€"], GBP: ["en-GB", "£"], INR: ["en-IN", "₹"],
     AUD: ["en-AU", "$"], CAD: ["en-CA", "$"], NZD: ["en-NZ", "$"], SGD: ["en-SG", "$"],
@@ -977,17 +1041,20 @@ html:not(.unlocked) .mobile-topbar {
   }
   function formatCurrency(amount, currency) {
     var amt = amount || 0;
+    // Always show 2 decimal places (cents) -- this is a financial app, and
+    // rounding to whole units on-screen (e.g. showing "R100" for R100.09)
+    // hides real balances and invoice totals from the landlord.
     var customSymbol = data.settings && data.settings.customSymbol;
     if (customSymbol) {
-      var numStr = Math.abs(amt).toLocaleString(undefined, { maximumFractionDigits: 0 });
+      var numStr = Math.abs(amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       return (amt < 0 ? "-" : "") + customSymbol + numStr;
     }
     var cur = currency || "USD";
     var meta = CURRENCY_META[cur];
     try {
-      return new Intl.NumberFormat((meta && meta[0]) || "en-US", { style: "currency", currency: cur, maximumFractionDigits: 0 }).format(amt);
+      return new Intl.NumberFormat((meta && meta[0]) || "en-US", { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(amt);
     } catch (e) {
-      return currencySymbol(cur) + Math.round(amt).toLocaleString();
+      return (amt < 0 ? "-" : "") + currencySymbol(cur) + Math.abs(amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
   }
   function formatDate(iso) {
@@ -1015,6 +1082,7 @@ html:not(.unlocked) .mobile-topbar {
         maintenanceRequests: parsed.maintenanceRequests || [],
         expenses: parsed.expenses || [],
         invoices: parsed.invoices || [],
+        creditNotes: parsed.creditNotes || [],
       });
       persist();
       return { ok: true };
@@ -1063,7 +1131,14 @@ html:not(.unlocked) .mobile-topbar {
     deleteInvoice: deleteInvoice,
     peekNextInvoiceNumber: peekNextInvoiceNumber,
 
+    addCreditNote: addCreditNote,
+    updateCreditNote: updateCreditNote,
+    deleteCreditNote: deleteCreditNote,
+
     updateSettings: updateSettings,
+    addChargeItem: addChargeItem,
+    updateChargeItem: updateChargeItem,
+    deleteChargeItem: deleteChargeItem,
 
     currentPeriodLabel: currentPeriodLabel,
     periodKey: periodKey,
@@ -1079,6 +1154,7 @@ html:not(.unlocked) .mobile-topbar {
     currencySymbol: currencySymbol,
     CURRENCY_CODES: Object.keys(CURRENCY_META),
     EXPENSE_CATEGORIES: EXPENSE_CATEGORIES,
+    CREDIT_NOTE_REASONS: CREDIT_NOTE_REASONS,
 
     exportData: exportData,
     importData: importData,
@@ -1097,7 +1173,7 @@ html:not(.unlocked) .mobile-topbar {
 (function (global) {
   "use strict";
 
-  var BUILD_DATE = "2026-08-18";
+  var BUILD_DATE = "2026-08-20";
 
   var ICONS = {
     dashboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',

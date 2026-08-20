@@ -634,6 +634,18 @@ html:not(.unlocked) .mobile-topbar {
     invoicePrefix: "INV-",
     nextInvoiceNumber: 1,
     leaseRenewalLeadDays: 60,
+    // Preset invoice line items a landlord bills often (rent, utilities,
+    // etc.) with a fixed unit price, so invoicing doesn't mean re-typing
+    // the same description and rate every time. Fully editable in
+    // Settings — this is just a sensible starting point for a new
+    // portfolio, not a fixed list.
+    chargeItems: [
+      { id: "preset-rental", description: "Rental", unitPrice: 0 },
+      { id: "preset-electricity", description: "Electricity", unitPrice: 0 },
+      { id: "preset-water", description: "Water", unitPrice: 0 },
+      { id: "preset-refuse", description: "Refuse", unitPrice: 0 },
+      { id: "preset-sewerage", description: "Sewerage", unitPrice: 0 },
+    ],
   };
 
   function emptyData() {
@@ -646,6 +658,7 @@ html:not(.unlocked) .mobile-topbar {
       maintenanceRequests: [],
       expenses: [],
       invoices: [],
+      creditNotes: [],
       settings: Object.assign({}, DEFAULT_SETTINGS),
     };
   }
@@ -684,6 +697,7 @@ html:not(.unlocked) .mobile-topbar {
         maintenanceRequests: parsed.maintenanceRequests || [],
         expenses: parsed.expenses || [],
         invoices: parsed.invoices || [],
+        creditNotes: parsed.creditNotes || [],
       });
     } catch (e) {
       console.warn("PMS: could not parse saved data, starting fresh.", e);
@@ -739,6 +753,7 @@ html:not(.unlocked) .mobile-topbar {
     data.maintenanceRequests = data.maintenanceRequests.filter(function (m) { return m.propertyId !== id; });
     data.expenses = data.expenses.filter(function (e) { return e.propertyId !== id; });
     data.invoices = data.invoices.filter(function (inv) { return inv.propertyId !== id; });
+    data.creditNotes = data.creditNotes.filter(function (cn) { return cn.propertyId !== id; });
     persist();
   }
   function activeLeaseForProperty(propertyId) {
@@ -863,9 +878,54 @@ html:not(.unlocked) .mobile-topbar {
     persist();
   }
 
+  // ---------- credit notes ----------
+  // A credit note reduces what a tenant owes without being cash received --
+  // a deposit refund, a discount, a billing correction, a bad-debt write-off.
+  // Distinct from a rentPayment (money actually received) and from an
+  // invoice (a new charge). Shows up on that tenant's Statement as a credit
+  // against their balance.
+  function addCreditNote(input) {
+    var rec = Object.assign({}, input, { id: uid(), createdAt: nowISO() });
+    data.creditNotes.push(rec);
+    persist();
+    return rec;
+  }
+  function updateCreditNote(id, patch) {
+    var cn = data.creditNotes.find(function (x) { return x.id === id; });
+    if (!cn) return;
+    Object.assign(cn, patch);
+    persist();
+  }
+  function deleteCreditNote(id) {
+    data.creditNotes = data.creditNotes.filter(function (x) { return x.id !== id; });
+    persist();
+  }
+
   // ---------- settings ----------
   function updateSettings(patch) {
     data.settings = Object.assign({}, data.settings, patch);
+    persist();
+  }
+
+  // ---------- charge item presets (Settings) ----------
+  // Stored on settings.chargeItems. These functions always build new
+  // arrays/objects rather than mutating in place, so a fresh install's
+  // default presets (shared object literal in DEFAULT_SETTINGS) are never
+  // accidentally edited through a live data reference.
+  function addChargeItem(input) {
+    var rec = Object.assign({}, input, { id: uid() });
+    data.settings.chargeItems = (data.settings.chargeItems || []).concat([rec]);
+    persist();
+    return rec;
+  }
+  function updateChargeItem(id, patch) {
+    data.settings.chargeItems = (data.settings.chargeItems || []).map(function (x) {
+      return x.id === id ? Object.assign({}, x, patch) : x;
+    });
+    persist();
+  }
+  function deleteChargeItem(id) {
+    data.settings.chargeItems = (data.settings.chargeItems || []).filter(function (x) { return x.id !== id; });
     persist();
   }
 
@@ -956,6 +1016,10 @@ html:not(.unlocked) .mobile-topbar {
   // want ("HOA Fees", "Pest Control", etc.) without it being a fixed list.
   var EXPENSE_CATEGORIES = ["Maintenance", "Insurance", "Property Tax / Levy", "Bank Loan Payment", "Utility Bill", "Management Fee", "Other"];
 
+  // Suggested credit note reasons -- same free-text-with-suggestions pattern
+  // as expense categories above.
+  var CREDIT_NOTE_REASONS = ["Deposit Refund", "Discount", "Refund", "Billing Correction", "Write-off", "Needs Review", "Other"];
+
   var CURRENCY_META = {
     USD: ["en-US", "$"], EUR: ["de-DE", "€"], GBP: ["en-GB", "£"], INR: ["en-IN", "₹"],
     AUD: ["en-AU", "$"], CAD: ["en-CA", "$"], NZD: ["en-NZ", "$"], SGD: ["en-SG", "$"],
@@ -976,17 +1040,20 @@ html:not(.unlocked) .mobile-topbar {
   }
   function formatCurrency(amount, currency) {
     var amt = amount || 0;
+    // Always show 2 decimal places (cents) -- this is a financial app, and
+    // rounding to whole units on-screen (e.g. showing "R100" for R100.09)
+    // hides real balances and invoice totals from the landlord.
     var customSymbol = data.settings && data.settings.customSymbol;
     if (customSymbol) {
-      var numStr = Math.abs(amt).toLocaleString(undefined, { maximumFractionDigits: 0 });
+      var numStr = Math.abs(amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       return (amt < 0 ? "-" : "") + customSymbol + numStr;
     }
     var cur = currency || "USD";
     var meta = CURRENCY_META[cur];
     try {
-      return new Intl.NumberFormat((meta && meta[0]) || "en-US", { style: "currency", currency: cur, maximumFractionDigits: 0 }).format(amt);
+      return new Intl.NumberFormat((meta && meta[0]) || "en-US", { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(amt);
     } catch (e) {
-      return currencySymbol(cur) + Math.round(amt).toLocaleString();
+      return (amt < 0 ? "-" : "") + currencySymbol(cur) + Math.abs(amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
   }
   function formatDate(iso) {
@@ -1014,6 +1081,7 @@ html:not(.unlocked) .mobile-topbar {
         maintenanceRequests: parsed.maintenanceRequests || [],
         expenses: parsed.expenses || [],
         invoices: parsed.invoices || [],
+        creditNotes: parsed.creditNotes || [],
       });
       persist();
       return { ok: true };
@@ -1062,7 +1130,14 @@ html:not(.unlocked) .mobile-topbar {
     deleteInvoice: deleteInvoice,
     peekNextInvoiceNumber: peekNextInvoiceNumber,
 
+    addCreditNote: addCreditNote,
+    updateCreditNote: updateCreditNote,
+    deleteCreditNote: deleteCreditNote,
+
     updateSettings: updateSettings,
+    addChargeItem: addChargeItem,
+    updateChargeItem: updateChargeItem,
+    deleteChargeItem: deleteChargeItem,
 
     currentPeriodLabel: currentPeriodLabel,
     periodKey: periodKey,
@@ -1078,6 +1153,7 @@ html:not(.unlocked) .mobile-topbar {
     currencySymbol: currencySymbol,
     CURRENCY_CODES: Object.keys(CURRENCY_META),
     EXPENSE_CATEGORIES: EXPENSE_CATEGORIES,
+    CREDIT_NOTE_REASONS: CREDIT_NOTE_REASONS,
 
     exportData: exportData,
     importData: importData,
@@ -1096,7 +1172,7 @@ html:not(.unlocked) .mobile-topbar {
 (function (global) {
   "use strict";
 
-  var BUILD_DATE = "2026-08-18";
+  var BUILD_DATE = "2026-08-20";
 
   var ICONS = {
     dashboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
@@ -1460,14 +1536,22 @@ html:not(.unlocked) .mobile-topbar {
     if (!lease) { PMSUI.toast("This tenant needs a lease (assign them to a property first) before you can invoice them.", "error"); return; }
     var property = data.properties.find(function (p) { return p.id === lease.propertyId; });
 
+    var chargeItems = data.settings.chargeItems || [];
+    var presetOptionsHtml = '<option value="">— Custom —</option>' + chargeItems.map(function (ci) {
+      return '<option value="' + PMSUI.escapeHtml(ci.id) + '">' + PMSUI.escapeHtml(ci.description) + "</option>";
+    }).join("");
+
     var lineId = 0;
-    var lines = [{ id: lineId++, description: "Rent — " + PMS.currentPeriodLabel(), amount: lease.rentAmount }];
+    var lines = [{ id: lineId++, description: "Rent — " + PMS.currentPeriodLabel(), quantity: 1, unitPrice: lease.rentAmount, amount: lease.rentAmount }];
 
     function lineRowHtml(line) {
       return (
-        '<div class="form-grid" data-line="' + line.id + '" style="grid-template-columns:1fr 130px 34px;gap:8px;align-items:end;margin-bottom:8px;">' +
+        '<div class="form-grid" data-line="' + line.id + '" style="grid-template-columns:120px 1fr 70px 100px 100px 34px;gap:8px;align-items:end;margin-bottom:8px;">' +
+          '<div class="field" style="margin:0;"><label>Preset</label><select class="input" data-preset>' + presetOptionsHtml + "</select></div>" +
           '<div class="field" style="margin:0;"><label>Description</label><input class="input" data-desc value="' + PMSUI.escapeHtml(line.description) + '"/></div>' +
-          '<div class="field" style="margin:0;"><label>Amount</label><input class="input" type="number" min="0" data-amt value="' + line.amount + '"/></div>' +
+          '<div class="field" style="margin:0;"><label>Qty</label><input class="input" type="number" min="0" step="any" data-qty value="' + line.quantity + '"/></div>' +
+          '<div class="field" style="margin:0;"><label>Unit Price</label><input class="input" type="number" min="0" step="any" data-price value="' + line.unitPrice + '"/></div>' +
+          '<div class="field" style="margin:0;"><label>Amount</label><input class="input" type="number" min="0" step="any" data-amt value="' + line.amount + '"/></div>' +
           '<button class="btn-icon" data-removeline="' + line.id + '" aria-label="Remove line" style="align-self:end;margin-bottom:1px;">' + PMSUI.ICONS.trash + "</button>" +
         "</div>"
       );
@@ -1480,7 +1564,8 @@ html:not(.unlocked) .mobile-topbar {
         '<div class="field"><label>Due date</label><input class="input" type="date" id="fDueDate" value="' + PMS.dueDateForCurrentPeriod(lease.dueDay) + '"/></div>' +
       "</div>" +
       '<div id="linesWrap">' + lines.map(lineRowHtml).join("") + "</div>" +
-      '<button class="btn btn-ghost btn-sm" id="addLineBtn" type="button">' + PMSUI.ICONS.plus + " Add Line</button>" +
+      '<button class="btn btn-ghost btn-sm" id="addLineBtn" type="button">' + PMSUI.ICONS.plus + ' Add Line</button>' +
+      '<p class="text-tertiary" style="font-size:12px;margin:6px 0 0;">Pick a Preset to fill in a description and price from Settings → Charge Items, then set the quantity — Amount fills in automatically but you can still type over it directly.</p>' +
       '<div class="row" style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px;"><span class="title">Total</span><span class="title" id="invoiceTotal" style="font-weight:700;font-size:16px;"></span></div>' +
       '<div class="field"><label>Note (shown on the invoice)</label><textarea class="input" id="fNote" rows="2" placeholder="Optional"></textarea></div>';
 
@@ -1495,6 +1580,8 @@ html:not(.unlocked) .mobile-topbar {
             return {
               id: Number(row.getAttribute("data-line")),
               description: row.querySelector("[data-desc]").value.trim(),
+              quantity: Number(row.querySelector("[data-qty]").value) || 0,
+              unitPrice: Number(row.querySelector("[data-price]").value) || 0,
               amount: Number(row.querySelector("[data-amt]").value) || 0,
             };
           });
@@ -1503,9 +1590,29 @@ html:not(.unlocked) .mobile-topbar {
           var total = currentLines().reduce(function (s, l) { return s + l.amount; }, 0);
           root.querySelector("#invoiceTotal").textContent = money(total, data);
         }
+        function recalcRowAmount(row) {
+          var qty = Number(row.querySelector("[data-qty]").value) || 0;
+          var price = Number(row.querySelector("[data-price]").value) || 0;
+          row.querySelector("[data-amt]").value = Math.round(qty * price * 100) / 100;
+          recalcTotal();
+        }
         function wireLineEvents() {
           root.querySelectorAll("[data-desc], [data-amt]").forEach(function (input) {
             input.addEventListener("input", recalcTotal);
+          });
+          root.querySelectorAll("[data-qty], [data-price]").forEach(function (input) {
+            input.addEventListener("input", function () { recalcRowAmount(input.closest("[data-line]")); });
+          });
+          root.querySelectorAll("[data-preset]").forEach(function (select) {
+            select.addEventListener("change", function () {
+              var row = select.closest("[data-line]");
+              var item = chargeItems.find(function (ci) { return ci.id === select.value; });
+              if (!item) return;
+              row.querySelector("[data-desc]").value = item.description;
+              row.querySelector("[data-price]").value = item.unitPrice;
+              if (!Number(row.querySelector("[data-qty]").value)) row.querySelector("[data-qty]").value = 1;
+              recalcRowAmount(row);
+            });
           });
           root.querySelectorAll("[data-removeline]").forEach(function (btn) {
             btn.addEventListener("click", function () {
@@ -1521,7 +1628,7 @@ html:not(.unlocked) .mobile-topbar {
         root.querySelector("#addLineBtn").addEventListener("click", function () {
           var wrap = root.querySelector("#linesWrap");
           var div = document.createElement("div");
-          div.innerHTML = lineRowHtml({ id: lineId++, description: "", amount: 0 });
+          div.innerHTML = lineRowHtml({ id: lineId++, description: "", quantity: 1, unitPrice: 0, amount: 0 });
           wrap.appendChild(div.firstElementChild);
           wireLineEvents();
         });
@@ -1560,7 +1667,16 @@ html:not(.unlocked) .mobile-topbar {
 
   function printInvoice(invoice, tenant, property, data) {
     var settings = data.settings;
+    // Older invoices (including imported legacy ones) may not carry
+    // quantity/unitPrice on their line items -- only show those columns
+    // when at least one line actually has them, so old invoices still
+    // print cleanly with just Description/Amount.
+    var hasQtyPrice = invoice.lineItems.some(function (l) { return l.quantity != null && l.unitPrice != null; });
     var rowsHtml = invoice.lineItems.map(function (l) {
+      if (hasQtyPrice) {
+        return "<tr><td>" + PMSUI.escapeHtml(l.description) + "</td><td class='num'>" + (l.quantity != null ? l.quantity : "") +
+          "</td><td class='num'>" + (l.unitPrice != null ? money(l.unitPrice, data) : "") + '</td><td class="num">' + money(l.amount, data) + "</td></tr>";
+      }
       return "<tr><td>" + PMSUI.escapeHtml(l.description) + '</td><td class="num">' + money(l.amount, data) + "</td></tr>";
     }).join("");
 
@@ -1569,6 +1685,10 @@ html:not(.unlocked) .mobile-topbar {
       { label: "Due", value: PMS.formatDate(invoice.dueDate) },
     ];
 
+    var headerRow = hasQtyPrice
+      ? "<tr><th>Description</th><th class='num'>Qty</th><th class='num'>Unit Price</th><th class='num'>Amount</th></tr>"
+      : "<tr><th>Description</th><th class='num'>Amount</th></tr>";
+
     var html =
       PMSUI.printLetterhead(settings, "INVOICE", invoice.invoiceNumber || "", metaLines) +
       '<div class="bill-to">' +
@@ -1576,7 +1696,7 @@ html:not(.unlocked) .mobile-topbar {
         '<div class="name">' + PMSUI.escapeHtml(tenant.name) + "</div>" +
         (property ? '<div class="muted" style="margin-top:2px;">' + PMSUI.escapeHtml(property.name) + (property.address ? ", " + PMSUI.escapeHtml(property.address) : "") + "</div>" : "") +
       "</div>" +
-      "<table><thead><tr><th>Description</th><th class='num'>Amount</th></tr></thead><tbody>" +
+      "<table><thead>" + headerRow + "</thead><tbody>" +
         rowsHtml +
       "</tbody></table>" +
       '<div class="total-box"><div class="inner"><span class="label">Total Due</span><span class="value">' + money(invoice.total, data) + "</span></div></div>" +
@@ -1584,6 +1704,75 @@ html:not(.unlocked) .mobile-topbar {
       '<div class="doc-footer"><div class="thanks">Thank you for your prompt payment.</div><div class="stamp">Generated ' + PMS.formatDate(PMS.todayISO()) + "</div></div>";
 
     PMSUI.openPrintWindow("Invoice " + (invoice.invoiceNumber || "") + " — " + tenant.name, html);
+  }
+
+  // ---------- Credit Note ----------
+  // A credit note reduces what a tenant owes without cash changing hands --
+  // a deposit refund, a discount, a billing correction, or a write-off. It
+  // shows up on the Statement below as a credit against the running balance.
+  function openCreditNoteModal(tenantId, existing) {
+    var data = PMS.getData();
+    var tenant = data.tenants.find(function (t) { return t.id === tenantId; });
+    if (!tenant) return;
+    var lease = tenantLease(data, tenantId);
+    if (!lease) { PMSUI.toast("This tenant needs a lease (assign them to a property first) before you can add a credit note.", "error"); return; }
+
+    var reasonOptionsHtml = (PMS.CREDIT_NOTE_REASONS || []).map(function (r) {
+      return '<option value="' + PMSUI.escapeHtml(r) + '"></option>';
+    }).join("");
+
+    var body =
+      '<div class="form-grid">' +
+        '<div class="field"><label>Date</label><input class="input" type="date" id="fCnDate" value="' + (existing ? existing.date : PMS.todayISO()) + '"/></div>' +
+        '<div class="field"><label>Amount<span class="req">*</span></label><input class="input" type="number" min="0" step="any" id="fCnAmount" value="' + (existing ? existing.amount : "") + '"/></div>' +
+      "</div>" +
+      '<div class="field"><label>Reason<span class="req">*</span></label><input class="input" id="fCnReason" list="creditNoteReasons" value="' + (existing ? PMSUI.escapeHtml(existing.reason) : "") + '" placeholder="e.g. Deposit Refund"/>' +
+      '<datalist id="creditNoteReasons">' + reasonOptionsHtml + "</datalist>" +
+      '<span class="error hidden" id="fCnReasonErr">Enter a reason.</span></div>' +
+      '<div class="field"><label>Note</label><textarea class="input" id="fCnNote" rows="2" placeholder="Optional — any extra context">' + (existing ? PMSUI.escapeHtml(existing.note || "") : "") + "</textarea></div>";
+
+    var footer = '<button class="btn btn-ghost" id="cancelBtn">Cancel</button>' +
+      (existing ? '<button class="btn btn-danger" id="deleteBtn">Delete</button>' : "") +
+      '<button class="btn btn-primary" id="saveBtn">' + (existing ? "Save Changes" : "Add Credit Note") + "</button>";
+
+    PMSUI.openModal({
+      title: (existing ? "Edit" : "New") + " Credit Note — " + tenant.name,
+      body: body,
+      footer: footer,
+      onMount: function (root, close) {
+        root.querySelector("#cancelBtn").addEventListener("click", close);
+        if (existing) {
+          root.querySelector("#deleteBtn").addEventListener("click", function () {
+            PMSUI.confirmDialog({
+              title: "Delete this credit note?",
+              description: "This removes it from " + tenant.name + "'s statement. This cannot be undone.",
+              confirmLabel: "Delete",
+              onConfirm: function () { PMS.deleteCreditNote(existing.id); PMSUI.toast("Credit note deleted.", "info"); close(); if (global.PMSBilling.onCreditNoteChange) global.PMSBilling.onCreditNoteChange(); },
+            });
+          });
+        }
+        root.querySelector("#saveBtn").addEventListener("click", function () {
+          var reason = root.querySelector("#fCnReason").value.trim();
+          var amount = Number(root.querySelector("#fCnAmount").value) || 0;
+          if (!reason) { root.querySelector("#fCnReason").classList.add("has-error"); root.querySelector("#fCnReasonErr").classList.remove("hidden"); return; }
+          if (amount <= 0) { PMSUI.toast("Enter an amount greater than 0.", "error"); return; }
+          var patch = {
+            tenantId: tenantId,
+            leaseId: lease.id,
+            propertyId: lease.propertyId,
+            date: root.querySelector("#fCnDate").value || PMS.todayISO(),
+            amount: amount,
+            reason: reason,
+            note: root.querySelector("#fCnNote").value.trim(),
+          };
+          if (existing) PMS.updateCreditNote(existing.id, patch);
+          else PMS.addCreditNote(patch);
+          PMSUI.toast(existing ? "Credit note updated." : "Credit note added.");
+          close();
+          if (global.PMSBilling.onCreditNoteChange) global.PMSBilling.onCreditNoteChange();
+        });
+      },
+    });
   }
 
   // ---------- Statement ----------
@@ -1611,15 +1800,19 @@ html:not(.unlocked) .mobile-topbar {
       var rows = [];
       data.invoices.filter(function (inv) { return inv.tenantId === tenantId && inv.date >= from && inv.date <= to; })
         .forEach(function (inv) {
-          rows.push({ date: inv.date, description: "Invoice #" + (inv.invoiceNumber || "?") + " — " + inv.lineItems.map(function (l) { return l.description; }).join(", "), charge: inv.total, payment: 0, invoiceId: inv.id, paid: !!inv.paid });
+          rows.push({ date: inv.date, description: "Invoice #" + (inv.invoiceNumber || "?") + " — " + inv.lineItems.map(function (l) { return l.description; }).join(", "), charge: inv.total, payment: 0, credit: 0, invoiceId: inv.id, paid: !!inv.paid });
         });
       data.rentPayments.filter(function (rp) { return tenantLeaseIds.indexOf(rp.leaseId) !== -1 && rp.date >= from && rp.date <= to; })
         .forEach(function (rp) {
-          rows.push({ date: rp.date, description: "Payment received — " + (rp.method || "") + (rp.note ? " (" + rp.note + ")" : ""), charge: 0, payment: rp.amount });
+          rows.push({ date: rp.date, description: "Payment received — " + (rp.method || "") + (rp.note ? " (" + rp.note + ")" : ""), charge: 0, payment: rp.amount, credit: 0 });
+        });
+      (data.creditNotes || []).filter(function (cn) { return cn.tenantId === tenantId && cn.date >= from && cn.date <= to; })
+        .forEach(function (cn) {
+          rows.push({ date: cn.date, description: "Credit Note — " + cn.reason + (cn.note ? " (" + cn.note + ")" : ""), charge: 0, payment: 0, credit: cn.amount, creditNoteId: cn.id });
         });
       rows.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
       var running = 0;
-      rows.forEach(function (r) { running += r.charge - r.payment; r.balance = running; });
+      rows.forEach(function (r) { running += r.charge - r.payment - r.credit; r.balance = running; });
       return rows;
     }
 
@@ -1637,23 +1830,28 @@ html:not(.unlocked) .mobile-topbar {
           currentRows = buildLedger(from, to);
           var totalCharged = currentRows.reduce(function (s, r) { return s + r.charge; }, 0);
           var totalPaid = currentRows.reduce(function (s, r) { return s + r.payment; }, 0);
+          var totalCredited = currentRows.reduce(function (s, r) { return s + r.credit; }, 0);
 
           var tableHtml = currentRows.length === 0
-            ? '<p class="text-secondary" style="margin-top:12px;">No invoices or payments in this date range.</p>'
-            : '<div class="table-wrap" style="margin-top:14px;"><table class="data-table"><thead><tr><th>Date</th><th>Description</th><th>Charge</th><th>Payment</th><th>Balance</th><th>Status</th></tr></thead><tbody>' +
+            ? '<p class="text-secondary" style="margin-top:12px;">No invoices, payments, or credit notes in this date range.</p>'
+            : '<div class="table-wrap" style="margin-top:14px;"><table class="data-table"><thead><tr><th>Date</th><th>Description</th><th>Charge</th><th>Payment</th><th>Credit</th><th>Balance</th><th>Status</th></tr></thead><tbody>' +
                 currentRows.map(function (r) {
                   var statusCell = r.invoiceId
                     ? '<button class="pill ' + (r.paid ? "pill-success" : "pill-neutral") + '" data-toggleinvoicepaid="' + r.invoiceId + '" style="border:none;cursor:pointer;">' + (r.paid ? "Paid" : "Unpaid") + "</button>"
+                    : r.creditNoteId
+                    ? '<button class="btn btn-ghost btn-sm" data-editcreditnote="' + r.creditNoteId + '" style="padding:2px 8px;">Edit</button>'
                     : "";
                   return "<tr><td>" + PMS.formatDate(r.date) + "</td><td>" + PMSUI.escapeHtml(r.description) + "</td>" +
                     "<td>" + (r.charge ? money(r.charge, data) : "—") + "</td>" +
                     "<td>" + (r.payment ? money(r.payment, data) : "—") + "</td>" +
+                    "<td>" + (r.credit ? money(r.credit, data) : "—") + "</td>" +
                     "<td>" + money(r.balance, data) + "</td>" +
                     "<td>" + statusCell + "</td></tr>";
                 }).join("") +
               "</tbody></table></div>" +
               '<div class="import-summary" style="margin-top:12px;">Total charged: ' + money(totalCharged, data) + " · Total paid: " + money(totalPaid, data) +
-                " · Balance due: " + money(totalCharged - totalPaid, data) + "</div>";
+                " · Total credited: " + money(totalCredited, data) +
+                " · Balance due: " + money(totalCharged - totalPaid - totalCredited, data) + "</div>";
 
           root.querySelector("#statementResult").innerHTML = tableHtml;
           root.querySelectorAll("[data-toggleinvoicepaid]").forEach(function (btn) {
@@ -1666,7 +1864,16 @@ html:not(.unlocked) .mobile-topbar {
               renderTable();
             });
           });
+          root.querySelectorAll("[data-editcreditnote]").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              var id = btn.getAttribute("data-editcreditnote");
+              var cn = (data.creditNotes || []).find(function (x) { return x.id === id; });
+              if (!cn) return;
+              openCreditNoteModal(tenantId, cn);
+            });
+          });
         }
+        global.PMSBilling.onCreditNoteChange = function () { data = PMS.getData(); renderTable(); };
 
         root.querySelector("#fFrom").addEventListener("change", renderTable);
         root.querySelector("#fTo").addEventListener("change", renderTable);
@@ -1675,7 +1882,7 @@ html:not(.unlocked) .mobile-topbar {
         root.querySelector("#exportStBtn").addEventListener("click", function () {
           if (!currentRows.length) { PMSUI.toast("Nothing to export in this date range.", "error"); return; }
           var rows = currentRows.map(function (r) {
-            return { Date: r.date, Description: r.description, Charge: r.charge || "", Payment: r.payment || "", Balance: r.balance };
+            return { Date: r.date, Description: r.description, Charge: r.charge || "", Payment: r.payment || "", Credit: r.credit || "", Balance: r.balance };
           });
           PMSUI.toast("Preparing Excel file…", "info");
           PMSUI.downloadWorkbook("Statement", rows, "statement_" + tenant.name.replace(/[^a-z0-9]+/gi, "_") + ".xlsx")
@@ -1687,10 +1894,12 @@ html:not(.unlocked) .mobile-topbar {
           var from = root.querySelector("#fFrom").value, to = root.querySelector("#fTo").value;
           var totalCharged = currentRows.reduce(function (s, r) { return s + r.charge; }, 0);
           var totalPaid = currentRows.reduce(function (s, r) { return s + r.payment; }, 0);
+          var totalCredited = currentRows.reduce(function (s, r) { return s + r.credit; }, 0);
           var rowsHtml = currentRows.map(function (r) {
             return "<tr><td>" + PMS.formatDate(r.date) + "</td><td>" + PMSUI.escapeHtml(r.description) + "</td>" +
               "<td class='num'>" + (r.charge ? money(r.charge, data) : "—") + "</td>" +
               "<td class='num'>" + (r.payment ? money(r.payment, data) : "—") + "</td>" +
+              "<td class='num'>" + (r.credit ? money(r.credit, data) : "—") + "</td>" +
               "<td class='num'>" + money(r.balance, data) + "</td></tr>";
           }).join("");
           var metaLines = [{ label: "Period", value: PMS.formatDate(from) + " – " + PMS.formatDate(to) }];
@@ -1701,10 +1910,10 @@ html:not(.unlocked) .mobile-topbar {
               '<div class="name">' + PMSUI.escapeHtml(tenant.name) + "</div>" +
               (property ? '<div class="muted" style="margin-top:2px;">' + PMSUI.escapeHtml(property.name) + "</div>" : "") +
             "</div>" +
-            "<table><thead><tr><th>Date</th><th>Description</th><th class='num'>Charge</th><th class='num'>Payment</th><th class='num'>Balance</th></tr></thead><tbody>" +
+            "<table><thead><tr><th>Date</th><th>Description</th><th class='num'>Charge</th><th class='num'>Payment</th><th class='num'>Credit</th><th class='num'>Balance</th></tr></thead><tbody>" +
               rowsHtml +
             "</tbody></table>" +
-            '<div class="total-box"><div class="inner"><span class="label">Balance Due</span><span class="value">' + money(totalCharged - totalPaid, data) + "</span></div></div>" +
+            '<div class="total-box"><div class="inner"><span class="label">Balance Due</span><span class="value">' + money(totalCharged - totalPaid - totalCredited, data) + "</span></div></div>" +
             '<div class="doc-footer"><div class="thanks">Thank you for your business.</div><div class="stamp">Generated ' + PMS.formatDate(PMS.todayISO()) + "</div></div>";
           PMSUI.openPrintWindow("Statement — " + tenant.name, html);
         });
@@ -1718,6 +1927,7 @@ html:not(.unlocked) .mobile-topbar {
   global.PMSBilling = {
     openInvoiceModal: openInvoiceModal,
     openStatementModal: openStatementModal,
+    openCreditNoteModal: openCreditNoteModal,
   };
 })(window);
 
@@ -1827,6 +2037,19 @@ html:not(.unlocked) .mobile-topbar {
     return out;
   }
 
+  function creditNoteRows(data, creditNotes) {
+    return creditNotes.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).map(function (cn) {
+      return {
+        Date: PMS.formatDate(cn.date),
+        Property: propertyName(data, cn.propertyId),
+        Tenant: tenantName(data, cn.tenantId),
+        Reason: cn.reason || "",
+        Amount: money(cn.amount, data),
+        Note: cn.note || "",
+      };
+    });
+  }
+
   function expenseRows(data, expenses, maintenanceRequests) {
     var rows = expenses.map(function (e) {
       return { Date: PMS.formatDate(e.date), Property: propertyName(data, e.propertyId), Category: e.category || "Other", Amount: money(e.amount, data), Note: e.note || "" };
@@ -1875,6 +2098,7 @@ html:not(.unlocked) .mobile-topbar {
       { name: "Rent Payments", rows: data.rentPayments.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).map(function (rp) { return paymentRow(data, rp); }) },
       { name: "Invoices", rows: data.invoices.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).map(function (inv) { return invoiceRow(data, inv); }) },
       { name: "Invoice Line Items", rows: invoiceLineRows(data, data.invoices) },
+      { name: "Credit Notes", rows: creditNoteRows(data, data.creditNotes || []) },
       { name: "Expenses", rows: expenseRows(data, data.expenses, data.maintenanceRequests) },
     ];
     var filename = safeFileFragment(data.settings.landlordName) + "_full_backup_" + PMS.todayISO() + ".xlsx";
@@ -1893,6 +2117,7 @@ html:not(.unlocked) .mobile-topbar {
     var activeLease = leases.find(function (l) { return l.status === "active"; });
     var payments = data.rentPayments.filter(function (rp) { return leaseIds.indexOf(rp.leaseId) !== -1; }).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
     var invoices = data.invoices.filter(function (inv) { return inv.tenantId === tenantId; }).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    var creditNotes = (data.creditNotes || []).filter(function (cn) { return cn.tenantId === tenantId; });
 
     var profileRows = [
       { Field: "Name", Value: tenant.name },
@@ -1914,8 +2139,10 @@ html:not(.unlocked) .mobile-topbar {
 
     var totalPaid = payments.reduce(function (s, rp) { return s + rp.amount; }, 0);
     var totalInvoiced = invoices.reduce(function (s, inv) { return s + inv.total; }, 0);
+    var totalCredited = creditNotes.reduce(function (s, cn) { return s + cn.amount; }, 0);
     profileRows.push({ Field: "Lifetime Paid", Value: money(totalPaid, data) });
     profileRows.push({ Field: "Lifetime Invoiced", Value: money(totalInvoiced, data) });
+    if (totalCredited) profileRows.push({ Field: "Lifetime Credited", Value: money(totalCredited, data) });
 
     var sheets = [
       { name: "Profile", rows: coverSheetRows(data, "Tenant Record — " + tenant.name, tenant.name).concat([{ Field: "", Value: "" }]).concat(profileRows) },
@@ -1923,6 +2150,7 @@ html:not(.unlocked) .mobile-topbar {
       { name: "Payments", rows: payments.map(function (rp) { return paymentRow(data, rp); }) },
       { name: "Invoices", rows: invoices.map(function (inv) { return invoiceRow(data, inv); }) },
       { name: "Invoice Line Items", rows: invoiceLineRows(data, invoices) },
+      { name: "Credit Notes", rows: creditNoteRows(data, creditNotes) },
     ];
     var filename = safeFileFragment(tenant.name) + "_records_" + PMS.todayISO() + ".xlsx";
     PMSUI.toast("Preparing Excel workbook…", "info");
@@ -1983,6 +2211,7 @@ html:not(.unlocked) .mobile-topbar {
           '<div style="display:flex;gap:6px;flex-wrap:wrap;">' +
             '<button class="btn btn-secondary btn-sm" data-invoice="' + t.id + '"' + (hasAnyLease ? "" : " disabled") + ">Invoice</button>" +
             '<button class="btn btn-secondary btn-sm" data-statement="' + t.id + '"' + (hasAnyLease ? "" : " disabled") + ">Statement</button>" +
+            '<button class="btn btn-ghost btn-sm" data-creditnote="' + t.id + '"' + (hasAnyLease ? "" : " disabled") + ">Credit Note</button>" +
             '<button class="btn-icon" data-export="' + t.id + '" aria-label="Export this tenant\'s records to Excel">' + PMSUI.ICONS.download + "</button>" +
             '<button class="btn btn-ghost btn-sm" data-edit="' + t.id + '">Edit</button>' +
             '<button class="btn-icon" data-delete="' + t.id + '" aria-label="Delete tenant">' + PMSUI.ICONS.trash + "</button>" +
@@ -2014,6 +2243,9 @@ html:not(.unlocked) .mobile-topbar {
     });
     shell.contentEl.querySelectorAll("[data-export]").forEach(function (b) {
       b.addEventListener("click", function () { PMSBackup.exportTenantWorkbook(b.getAttribute("data-export")); });
+    });
+    shell.contentEl.querySelectorAll("[data-creditnote]").forEach(function (b) {
+      b.addEventListener("click", function () { PMSBilling.openCreditNoteModal(b.getAttribute("data-creditnote")); });
     });
   }
 

@@ -634,6 +634,18 @@ html:not(.unlocked) .mobile-topbar {
     invoicePrefix: "INV-",
     nextInvoiceNumber: 1,
     leaseRenewalLeadDays: 60,
+    // Preset invoice line items a landlord bills often (rent, utilities,
+    // etc.) with a fixed unit price, so invoicing doesn't mean re-typing
+    // the same description and rate every time. Fully editable in
+    // Settings — this is just a sensible starting point for a new
+    // portfolio, not a fixed list.
+    chargeItems: [
+      { id: "preset-rental", description: "Rental", unitPrice: 0 },
+      { id: "preset-electricity", description: "Electricity", unitPrice: 0 },
+      { id: "preset-water", description: "Water", unitPrice: 0 },
+      { id: "preset-refuse", description: "Refuse", unitPrice: 0 },
+      { id: "preset-sewerage", description: "Sewerage", unitPrice: 0 },
+    ],
   };
 
   function emptyData() {
@@ -646,6 +658,7 @@ html:not(.unlocked) .mobile-topbar {
       maintenanceRequests: [],
       expenses: [],
       invoices: [],
+      creditNotes: [],
       settings: Object.assign({}, DEFAULT_SETTINGS),
     };
   }
@@ -684,6 +697,7 @@ html:not(.unlocked) .mobile-topbar {
         maintenanceRequests: parsed.maintenanceRequests || [],
         expenses: parsed.expenses || [],
         invoices: parsed.invoices || [],
+        creditNotes: parsed.creditNotes || [],
       });
     } catch (e) {
       console.warn("PMS: could not parse saved data, starting fresh.", e);
@@ -739,6 +753,7 @@ html:not(.unlocked) .mobile-topbar {
     data.maintenanceRequests = data.maintenanceRequests.filter(function (m) { return m.propertyId !== id; });
     data.expenses = data.expenses.filter(function (e) { return e.propertyId !== id; });
     data.invoices = data.invoices.filter(function (inv) { return inv.propertyId !== id; });
+    data.creditNotes = data.creditNotes.filter(function (cn) { return cn.propertyId !== id; });
     persist();
   }
   function activeLeaseForProperty(propertyId) {
@@ -863,9 +878,54 @@ html:not(.unlocked) .mobile-topbar {
     persist();
   }
 
+  // ---------- credit notes ----------
+  // A credit note reduces what a tenant owes without being cash received --
+  // a deposit refund, a discount, a billing correction, a bad-debt write-off.
+  // Distinct from a rentPayment (money actually received) and from an
+  // invoice (a new charge). Shows up on that tenant's Statement as a credit
+  // against their balance.
+  function addCreditNote(input) {
+    var rec = Object.assign({}, input, { id: uid(), createdAt: nowISO() });
+    data.creditNotes.push(rec);
+    persist();
+    return rec;
+  }
+  function updateCreditNote(id, patch) {
+    var cn = data.creditNotes.find(function (x) { return x.id === id; });
+    if (!cn) return;
+    Object.assign(cn, patch);
+    persist();
+  }
+  function deleteCreditNote(id) {
+    data.creditNotes = data.creditNotes.filter(function (x) { return x.id !== id; });
+    persist();
+  }
+
   // ---------- settings ----------
   function updateSettings(patch) {
     data.settings = Object.assign({}, data.settings, patch);
+    persist();
+  }
+
+  // ---------- charge item presets (Settings) ----------
+  // Stored on settings.chargeItems. These functions always build new
+  // arrays/objects rather than mutating in place, so a fresh install's
+  // default presets (shared object literal in DEFAULT_SETTINGS) are never
+  // accidentally edited through a live data reference.
+  function addChargeItem(input) {
+    var rec = Object.assign({}, input, { id: uid() });
+    data.settings.chargeItems = (data.settings.chargeItems || []).concat([rec]);
+    persist();
+    return rec;
+  }
+  function updateChargeItem(id, patch) {
+    data.settings.chargeItems = (data.settings.chargeItems || []).map(function (x) {
+      return x.id === id ? Object.assign({}, x, patch) : x;
+    });
+    persist();
+  }
+  function deleteChargeItem(id) {
+    data.settings.chargeItems = (data.settings.chargeItems || []).filter(function (x) { return x.id !== id; });
     persist();
   }
 
@@ -956,6 +1016,10 @@ html:not(.unlocked) .mobile-topbar {
   // want ("HOA Fees", "Pest Control", etc.) without it being a fixed list.
   var EXPENSE_CATEGORIES = ["Maintenance", "Insurance", "Property Tax / Levy", "Bank Loan Payment", "Utility Bill", "Management Fee", "Other"];
 
+  // Suggested credit note reasons -- same free-text-with-suggestions pattern
+  // as expense categories above.
+  var CREDIT_NOTE_REASONS = ["Deposit Refund", "Discount", "Refund", "Billing Correction", "Write-off", "Needs Review", "Other"];
+
   var CURRENCY_META = {
     USD: ["en-US", "$"], EUR: ["de-DE", "€"], GBP: ["en-GB", "£"], INR: ["en-IN", "₹"],
     AUD: ["en-AU", "$"], CAD: ["en-CA", "$"], NZD: ["en-NZ", "$"], SGD: ["en-SG", "$"],
@@ -976,17 +1040,20 @@ html:not(.unlocked) .mobile-topbar {
   }
   function formatCurrency(amount, currency) {
     var amt = amount || 0;
+    // Always show 2 decimal places (cents) -- this is a financial app, and
+    // rounding to whole units on-screen (e.g. showing "R100" for R100.09)
+    // hides real balances and invoice totals from the landlord.
     var customSymbol = data.settings && data.settings.customSymbol;
     if (customSymbol) {
-      var numStr = Math.abs(amt).toLocaleString(undefined, { maximumFractionDigits: 0 });
+      var numStr = Math.abs(amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       return (amt < 0 ? "-" : "") + customSymbol + numStr;
     }
     var cur = currency || "USD";
     var meta = CURRENCY_META[cur];
     try {
-      return new Intl.NumberFormat((meta && meta[0]) || "en-US", { style: "currency", currency: cur, maximumFractionDigits: 0 }).format(amt);
+      return new Intl.NumberFormat((meta && meta[0]) || "en-US", { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(amt);
     } catch (e) {
-      return currencySymbol(cur) + Math.round(amt).toLocaleString();
+      return (amt < 0 ? "-" : "") + currencySymbol(cur) + Math.abs(amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
   }
   function formatDate(iso) {
@@ -1014,6 +1081,7 @@ html:not(.unlocked) .mobile-topbar {
         maintenanceRequests: parsed.maintenanceRequests || [],
         expenses: parsed.expenses || [],
         invoices: parsed.invoices || [],
+        creditNotes: parsed.creditNotes || [],
       });
       persist();
       return { ok: true };
@@ -1062,7 +1130,14 @@ html:not(.unlocked) .mobile-topbar {
     deleteInvoice: deleteInvoice,
     peekNextInvoiceNumber: peekNextInvoiceNumber,
 
+    addCreditNote: addCreditNote,
+    updateCreditNote: updateCreditNote,
+    deleteCreditNote: deleteCreditNote,
+
     updateSettings: updateSettings,
+    addChargeItem: addChargeItem,
+    updateChargeItem: updateChargeItem,
+    deleteChargeItem: deleteChargeItem,
 
     currentPeriodLabel: currentPeriodLabel,
     periodKey: periodKey,
@@ -1078,6 +1153,7 @@ html:not(.unlocked) .mobile-topbar {
     currencySymbol: currencySymbol,
     CURRENCY_CODES: Object.keys(CURRENCY_META),
     EXPENSE_CATEGORIES: EXPENSE_CATEGORIES,
+    CREDIT_NOTE_REASONS: CREDIT_NOTE_REASONS,
 
     exportData: exportData,
     importData: importData,
@@ -1096,7 +1172,7 @@ html:not(.unlocked) .mobile-topbar {
 (function (global) {
   "use strict";
 
-  var BUILD_DATE = "2026-08-18";
+  var BUILD_DATE = "2026-08-20";
 
   var ICONS = {
     dashboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
@@ -1530,6 +1606,19 @@ html:not(.unlocked) .mobile-topbar {
     return out;
   }
 
+  function creditNoteRows(data, creditNotes) {
+    return creditNotes.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).map(function (cn) {
+      return {
+        Date: PMS.formatDate(cn.date),
+        Property: propertyName(data, cn.propertyId),
+        Tenant: tenantName(data, cn.tenantId),
+        Reason: cn.reason || "",
+        Amount: money(cn.amount, data),
+        Note: cn.note || "",
+      };
+    });
+  }
+
   function expenseRows(data, expenses, maintenanceRequests) {
     var rows = expenses.map(function (e) {
       return { Date: PMS.formatDate(e.date), Property: propertyName(data, e.propertyId), Category: e.category || "Other", Amount: money(e.amount, data), Note: e.note || "" };
@@ -1578,6 +1667,7 @@ html:not(.unlocked) .mobile-topbar {
       { name: "Rent Payments", rows: data.rentPayments.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).map(function (rp) { return paymentRow(data, rp); }) },
       { name: "Invoices", rows: data.invoices.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).map(function (inv) { return invoiceRow(data, inv); }) },
       { name: "Invoice Line Items", rows: invoiceLineRows(data, data.invoices) },
+      { name: "Credit Notes", rows: creditNoteRows(data, data.creditNotes || []) },
       { name: "Expenses", rows: expenseRows(data, data.expenses, data.maintenanceRequests) },
     ];
     var filename = safeFileFragment(data.settings.landlordName) + "_full_backup_" + PMS.todayISO() + ".xlsx";
@@ -1596,6 +1686,7 @@ html:not(.unlocked) .mobile-topbar {
     var activeLease = leases.find(function (l) { return l.status === "active"; });
     var payments = data.rentPayments.filter(function (rp) { return leaseIds.indexOf(rp.leaseId) !== -1; }).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
     var invoices = data.invoices.filter(function (inv) { return inv.tenantId === tenantId; }).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    var creditNotes = (data.creditNotes || []).filter(function (cn) { return cn.tenantId === tenantId; });
 
     var profileRows = [
       { Field: "Name", Value: tenant.name },
@@ -1617,8 +1708,10 @@ html:not(.unlocked) .mobile-topbar {
 
     var totalPaid = payments.reduce(function (s, rp) { return s + rp.amount; }, 0);
     var totalInvoiced = invoices.reduce(function (s, inv) { return s + inv.total; }, 0);
+    var totalCredited = creditNotes.reduce(function (s, cn) { return s + cn.amount; }, 0);
     profileRows.push({ Field: "Lifetime Paid", Value: money(totalPaid, data) });
     profileRows.push({ Field: "Lifetime Invoiced", Value: money(totalInvoiced, data) });
+    if (totalCredited) profileRows.push({ Field: "Lifetime Credited", Value: money(totalCredited, data) });
 
     var sheets = [
       { name: "Profile", rows: coverSheetRows(data, "Tenant Record — " + tenant.name, tenant.name).concat([{ Field: "", Value: "" }]).concat(profileRows) },
@@ -1626,6 +1719,7 @@ html:not(.unlocked) .mobile-topbar {
       { name: "Payments", rows: payments.map(function (rp) { return paymentRow(data, rp); }) },
       { name: "Invoices", rows: invoices.map(function (inv) { return invoiceRow(data, inv); }) },
       { name: "Invoice Line Items", rows: invoiceLineRows(data, invoices) },
+      { name: "Credit Notes", rows: creditNoteRows(data, creditNotes) },
     ];
     var filename = safeFileFragment(tenant.name) + "_records_" + PMS.todayISO() + ".xlsx";
     PMSUI.toast("Preparing Excel workbook…", "info");
@@ -1703,6 +1797,26 @@ html:not(.unlocked) .mobile-topbar {
       "</div>" +
 
       '<div class="card" style="padding:20px;">' +
+        '<h2 style="font-size:13.5px;font-weight:650;margin-bottom:4px;">Charge Items</h2>' +
+        '<p class="text-secondary" style="font-size:12px;margin-bottom:14px;">Preset descriptions and fixed unit prices — Rent, Water, Electricity, Refuse, Sewerage, or anything else you bill often. Pick one from an invoice\'s line item to fill in the description and price automatically, then just set the quantity.</p>' +
+        (s.chargeItems && s.chargeItems.length
+          ? '<div class="divider-list" style="margin-bottom:14px;">' + s.chargeItems.map(function (ci) {
+              return (
+                '<div class="row">' +
+                  '<div class="min-w-0"><p class="title truncate">' + PMSUI.escapeHtml(ci.description) + "</p>" +
+                  '<p class="meta">' + PMS.formatCurrency(ci.unitPrice, s.currency) + " per unit</p></div>" +
+                  '<div style="display:flex;gap:6px;">' +
+                    '<button class="btn btn-ghost btn-sm" data-editcharge="' + PMSUI.escapeHtml(ci.id) + '">Edit</button>' +
+                    '<button class="btn-icon neutral" data-deletecharge="' + PMSUI.escapeHtml(ci.id) + '" aria-label="Delete">' + PMSUI.ICONS.trash + "</button>" +
+                  "</div>" +
+                "</div>"
+              );
+            }).join("") + "</div>"
+          : '<p class="text-tertiary" style="font-size:12px;margin-bottom:14px;">No charge items yet.</p>') +
+        '<button class="btn btn-secondary btn-sm" id="addChargeBtn">' + PMSUI.ICONS.plus + " Add Charge Item</button>" +
+      "</div>" +
+
+      '<div class="card" style="padding:20px;">' +
         '<h2 style="font-size:13.5px;font-weight:650;margin-bottom:4px;">Theme</h2>' +
         '<p class="text-secondary" style="font-size:12px;margin-bottom:14px;">Pure black &amp; white, either direction — pick which one reads better for you.</p>' +
         '<div class="chip-row">' +
@@ -1756,6 +1870,65 @@ html:not(.unlocked) .mobile-topbar {
     document.getElementById("sRenewalLead").addEventListener("change", function (e) { save({ leaseRenewalLeadDays: Number(e.target.value) || 0 }); PMSUI.toast("Saved."); });
     document.getElementById("sInvoicePrefix").addEventListener("change", function (e) { save({ invoicePrefix: e.target.value.trim() }); PMSUI.toast("Saved."); render(); });
     document.getElementById("sNextInvoiceNumber").addEventListener("change", function (e) { save({ nextInvoiceNumber: Math.max(1, Number(e.target.value) || 1) }); PMSUI.toast("Saved."); render(); });
+
+    function chargeItemFormBody(item) {
+      return (
+        '<div class="field"><label>Description<span class="req">*</span></label><input class="input" id="fCiDesc" value="' + PMSUI.escapeHtml(item ? item.description : "") + '" placeholder="e.g. Water"/><span class="hint hidden" id="fCiDescErr">Description is required.</span></div>' +
+        '<div class="field"><label>Unit price<span class="req">*</span></label><input class="input" type="number" min="0" step="any" id="fCiPrice" value="' + (item ? item.unitPrice : 0) + '"/></div>'
+      );
+    }
+    document.getElementById("addChargeBtn").addEventListener("click", function () {
+      PMSUI.openModal({
+        title: "Add Charge Item",
+        body: chargeItemFormBody(null),
+        footer: '<button class="btn btn-ghost" id="cancelBtn">Cancel</button><button class="btn btn-primary" id="saveBtn">Save</button>',
+        onMount: function (root, close) {
+          root.querySelector("#cancelBtn").addEventListener("click", close);
+          root.querySelector("#saveBtn").addEventListener("click", function () {
+            var desc = root.querySelector("#fCiDesc").value.trim();
+            if (!desc) { root.querySelector("#fCiDesc").classList.add("has-error"); root.querySelector("#fCiDescErr").classList.remove("hidden"); return; }
+            PMS.addChargeItem({ description: desc, unitPrice: Number(root.querySelector("#fCiPrice").value) || 0 });
+            PMSUI.toast("Charge item added.");
+            close();
+            render();
+          });
+        },
+      });
+    });
+    document.querySelectorAll("[data-editcharge]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var id = btn.getAttribute("data-editcharge");
+        var item = (PMS.getData().settings.chargeItems || []).find(function (x) { return x.id === id; });
+        if (!item) return;
+        PMSUI.openModal({
+          title: "Edit Charge Item",
+          body: chargeItemFormBody(item),
+          footer: '<button class="btn btn-ghost" id="cancelBtn">Cancel</button><button class="btn btn-primary" id="saveBtn">Save Changes</button>',
+          onMount: function (root, close) {
+            root.querySelector("#cancelBtn").addEventListener("click", close);
+            root.querySelector("#saveBtn").addEventListener("click", function () {
+              var desc = root.querySelector("#fCiDesc").value.trim();
+              if (!desc) { root.querySelector("#fCiDesc").classList.add("has-error"); root.querySelector("#fCiDescErr").classList.remove("hidden"); return; }
+              PMS.updateChargeItem(id, { description: desc, unitPrice: Number(root.querySelector("#fCiPrice").value) || 0 });
+              PMSUI.toast("Charge item updated.");
+              close();
+              render();
+            });
+          },
+        });
+      });
+    });
+    document.querySelectorAll("[data-deletecharge]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var id = btn.getAttribute("data-deletecharge");
+        PMSUI.confirmDialog({
+          title: "Delete this charge item?",
+          description: "This only removes it from the preset list in Settings — it won't change any invoices you've already saved.",
+          confirmLabel: "Delete",
+          onConfirm: function () { PMS.deleteChargeItem(id); PMSUI.toast("Charge item deleted.", "info"); render(); },
+        });
+      });
+    });
 
     document.querySelectorAll("[data-theme]").forEach(function (btn) {
       btn.addEventListener("click", function () {
