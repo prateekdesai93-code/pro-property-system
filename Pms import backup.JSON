@@ -1,0 +1,5104 @@
+{
+  "version": 1,
+  "properties": [
+    {
+      "id": "63b1ff56-fb0c-4fca-a33c-8269ada37bfa",
+      "name": "27 A St Cloud Avenue",
+      "address": "27 A St Cloud Avenue, Mayfair West, 2092",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.604309Z"
+    },
+    {
+      "id": "d51e3105-1c90-4e95-91d9-7ce5fe887f38",
+      "name": "Amit Patel's unit",
+      "address": "",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.604420Z"
+    },
+    {
+      "id": "fa70d6c9-3169-47f4-9660-eb94c5dfc536",
+      "name": "55B NERINA STREET",
+      "address": "55B NERINA STREET, EXTENSION 3, LENASIA, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.604480Z"
+    },
+    {
+      "id": "1a014be7-29c3-499c-b280-20074eedb602",
+      "name": "28 ST CLOUD AVENUE",
+      "address": "28 ST CLOUD AVENUE, MAYFAIR WEST, 2092",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.604542Z"
+    },
+    {
+      "id": "1c39eda4-809e-41b8-a3a1-4a129c69ef4d",
+      "name": "29 B ST CLOUD AVENUE",
+      "address": "29 B ST CLOUD AVENUE, MAYFAIR WEST, 2092",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.604633Z"
+    },
+    {
+      "id": "4e7c006a-0a19-4161-bc09-81238f9b0e69",
+      "name": "DC PATEL's unit",
+      "address": "",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.604674Z"
+    },
+    {
+      "id": "4fefe8e6-466c-4414-a555-ff5bc956d50b",
+      "name": "Dharmesh Carpenter's unit",
+      "address": "",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.604693Z"
+    },
+    {
+      "id": "8bcbbcb4-11d4-4304-accf-793aa5871176",
+      "name": "29A ST CLOUD AVENUE",
+      "address": "29A ST CLOUD AVENUE, MAYFAIR WEST, 2092",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.604710Z"
+    },
+    {
+      "id": "f49a3472-f62e-4304-a2ec-4ed39595d6f9",
+      "name": "55 A NERINA STREET",
+      "address": "55 A NERINA STREET, EXTENSION 3, LENASIA, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.604754Z"
+    },
+    {
+      "id": "a50dfa1e-1554-4337-afff-e3e9deb66a5f",
+      "name": "23b Starling Street",
+      "address": "23b Starling Street, Extension 1, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.604816Z"
+    },
+    {
+      "id": "be1e0580-db99-461e-87c1-20ddb152253f",
+      "name": "27 A ST CLOUD AVENUE",
+      "address": "27 A ST CLOUD AVENUE, MAYFAIR WEST, 2092",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.604955Z"
+    },
+    {
+      "id": "dbae4296-5e1c-41de-a414-5bfe9fc00242",
+      "name": "Jitesh Morar's unit",
+      "address": "",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.605010Z"
+    },
+    {
+      "id": "ce1c1f3b-2fcd-4e64-bbd1-1e33ae4a3eae",
+      "name": "JUSTICE SIDUMO's unit",
+      "address": "",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.605130Z"
+    },
+    {
+      "id": "1ff1bd62-ad7a-4ca1-9908-925c097e94e0",
+      "name": "55A NERINA AVENUE",
+      "address": "55A NERINA AVENUE, EXTENSION 3, LENASIA, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.605196Z"
+    },
+    {
+      "id": "39a74d08-7b10-40eb-b9ea-d88bce8b42c5",
+      "name": "23 C STARLING STREET",
+      "address": "23 C STARLING STREET, EXTENSION 1, LENASIA, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.605250Z"
+    },
+    {
+      "id": "eedc2049-02f8-491b-b4df-cc5e3eadaa15",
+      "name": "23C Starling Street",
+      "address": "23C Starling Street, Extension 1, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.605269Z"
+    },
+    {
+      "id": "fd398edf-4ddb-454d-b53b-e9850068a18a",
+      "name": "105 A Brahamani Street",
+      "address": "105 A Brahamani Street, Extension 11, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.605419Z"
+    },
+    {
+      "id": "625bfefb-28f2-49a8-9f23-dc716e9afd3f",
+      "name": "P O BOX 675",
+      "address": "P O BOX 675, LENASIA, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.605438Z"
+    },
+    {
+      "id": "02ba2c71-ed5a-4eab-a664-924fbb6d117f",
+      "name": "23b Starling Street",
+      "address": "23b Starling Street, Extension 1, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.605455Z"
+    },
+    {
+      "id": "61acef41-f2b9-4b88-ab21-9018a9b0a519",
+      "name": "Luxmi Morar's unit",
+      "address": "",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.605486Z"
+    },
+    {
+      "id": "a987e631-ca23-44e8-a172-832e9982bd78",
+      "name": "23 b Starling Street",
+      "address": "23 b Starling Street, Extension 1, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.605554Z"
+    },
+    {
+      "id": "b7f57076-274a-482f-9e30-cbfc06c0c60c",
+      "name": "23B Poppy Street",
+      "address": "23B Poppy Street, Extension 3, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.605698Z"
+    },
+    {
+      "id": "243c57c0-66be-419e-8f29-2415af7bb47b",
+      "name": "27B St Cloud Avenue",
+      "address": "27B St Cloud Avenue, Mayfair West, Johannesburg, 2092",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.605831Z"
+    },
+    {
+      "id": "6c2c8f62-45c6-4592-8e4b-2c7c69306140",
+      "name": "105 A Brahamani Street",
+      "address": "105 A Brahamani Street, Extension 11, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606038Z"
+    },
+    {
+      "id": "6b46fd84-5218-44d9-bc55-f30cf6761f2a",
+      "name": "23 A Starling Street",
+      "address": "23 A Starling Street, Extension 1, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606085Z"
+    },
+    {
+      "id": "e4c471fb-093a-4495-b074-a941bb79cdff",
+      "name": "23A STARLING STREET",
+      "address": "23A STARLING STREET, EXTENSION 1, LENASIA, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606108Z"
+    },
+    {
+      "id": "7beea329-97b5-4ce3-94ab-469314765fe7",
+      "name": "Mukesh - Olympic's unit",
+      "address": "",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606159Z"
+    },
+    {
+      "id": "78f43ee5-6531-4f83-8ec5-922e30fb6459",
+      "name": "32A Nerina Street",
+      "address": "32A Nerina Street, Extension 3, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606201Z"
+    },
+    {
+      "id": "1a2f0f0d-e76f-4b92-a8f1-7070342cc78f",
+      "name": "Nikhil Panchal's unit",
+      "address": "",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606354Z"
+    },
+    {
+      "id": "d6d6337e-c9e4-42d3-a911-aba41aa37a8b",
+      "name": "55B Nerina Avenue",
+      "address": "55B Nerina Avenue, Extension 3, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606371Z"
+    },
+    {
+      "id": "215523cf-30d3-4031-9be8-812f05cffa0c",
+      "name": "117 HUMMINGBIRD AVENUE",
+      "address": "117 HUMMINGBIRD AVENUE, EXTENSION 1, LENASIA",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606441Z"
+    },
+    {
+      "id": "83b6180c-50d2-44e5-bd1d-cd87bb8d4ced",
+      "name": "32 B Nerina Street",
+      "address": "32 B Nerina Street, Extension 3, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606554Z"
+    },
+    {
+      "id": "c3b397e6-d86b-4d7e-8c7f-3ce7814db500",
+      "name": "Pratik Desai's unit",
+      "address": "",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606697Z"
+    },
+    {
+      "id": "7fae8635-bd04-4713-ade2-3f054f46c8e5",
+      "name": "105 B Brahamani Street",
+      "address": "105 B Brahamani Street, Extension 11, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606714Z"
+    },
+    {
+      "id": "a840520d-cbb6-45ff-8367-8c7fb2f4c840",
+      "name": "55B NERINA STREET",
+      "address": "55B NERINA STREET, EXTENSION 3, LENASIA, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606787Z"
+    },
+    {
+      "id": "38d1ffae-1203-4b3f-8a43-4b5af2ff2cf5",
+      "name": "23A Starling Street",
+      "address": "23A Starling Street, Extension 1, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606843Z"
+    },
+    {
+      "id": "15a591f2-598d-4b11-b817-438e77c63209",
+      "name": "23 B POPPY STREET",
+      "address": "23 B POPPY STREET, EXTENSION 3, LENASIA, JHB",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606879Z"
+    },
+    {
+      "id": "07130db2-8bfe-4a21-aa0f-b6556aea1113",
+      "name": "23C Starling Street",
+      "address": "23C Starling Street, Extension 1, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606951Z"
+    },
+    {
+      "id": "9495ef85-931f-4d12-8e79-bbee6048b207",
+      "name": "23 A Poppy Street",
+      "address": "23 A Poppy Street, Extension 3, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.606983Z"
+    },
+    {
+      "id": "9e5f22b5-2b5a-40d7-ae61-4ea15818df7a",
+      "name": "28 ST CLOUD AVENUE",
+      "address": "28 ST CLOUD AVENUE, MAYFAIR WEST, 2092",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.607215Z"
+    },
+    {
+      "id": "119cb651-f20f-4350-929f-d89abf3e6912",
+      "name": "VINCENT's unit",
+      "address": "",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.607311Z"
+    },
+    {
+      "id": "a69c6e24-2b17-4edc-bac9-3d25fb9f8a67",
+      "name": "29 A ST CLOUD AVENUE",
+      "address": "29 A ST CLOUD AVENUE, MAYFAIR WEST, 2092",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.607373Z"
+    },
+    {
+      "id": "df71c3b2-4b89-45e8-88f1-4efb3c55d5d6",
+      "name": "27 C St Cloud Avenue",
+      "address": "27 C St Cloud Avenue, Mayfair West, Johannesburg, 2092",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.607399Z"
+    },
+    {
+      "id": "c7631f31-272a-49c5-b259-dde46058c06b",
+      "name": "Vishalbhai M Patel",
+      "address": "Vishalbhai M Patel, id number : 8203206286181",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.607453Z"
+    },
+    {
+      "id": "ad775619-cc7f-424a-b5f0-f32c65b3a60a",
+      "name": "33 Sunbird Avenue",
+      "address": "33 Sunbird Avenue, Extension 1, Lenasia, 1820",
+      "notes": "Imported from legacy accounting system.",
+      "createdAt": "2026-08-20T08:01:09.607478Z"
+    }
+  ],
+  "tenants": [
+    {
+      "id": "49be52ae-d9ee-4c6c-8303-260bf18fbf7f",
+      "name": "Akshaykumar M Patel",
+      "email": "",
+      "phone": "844291608",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.604276Z"
+    },
+    {
+      "id": "74e1ddd1-8d2e-4a73-b6e6-f142c1c7c959",
+      "name": "Amit Patel",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.604416Z"
+    },
+    {
+      "id": "ad52b6f7-a13d-49d3-bfea-9babdaa3bd3e",
+      "name": "ARUN KUMAR",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.604476Z"
+    },
+    {
+      "id": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "name": "Bhavesh patel",
+      "email": "patelbhavesh090@gmail.com",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.604531Z"
+    },
+    {
+      "id": "0a57757a-7c28-4ae0-a24e-48feef397f6d",
+      "name": "Bhavin Patel",
+      "email": "bhavin.patel6337@gmail.com",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.604629Z"
+    },
+    {
+      "id": "e1231ae7-01da-4659-a5b5-36fd78868e29",
+      "name": "DC PATEL",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.604671Z"
+    },
+    {
+      "id": "8c891a40-b260-466a-81c2-db14e86fad0d",
+      "name": "Dharmesh Carpenter",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.604689Z"
+    },
+    {
+      "id": "b1c603a8-6fc4-4948-89dc-dce918c2cb0e",
+      "name": "Hemant & Kalpana Patel",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.604706Z"
+    },
+    {
+      "id": "43c0e189-12a0-432f-92fc-694e95965cb6",
+      "name": "HV VAGHELA",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.604751Z"
+    },
+    {
+      "id": "748812d1-3681-40b4-bec6-d6c529a0d437",
+      "name": "Jayveer Sisodiya",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.604813Z"
+    },
+    {
+      "id": "3ac14531-bc5e-47d5-97d9-f0157f5a3989",
+      "name": "Jignesh Patel",
+      "email": "reshmajay2821@gmail.com",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.604949Z"
+    },
+    {
+      "id": "593cd6af-9fa6-4259-b654-7786c4299bcc",
+      "name": "Jitesh Morar",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.605006Z"
+    },
+    {
+      "id": "c93695c3-459d-4187-9d72-efb38ade17c0",
+      "name": "JUSTICE SIDUMO",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.605126Z"
+    },
+    {
+      "id": "80290cdf-e24e-4b39-95cb-898b1f45451d",
+      "name": "Kalpeshkumar Kiritbhai Mahyavanshi",
+      "email": "kalpesh58092@gmail.com",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.605192Z"
+    },
+    {
+      "id": "d7e9589b-992c-452b-8a54-6dec7ba7243c",
+      "name": "Karishma Bhana",
+      "email": "karishma.bhana@gmail.com",
+      "phone": "843709600",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.605247Z"
+    },
+    {
+      "id": "8839bb78-94be-4678-80a4-99e148d31f8e",
+      "name": "Kaushikkumar Patel",
+      "email": "",
+      "phone": "658474264",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.605266Z"
+    },
+    {
+      "id": "3ea5175b-1e1b-4888-a30b-dff5554680b9",
+      "name": "Ketan R Patel",
+      "email": "druv.patel43@gmail.com",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.605416Z"
+    },
+    {
+      "id": "5e04c84b-fe78-4381-a1a7-850a6cb7014a",
+      "name": "KISHAN & MAYUREE MORAR",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.605435Z"
+    },
+    {
+      "id": "600aa942-3405-4380-b0d3-ac1139fdbd83",
+      "name": "Kishor Mistry",
+      "email": "pannamistry19@gmail.com",
+      "phone": "740895789",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.605452Z"
+    },
+    {
+      "id": "ac6c150e-8c48-4283-b4f8-a35922347be7",
+      "name": "Luxmi Morar",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.605483Z"
+    },
+    {
+      "id": "ae32080e-0ed1-44b9-bd5a-bb539d2f83ae",
+      "name": "Maheshkumar Patel",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.605550Z"
+    },
+    {
+      "id": "17f377a1-3ade-497b-99a2-dee50b160d9a",
+      "name": "Manoj Patel",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.605695Z"
+    },
+    {
+      "id": "9072fe99-1140-49f4-b4ae-ced6104778fd",
+      "name": "Mayur Patel",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.605827Z"
+    },
+    {
+      "id": "7e579904-7552-4bff-b730-3b56f11acc5d",
+      "name": "MAYURKUMAR HASMUKHLAL PAREKH",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606033Z"
+    },
+    {
+      "id": "4f870a24-61b9-4fe0-8461-2712b39fa2ad",
+      "name": "Mihirkumar Panchal",
+      "email": "mihirpanchal36872011@gmail.com",
+      "phone": "613077176",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606082Z"
+    },
+    {
+      "id": "29a68742-c2e1-4699-947c-c7072e0803d3",
+      "name": "MUBIN ABDUL AZIM PETKAR",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606104Z"
+    },
+    {
+      "id": "11ccca3d-5ea8-4ce6-9b47-0b0643c8e4bd",
+      "name": "Mukesh - Olympic",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606156Z"
+    },
+    {
+      "id": "20ab2c15-aec4-4147-bda1-a7e5e80fbd1c",
+      "name": "Mukesh Patel",
+      "email": "bhavinpatel8911@yahoo.com",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606199Z"
+    },
+    {
+      "id": "6e857568-90a8-45f6-ade7-fccd735113a4",
+      "name": "Nikhil Panchal",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606351Z"
+    },
+    {
+      "id": "52015eea-986a-4316-afa4-2f4585a30408",
+      "name": "Nilaykumar Navinbhai Patel",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606368Z"
+    },
+    {
+      "id": "5395391b-0a22-41be-bb4e-be875f5b90e9",
+      "name": "Nilesh Morar",
+      "email": "NileshM@nedbank.co.za",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606439Z"
+    },
+    {
+      "id": "1ec67d4f-6646-4fba-9984-78206ac7f995",
+      "name": "Piyush Desai",
+      "email": "piyushdesai79@gmail.com",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606551Z"
+    },
+    {
+      "id": "161c6108-100f-4842-bf79-b36e23ec61aa",
+      "name": "Pratik Desai",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606694Z"
+    },
+    {
+      "id": "60446d7d-5434-4e3a-a696-d1bda3ad7386",
+      "name": "RAJESH HARIPARAD ( Sanjay )",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606711Z"
+    },
+    {
+      "id": "95f41ed8-c0a6-4f21-9845-b14ea77eb8c3",
+      "name": "Ritesh Dhiroo Jivan ( Kerit)",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606784Z"
+    },
+    {
+      "id": "bb929b6b-752a-4242-95a1-b1dad299d915",
+      "name": "RITESHKUMAR  NAVINCHANDRA GANDHI",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606840Z"
+    },
+    {
+      "id": "5422d760-5c39-40a7-811e-b35f9816355c",
+      "name": "Sandeepkumar Maganbhai Patel",
+      "email": "",
+      "phone": "743115470",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606876Z"
+    },
+    {
+      "id": "39c9dec0-fe94-4749-af7d-d2af17426708",
+      "name": "Shailesh Parekh",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606947Z"
+    },
+    {
+      "id": "2257b013-c320-4346-afba-5bd9dc8d8c16",
+      "name": "Sunil Patel",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.606980Z"
+    },
+    {
+      "id": "dcde6d36-0d7a-4085-85f7-235a5faa551e",
+      "name": "Umesh Patel",
+      "email": "jaan200630@gmail.com",
+      "phone": "764776507",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.607212Z"
+    },
+    {
+      "id": "1cc57819-1106-486c-a518-a5f1191458df",
+      "name": "VINCENT",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.607308Z"
+    },
+    {
+      "id": "7756c2b2-59c9-47ac-a5b5-fbfa0148ba5b",
+      "name": "Vipul Chimanbhai Patel",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.607370Z"
+    },
+    {
+      "id": "37afe59f-2f4d-4786-8244-cf968c95c942",
+      "name": "Vishal Panchal",
+      "email": "",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.607396Z"
+    },
+    {
+      "id": "211a0935-179b-4b58-8eeb-e8afcfc8d312",
+      "name": "Vishalbhai M Patel - id no:8203206286181",
+      "email": "patelvissh@gmail.com",
+      "phone": "791242143",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.607450Z"
+    },
+    {
+      "id": "bf187e29-860a-4d7b-a1c9-052f2892e978",
+      "name": "Yameen Moosa",
+      "email": "moosayameen22@gmail.com",
+      "phone": "",
+      "notes": "Imported from legacy accounting system (Shriya & Yatika Investments).",
+      "createdAt": "2026-08-20T08:01:09.607475Z"
+    }
+  ],
+  "leases": [
+    {
+      "id": "ddbc142d-4982-40b6-aad1-f5219ef71caa",
+      "propertyId": "63b1ff56-fb0c-4fca-a33c-8269ada37bfa",
+      "tenantId": "49be52ae-d9ee-4c6c-8303-260bf18fbf7f",
+      "status": "active",
+      "rentAmount": 5755.69,
+      "dueDay": 1,
+      "startDate": "2026-04-07",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.604329Z"
+    },
+    {
+      "id": "0b4bc556-fbc3-4239-8526-51dd2eb55137",
+      "propertyId": "d51e3105-1c90-4e95-91d9-7ce5fe887f38",
+      "tenantId": "74e1ddd1-8d2e-4a73-b6e6-f142c1c7c959",
+      "status": "active",
+      "rentAmount": 4885.75,
+      "dueDay": 1,
+      "startDate": "2026-06-26",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.604429Z"
+    },
+    {
+      "id": "2766d066-5bcc-475a-91f7-48b05854821c",
+      "propertyId": "fa70d6c9-3169-47f4-9660-eb94c5dfc536",
+      "tenantId": "ad52b6f7-a13d-49d3-bfea-9babdaa3bd3e",
+      "status": "active",
+      "rentAmount": 937.08,
+      "dueDay": 1,
+      "startDate": "2026-06-08",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.604488Z"
+    },
+    {
+      "id": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "status": "active",
+      "rentAmount": 0,
+      "dueDay": 1,
+      "startDate": "2013-04-25",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.604551Z"
+    },
+    {
+      "id": "aadbd6a2-7dcd-4ba5-8754-65e4883f8d78",
+      "propertyId": "1c39eda4-809e-41b8-a3a1-4a129c69ef4d",
+      "tenantId": "0a57757a-7c28-4ae0-a24e-48feef397f6d",
+      "status": "active",
+      "rentAmount": 5712.02,
+      "dueDay": 1,
+      "startDate": "2026-07-27",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.604639Z"
+    },
+    {
+      "id": "5a55196a-fe8e-42e7-951f-11873ef44d47",
+      "propertyId": "4e7c006a-0a19-4161-bc09-81238f9b0e69",
+      "tenantId": "e1231ae7-01da-4659-a5b5-36fd78868e29",
+      "status": "active",
+      "rentAmount": 0,
+      "dueDay": 1,
+      "startDate": "2018-01-01",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.604678Z"
+    },
+    {
+      "id": "cc908119-650d-4eaf-b00b-33905fa9bf35",
+      "propertyId": "4fefe8e6-466c-4414-a555-ff5bc956d50b",
+      "tenantId": "8c891a40-b260-466a-81c2-db14e86fad0d",
+      "status": "active",
+      "rentAmount": 0,
+      "dueDay": 1,
+      "startDate": "2018-01-01",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.604696Z"
+    },
+    {
+      "id": "70004484-2ca2-4e73-be16-99bc40f786d4",
+      "propertyId": "8bcbbcb4-11d4-4304-accf-793aa5871176",
+      "tenantId": "b1c603a8-6fc4-4948-89dc-dce918c2cb0e",
+      "status": "active",
+      "rentAmount": 5799.36,
+      "dueDay": 1,
+      "startDate": "2025-07-07",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.604714Z"
+    },
+    {
+      "id": "c58bfaad-cc7f-44df-8f26-5cb5c7ab8c59",
+      "propertyId": "f49a3472-f62e-4304-a2ec-4ed39595d6f9",
+      "tenantId": "43c0e189-12a0-432f-92fc-694e95965cb6",
+      "status": "active",
+      "rentAmount": 6664.84,
+      "dueDay": 1,
+      "startDate": "2026-06-08",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.604761Z"
+    },
+    {
+      "id": "138c4176-1639-4f6b-8de2-e76461b6084d",
+      "propertyId": "a50dfa1e-1554-4337-afff-e3e9deb66a5f",
+      "tenantId": "748812d1-3681-40b4-bec6-d6c529a0d437",
+      "status": "active",
+      "rentAmount": 375.43,
+      "dueDay": 1,
+      "startDate": "2022-10-05",
+      "leaseEndDate": null,
+      "securityDeposit": 3900.0,
+      "depositPaidDate": "2022-10-05",
+      "depositReturned": true,
+      "depositReturnedAmount": 3900.0,
+      "depositReturnedDate": "2023-02-28",
+      "createdAt": "2026-08-20T08:01:09.604824Z"
+    },
+    {
+      "id": "b7dcad73-918e-41e9-b384-8215e3251a79",
+      "propertyId": "be1e0580-db99-461e-87c1-20ddb152253f",
+      "tenantId": "3ac14531-bc5e-47d5-97d9-f0157f5a3989",
+      "status": "active",
+      "rentAmount": 0,
+      "dueDay": 1,
+      "startDate": "2014-06-17",
+      "leaseEndDate": null,
+      "securityDeposit": 3500.0,
+      "depositPaidDate": "2014-06-17",
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.604962Z"
+    },
+    {
+      "id": "66bdb147-348b-4bf5-a3a5-215203b70983",
+      "propertyId": "dbae4296-5e1c-41de-a414-5bfe9fc00242",
+      "tenantId": "593cd6af-9fa6-4259-b654-7786c4299bcc",
+      "status": "active",
+      "rentAmount": 20000.0,
+      "dueDay": 1,
+      "startDate": "2024-04-19",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.605019Z"
+    },
+    {
+      "id": "3e757854-2da4-4392-b8d9-739a19e090be",
+      "propertyId": "ce1c1f3b-2fcd-4e64-bbd1-1e33ae4a3eae",
+      "tenantId": "c93695c3-459d-4187-9d72-efb38ade17c0",
+      "status": "active",
+      "rentAmount": 10000.0,
+      "dueDay": 1,
+      "startDate": "2025-10-10",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.605137Z"
+    },
+    {
+      "id": "a5e6a524-7763-409b-8352-a66dee1ae065",
+      "propertyId": "1ff1bd62-ad7a-4ca1-9908-925c097e94e0",
+      "tenantId": "80290cdf-e24e-4b39-95cb-898b1f45451d",
+      "status": "active",
+      "rentAmount": 6462.06,
+      "dueDay": 1,
+      "startDate": "2013-06-13",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.605204Z"
+    },
+    {
+      "id": "7e1db3c8-a5bf-4796-9be5-430a3fe1ee2d",
+      "propertyId": "39a74d08-7b10-40eb-b9ea-d88bce8b42c5",
+      "tenantId": "d7e9589b-992c-452b-8a54-6dec7ba7243c",
+      "status": "ended",
+      "rentAmount": 0,
+      "dueDay": 1,
+      "startDate": "2018-01-01",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.605254Z",
+      "endDate": null
+    },
+    {
+      "id": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "propertyId": "eedc2049-02f8-491b-b4df-cc5e3eadaa15",
+      "tenantId": "8839bb78-94be-4678-80a4-99e148d31f8e",
+      "status": "active",
+      "rentAmount": 725.78,
+      "dueDay": 1,
+      "startDate": "2019-04-25",
+      "leaseEndDate": null,
+      "securityDeposit": 3600.0,
+      "depositPaidDate": "2019-04-25",
+      "depositReturned": true,
+      "depositReturnedAmount": 3600.0,
+      "depositReturnedDate": "2019-07-15",
+      "createdAt": "2026-08-20T08:01:09.605279Z"
+    },
+    {
+      "id": "485bb8c9-2931-4712-8dbe-ae88a11f7ab9",
+      "propertyId": "fd398edf-4ddb-454d-b53b-e9850068a18a",
+      "tenantId": "3ea5175b-1e1b-4888-a30b-dff5554680b9",
+      "status": "active",
+      "rentAmount": 0,
+      "dueDay": 1,
+      "startDate": "2018-01-01",
+      "leaseEndDate": null,
+      "securityDeposit": 4500.0,
+      "depositPaidDate": "2018-01-01",
+      "depositReturned": true,
+      "depositReturnedAmount": 4500.0,
+      "depositReturnedDate": "2020-11-25",
+      "createdAt": "2026-08-20T08:01:09.605423Z"
+    },
+    {
+      "id": "d40ca0c4-3f1d-45c1-b751-cdd0f2ef4718",
+      "propertyId": "625bfefb-28f2-49a8-9f23-dc716e9afd3f",
+      "tenantId": "5e04c84b-fe78-4381-a1a7-850a6cb7014a",
+      "status": "active",
+      "rentAmount": 0,
+      "dueDay": 1,
+      "startDate": "2018-01-01",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.605441Z"
+    },
+    {
+      "id": "54925145-29c3-42c4-a8a0-a7a8070a7de9",
+      "propertyId": "02ba2c71-ed5a-4eab-a664-924fbb6d117f",
+      "tenantId": "600aa942-3405-4380-b0d3-ac1139fdbd83",
+      "status": "active",
+      "rentAmount": 16563.02,
+      "dueDay": 1,
+      "startDate": "2018-09-25",
+      "leaseEndDate": null,
+      "securityDeposit": 3600.0,
+      "depositPaidDate": "2018-09-25",
+      "depositReturned": true,
+      "depositReturnedAmount": 3600.0,
+      "depositReturnedDate": "2022-01-18",
+      "createdAt": "2026-08-20T08:01:09.605460Z"
+    },
+    {
+      "id": "00584293-973d-498c-97ad-5a41f7c2b687",
+      "propertyId": "61acef41-f2b9-4b88-ab21-9018a9b0a519",
+      "tenantId": "ac6c150e-8c48-4283-b4f8-a35922347be7",
+      "status": "active",
+      "rentAmount": 0,
+      "dueDay": 1,
+      "startDate": "2022-07-05",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.605492Z"
+    },
+    {
+      "id": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "propertyId": "a987e631-ca23-44e8-a172-832e9982bd78",
+      "tenantId": "ae32080e-0ed1-44b9-bd5a-bb539d2f83ae",
+      "status": "active",
+      "rentAmount": 4754.74,
+      "dueDay": 1,
+      "startDate": "2025-07-07",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.605564Z"
+    },
+    {
+      "id": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "propertyId": "b7f57076-274a-482f-9e30-cbfc06c0c60c",
+      "tenantId": "17f377a1-3ade-497b-99a2-dee50b160d9a",
+      "status": "active",
+      "rentAmount": 4693.53,
+      "dueDay": 1,
+      "startDate": "2025-07-07",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.605706Z"
+    },
+    {
+      "id": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "propertyId": "243c57c0-66be-419e-8f29-2415af7bb47b",
+      "tenantId": "9072fe99-1140-49f4-b4ae-ced6104778fd",
+      "status": "active",
+      "rentAmount": 4458.38,
+      "dueDay": 1,
+      "startDate": "2025-03-05",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.605839Z"
+    },
+    {
+      "id": "49f6f2d1-681c-4f1d-82a9-00bde4558781",
+      "propertyId": "6c2c8f62-45c6-4592-8e4b-2c7c69306140",
+      "tenantId": "7e579904-7552-4bff-b730-3b56f11acc5d",
+      "status": "active",
+      "rentAmount": 5457.68,
+      "dueDay": 1,
+      "startDate": "2025-07-07",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.606044Z"
+    },
+    {
+      "id": "a6835158-69fe-49a6-8359-864af56160c1",
+      "propertyId": "6b46fd84-5218-44d9-bc55-f30cf6761f2a",
+      "tenantId": "4f870a24-61b9-4fe0-8461-2712b39fa2ad",
+      "status": "active",
+      "rentAmount": 0,
+      "dueDay": 1,
+      "startDate": "2018-03-22",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.606090Z"
+    },
+    {
+      "id": "fab9c99d-a793-4230-b431-9db632098f1a",
+      "propertyId": "e4c471fb-093a-4495-b074-a941bb79cdff",
+      "tenantId": "29a68742-c2e1-4699-947c-c7072e0803d3",
+      "status": "active",
+      "rentAmount": 6779.87,
+      "dueDay": 1,
+      "startDate": "2025-07-07",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.606113Z"
+    },
+    {
+      "id": "04912682-a7e1-43de-ba79-97ac199ad3e7",
+      "propertyId": "7beea329-97b5-4ce3-94ab-469314765fe7",
+      "tenantId": "11ccca3d-5ea8-4ce6-9b47-0b0643c8e4bd",
+      "status": "active",
+      "rentAmount": 5193.1,
+      "dueDay": 1,
+      "startDate": "2026-05-13",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.606164Z"
+    },
+    {
+      "id": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "propertyId": "78f43ee5-6531-4f83-8ec5-922e30fb6459",
+      "tenantId": "20ab2c15-aec4-4147-bda1-a7e5e80fbd1c",
+      "status": "active",
+      "rentAmount": 5294.15,
+      "dueDay": 1,
+      "startDate": "2026-01-07",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.606210Z"
+    },
+    {
+      "id": "4fa903ba-f009-40cc-a7b8-aaac871266a4",
+      "propertyId": "1a2f0f0d-e76f-4b92-a8f1-7070342cc78f",
+      "tenantId": "6e857568-90a8-45f6-ade7-fccd735113a4",
+      "status": "active",
+      "rentAmount": 0,
+      "dueDay": 1,
+      "startDate": "2018-01-01",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.606357Z"
+    },
+    {
+      "id": "1b046c33-098b-4a8b-b5e3-9815f61bb1ad",
+      "propertyId": "d6d6337e-c9e4-42d3-a911-aba41aa37a8b",
+      "tenantId": "52015eea-986a-4316-afa4-2f4585a30408",
+      "status": "active",
+      "rentAmount": 8107.12,
+      "dueDay": 1,
+      "startDate": "2026-06-26",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.606378Z"
+    },
+    {
+      "id": "7e3ce817-0404-47e7-92f2-daafbda3a063",
+      "propertyId": "215523cf-30d3-4031-9be8-812f05cffa0c",
+      "tenantId": "5395391b-0a22-41be-bb4e-be875f5b90e9",
+      "status": "active",
+      "rentAmount": 20000.0,
+      "dueDay": 1,
+      "startDate": "2022-11-25",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.606449Z"
+    },
+    {
+      "id": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "propertyId": "83b6180c-50d2-44e5-bd1d-cd87bb8d4ced",
+      "tenantId": "1ec67d4f-6646-4fba-9984-78206ac7f995",
+      "status": "active",
+      "rentAmount": 3230.85,
+      "dueDay": 1,
+      "startDate": "2023-08-03",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.606565Z"
+    },
+    {
+      "id": "df221b74-95f3-4e38-8138-2448a39825f4",
+      "propertyId": "c3b397e6-d86b-4d7e-8c7f-3ce7814db500",
+      "tenantId": "161c6108-100f-4842-bf79-b36e23ec61aa",
+      "status": "active",
+      "rentAmount": 0,
+      "dueDay": 1,
+      "startDate": "2018-01-01",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.606701Z"
+    },
+    {
+      "id": "01cc3d39-82b9-47d6-bbb2-e97b7229d4b2",
+      "propertyId": "7fae8635-bd04-4713-ade2-3f054f46c8e5",
+      "tenantId": "60446d7d-5434-4e3a-a696-d1bda3ad7386",
+      "status": "active",
+      "rentAmount": 5892.98,
+      "dueDay": 1,
+      "startDate": "2026-06-08",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.606721Z"
+    },
+    {
+      "id": "28a4a038-1271-40fb-b05f-ca52d0a10908",
+      "propertyId": "a840520d-cbb6-45ff-8367-8c7fb2f4c840",
+      "tenantId": "95f41ed8-c0a6-4f21-9845-b14ea77eb8c3",
+      "status": "active",
+      "rentAmount": 775.24,
+      "dueDay": 1,
+      "startDate": "2025-09-25",
+      "leaseEndDate": null,
+      "securityDeposit": 4500.0,
+      "depositPaidDate": "2025-09-25",
+      "depositReturned": true,
+      "depositReturnedAmount": 4500.0,
+      "depositReturnedDate": "2025-10-27",
+      "createdAt": "2026-08-20T08:01:09.606793Z"
+    },
+    {
+      "id": "0b61b59b-e8a8-4747-b957-6278004da329",
+      "propertyId": "38d1ffae-1203-4b3f-8a43-4b5af2ff2cf5",
+      "tenantId": "bb929b6b-752a-4242-95a1-b1dad299d915",
+      "status": "active",
+      "rentAmount": 18084.16,
+      "dueDay": 1,
+      "startDate": "2018-08-27",
+      "leaseEndDate": null,
+      "securityDeposit": 5000.0,
+      "depositPaidDate": "2018-08-27",
+      "depositReturned": true,
+      "depositReturnedAmount": 5000.0,
+      "depositReturnedDate": "2022-05-27",
+      "createdAt": "2026-08-20T08:01:09.606848Z"
+    },
+    {
+      "id": "ef834252-b664-4990-ab95-c8435eb56701",
+      "propertyId": "15a591f2-598d-4b11-b817-438e77c63209",
+      "tenantId": "5422d760-5c39-40a7-811e-b35f9816355c",
+      "status": "active",
+      "rentAmount": 4320.28,
+      "dueDay": 1,
+      "startDate": "2023-08-08",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.606884Z"
+    },
+    {
+      "id": "a494ae85-867a-4abc-8df9-fe10af74394e",
+      "propertyId": "07130db2-8bfe-4a21-aa0f-b6556aea1113",
+      "tenantId": "39c9dec0-fe94-4749-af7d-d2af17426708",
+      "status": "active",
+      "rentAmount": 4000.0,
+      "dueDay": 1,
+      "startDate": "2026-08-18",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.606957Z"
+    },
+    {
+      "id": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "propertyId": "9495ef85-931f-4d12-8e79-bbee6048b207",
+      "tenantId": "2257b013-c320-4346-afba-5bd9dc8d8c16",
+      "status": "active",
+      "rentAmount": 5718.85,
+      "dueDay": 1,
+      "startDate": "2023-08-08",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.606997Z"
+    },
+    {
+      "id": "b5a87359-c03a-4bff-a66b-a5548eaeffca",
+      "propertyId": "9e5f22b5-2b5a-40d7-ae61-4ea15818df7a",
+      "tenantId": "dcde6d36-0d7a-4085-85f7-235a5faa551e",
+      "status": "active",
+      "rentAmount": 7392.9,
+      "dueDay": 1,
+      "startDate": "2014-06-17",
+      "leaseEndDate": null,
+      "securityDeposit": 3500.0,
+      "depositPaidDate": "2014-06-17",
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.607222Z"
+    },
+    {
+      "id": "a071a0d7-c0db-4bb9-9b03-2d0b5c7a982c",
+      "propertyId": "119cb651-f20f-4350-929f-d89abf3e6912",
+      "tenantId": "1cc57819-1106-486c-a518-a5f1191458df",
+      "status": "active",
+      "rentAmount": 12000.0,
+      "dueDay": 1,
+      "startDate": "2024-12-05",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.607318Z"
+    },
+    {
+      "id": "9ed30f0f-1677-467a-afc9-d22342704c4d",
+      "propertyId": "a69c6e24-2b17-4edc-bac9-3d25fb9f8a67",
+      "tenantId": "7756c2b2-59c9-47ac-a5b5-fbfa0148ba5b",
+      "status": "active",
+      "rentAmount": 0,
+      "dueDay": 1,
+      "startDate": "2023-08-08",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.607377Z"
+    },
+    {
+      "id": "9d35239a-807e-472a-b948-96d510dfe6bd",
+      "propertyId": "df71c3b2-4b89-45e8-88f1-4efb3c55d5d6",
+      "tenantId": "37afe59f-2f4d-4786-8244-cf968c95c942",
+      "status": "active",
+      "rentAmount": 4589.39,
+      "dueDay": 1,
+      "startDate": "2024-08-02",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.607404Z"
+    },
+    {
+      "id": "4f2986de-3002-412e-8a32-aaf635832f36",
+      "propertyId": "c7631f31-272a-49c5-b259-dde46058c06b",
+      "tenantId": "211a0935-179b-4b58-8eeb-e8afcfc8d312",
+      "status": "active",
+      "rentAmount": 0,
+      "dueDay": 1,
+      "startDate": "2023-08-08",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.607457Z"
+    },
+    {
+      "id": "566e8e45-d060-48dc-8bea-6f8ac7dfead8",
+      "propertyId": "ad775619-cc7f-424a-b5f0-f32c65b3a60a",
+      "tenantId": "bf187e29-860a-4d7b-a1c9-052f2892e978",
+      "status": "active",
+      "rentAmount": 7548.09,
+      "dueDay": 1,
+      "startDate": "2023-02-27",
+      "leaseEndDate": null,
+      "securityDeposit": 0,
+      "depositPaidDate": null,
+      "depositReturned": false,
+      "depositReturnedAmount": 0,
+      "depositReturnedDate": null,
+      "createdAt": "2026-08-20T08:01:09.607487Z"
+    }
+  ],
+  "rentPayments": [
+    {
+      "id": "e7c1afa7-5cdc-4d5d-9f3d-c525508c65d7",
+      "leaseId": "ddbc142d-4982-40b6-aad1-f5219ef71caa",
+      "amount": 28.13,
+      "date": "2026-04-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002825",
+      "periodLabel": "April 2026",
+      "createdAt": "2026-08-20T08:01:09.604358Z"
+    },
+    {
+      "id": "0858f493-2e27-4576-8f71-3313fa7597cc",
+      "leaseId": "ddbc142d-4982-40b6-aad1-f5219ef71caa",
+      "amount": 5755.69,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002905, paid INV002634",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.604391Z"
+    },
+    {
+      "id": "5e329d0c-5495-4ccb-8de4-a55e045ad57e",
+      "leaseId": "0b4bc556-fbc3-4239-8526-51dd2eb55137",
+      "amount": 5000.0,
+      "date": "2026-07-27",
+      "method": "Imported",
+      "note": "Legacy reference RCP002891",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.604464Z"
+    },
+    {
+      "id": "f638fc6e-2ac5-45ad-9d1f-e4934ac7a634",
+      "leaseId": "2766d066-5bcc-475a-91f7-48b05854821c",
+      "amount": 0.52,
+      "date": "2026-06-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP002857",
+      "periodLabel": "June 2026",
+      "createdAt": "2026-08-20T08:01:09.604498Z"
+    },
+    {
+      "id": "fa212ca0-76ba-40f1-baaa-2506eea91f3e",
+      "leaseId": "2766d066-5bcc-475a-91f7-48b05854821c",
+      "amount": 500.0,
+      "date": "2026-06-26",
+      "method": "Imported",
+      "note": "Legacy reference RCP002868",
+      "periodLabel": "June 2026",
+      "createdAt": "2026-08-20T08:01:09.604518Z"
+    },
+    {
+      "id": "6babc128-a4e1-4eef-ace4-e1979d7d7da5",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "amount": 0.24,
+      "date": "2022-12-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP001963",
+      "periodLabel": "December 2022",
+      "createdAt": "2026-08-20T08:01:09.604562Z"
+    },
+    {
+      "id": "9efff16e-3743-4bcd-86a0-bb76ae208f48",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "amount": 0.17,
+      "date": "2022-12-22",
+      "method": "Imported",
+      "note": "Legacy reference RCP001979",
+      "periodLabel": "December 2022",
+      "createdAt": "2026-08-20T08:01:09.604569Z"
+    },
+    {
+      "id": "6e3b8d6e-6884-40ba-a4d1-bf70d2572e59",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "amount": 0.17,
+      "date": "2023-01-30",
+      "method": "Imported",
+      "note": "Legacy reference RCP002002",
+      "periodLabel": "January 2023",
+      "createdAt": "2026-08-20T08:01:09.604576Z"
+    },
+    {
+      "id": "c1b2aac4-61c4-4014-aa70-7dc4a2d4bcf6",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "amount": 0.17,
+      "date": "2023-03-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002024",
+      "periodLabel": "March 2023",
+      "createdAt": "2026-08-20T08:01:09.604583Z"
+    },
+    {
+      "id": "e602c404-0e83-4dc7-ac18-988cb493e401",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "amount": 0.17,
+      "date": "2023-04-06",
+      "method": "Imported",
+      "note": "Legacy reference RCP002046",
+      "periodLabel": "April 2023",
+      "createdAt": "2026-08-20T08:01:09.604590Z"
+    },
+    {
+      "id": "f22358d3-c2bf-43f1-be1f-279dd5d1a1e7",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "amount": 0.17,
+      "date": "2023-04-28",
+      "method": "Imported",
+      "note": "Legacy reference RCP002064",
+      "periodLabel": "April 2023",
+      "createdAt": "2026-08-20T08:01:09.604597Z"
+    },
+    {
+      "id": "f8c27a84-d13b-404b-b4e2-540b4bffa066",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "amount": 0.17,
+      "date": "2023-06-30",
+      "method": "Imported",
+      "note": "Legacy reference RCP002085",
+      "periodLabel": "June 2023",
+      "createdAt": "2026-08-20T08:01:09.604604Z"
+    },
+    {
+      "id": "e89ee224-086f-4dbc-99bc-b1c4659642fc",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "amount": 0.09,
+      "date": "2023-07-31",
+      "method": "Imported",
+      "note": "Legacy reference RCP002109",
+      "periodLabel": "July 2023",
+      "createdAt": "2026-08-20T08:01:09.604611Z"
+    },
+    {
+      "id": "8586e002-e698-46d6-b98a-276f409205a8",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "amount": 0.03,
+      "date": "2023-09-04",
+      "method": "Imported",
+      "note": "Legacy reference RCP002133",
+      "periodLabel": "September 2023",
+      "createdAt": "2026-08-20T08:01:09.604618Z"
+    },
+    {
+      "id": "cd95b53f-8fff-4d97-9608-26c816340ba6",
+      "leaseId": "aadbd6a2-7dcd-4ba5-8754-65e4883f8d78",
+      "amount": 5712.02,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002903, paid INV002633",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.604660Z"
+    },
+    {
+      "id": "16f3893e-566e-4383-91b2-b9c346785ae3",
+      "leaseId": "70004484-2ca2-4e73-be16-99bc40f786d4",
+      "amount": 68.26,
+      "date": "2025-07-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002614",
+      "periodLabel": "July 2025",
+      "createdAt": "2026-08-20T08:01:09.604723Z"
+    },
+    {
+      "id": "1d779d96-e9eb-421b-89ef-d7eb7dbf67d8",
+      "leaseId": "70004484-2ca2-4e73-be16-99bc40f786d4",
+      "amount": 5799.36,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002898, paid INV002632",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.604741Z"
+    },
+    {
+      "id": "61740389-927d-43b7-b941-8af6d7ac8ca0",
+      "leaseId": "c58bfaad-cc7f-44df-8f26-5cb5c7ab8c59",
+      "amount": 17.69,
+      "date": "2026-06-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP002863",
+      "periodLabel": "June 2026",
+      "createdAt": "2026-08-20T08:01:09.604770Z"
+    },
+    {
+      "id": "652d9616-7a1a-424a-9496-189baf91496e",
+      "leaseId": "c58bfaad-cc7f-44df-8f26-5cb5c7ab8c59",
+      "amount": 2.41,
+      "date": "2026-07-02",
+      "method": "Imported",
+      "note": "Legacy reference RCP002877",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.604778Z"
+    },
+    {
+      "id": "0aa03428-2ac8-4006-8bdb-a2313ca9de9e",
+      "leaseId": "c58bfaad-cc7f-44df-8f26-5cb5c7ab8c59",
+      "amount": 1200.0,
+      "date": "2026-07-27",
+      "method": "Imported",
+      "note": "Legacy reference RCP002892",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.604794Z"
+    },
+    {
+      "id": "e4336c23-2281-4365-a4f8-282df58be371",
+      "leaseId": "c58bfaad-cc7f-44df-8f26-5cb5c7ab8c59",
+      "amount": 5440.0,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002909, paid INV002628",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.604803Z"
+    },
+    {
+      "id": "d120dda5-2074-4105-bf16-c9f7f507914b",
+      "leaseId": "138c4176-1639-4f6b-8de2-e76461b6084d",
+      "amount": 3900.0,
+      "date": "2022-10-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP001924, paid INV001759",
+      "periodLabel": "October 2022",
+      "createdAt": "2026-08-20T08:01:09.604852Z"
+    },
+    {
+      "id": "d03e8087-0373-4784-9aa8-8bc57725c7b4",
+      "leaseId": "138c4176-1639-4f6b-8de2-e76461b6084d",
+      "amount": 6.96,
+      "date": "2022-11-16",
+      "method": "Imported",
+      "note": "Legacy reference RCP001958, paid INV001760",
+      "periodLabel": "October 2022",
+      "createdAt": "2026-08-20T08:01:09.604870Z"
+    },
+    {
+      "id": "4a589a4c-d60c-4635-9bc0-410b97d9f53a",
+      "leaseId": "138c4176-1639-4f6b-8de2-e76461b6084d",
+      "amount": 0.44,
+      "date": "2022-12-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP001973, paid INV001849",
+      "periodLabel": "December 2022",
+      "createdAt": "2026-08-20T08:01:09.604879Z"
+    },
+    {
+      "id": "1bcafd5b-c038-4cce-8d69-e01dd66708b9",
+      "leaseId": "138c4176-1639-4f6b-8de2-e76461b6084d",
+      "amount": 0.88,
+      "date": "2023-02-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP002013, paid INV001760",
+      "periodLabel": "October 2022",
+      "createdAt": "2026-08-20T08:01:09.604887Z"
+    },
+    {
+      "id": "94ed9817-fec3-4c57-883c-3cae1ef389b3",
+      "leaseId": "138c4176-1639-4f6b-8de2-e76461b6084d",
+      "amount": 370.0,
+      "date": "2023-03-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002026, paid INV001849",
+      "periodLabel": "February 2023",
+      "createdAt": "2026-08-20T08:01:09.604906Z"
+    },
+    {
+      "id": "929e943b-7631-479c-b204-b3249a1315fb",
+      "leaseId": "b7dcad73-918e-41e9-b384-8215e3251a79",
+      "amount": 31.21,
+      "date": "2020-10-01",
+      "method": "Imported",
+      "note": "Legacy reference RCP001386",
+      "periodLabel": "October 2020",
+      "createdAt": "2026-08-20T08:01:09.604973Z"
+    },
+    {
+      "id": "a6028bfa-b236-44d4-9b01-a62369ef82c4",
+      "leaseId": "b7dcad73-918e-41e9-b384-8215e3251a79",
+      "amount": 0.79,
+      "date": "2020-11-09",
+      "method": "Imported",
+      "note": "Legacy reference RCP001406",
+      "periodLabel": "November 2020",
+      "createdAt": "2026-08-20T08:01:09.604982Z"
+    },
+    {
+      "id": "9d2689fe-e098-44aa-aee7-bbeb115053ad",
+      "leaseId": "b7dcad73-918e-41e9-b384-8215e3251a79",
+      "amount": 0.71,
+      "date": "2020-12-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP001429",
+      "periodLabel": "December 2020",
+      "createdAt": "2026-08-20T08:01:09.604989Z"
+    },
+    {
+      "id": "42d213da-1a91-4b73-ab04-91256aa8418a",
+      "leaseId": "b7dcad73-918e-41e9-b384-8215e3251a79",
+      "amount": 0.28,
+      "date": "2021-01-19",
+      "method": "Imported",
+      "note": "Legacy reference RCP001455",
+      "periodLabel": "January 2021",
+      "createdAt": "2026-08-20T08:01:09.604996Z"
+    },
+    {
+      "id": "73c7e7e0-bf14-448c-96de-d76f51887de9",
+      "leaseId": "66bdb147-348b-4bf5-a3a5-215203b70983",
+      "amount": 20000.0,
+      "date": "2025-03-20",
+      "method": "Imported",
+      "note": "Legacy reference RCP002534, paid INV002077",
+      "periodLabel": "April 2024",
+      "createdAt": "2026-08-20T08:01:09.605071Z"
+    },
+    {
+      "id": "4b1ef8ec-4bb6-4042-a676-15524cd92d82",
+      "leaseId": "66bdb147-348b-4bf5-a3a5-215203b70983",
+      "amount": 25000.0,
+      "date": "2025-03-28",
+      "method": "Imported",
+      "note": "Legacy reference RCP002535, paid INV002077",
+      "periodLabel": "April 2024",
+      "createdAt": "2026-08-20T08:01:09.605079Z"
+    },
+    {
+      "id": "8bb9563f-c1ee-4fce-b318-846371f16b38",
+      "leaseId": "66bdb147-348b-4bf5-a3a5-215203b70983",
+      "amount": 5000.0,
+      "date": "2026-05-25",
+      "method": "Imported",
+      "note": "Legacy reference RCP002846, paid INV002077",
+      "periodLabel": "April 2024",
+      "createdAt": "2026-08-20T08:01:09.605096Z"
+    },
+    {
+      "id": "365996c6-6cf8-4c15-8e61-8b2cdee4a2bf",
+      "leaseId": "66bdb147-348b-4bf5-a3a5-215203b70983",
+      "amount": 5000.0,
+      "date": "2026-06-20",
+      "method": "Imported",
+      "note": "Legacy reference RCP002871, paid INV002077",
+      "periodLabel": "April 2024",
+      "createdAt": "2026-08-20T08:01:09.605105Z"
+    },
+    {
+      "id": "589d072b-7cde-4bb5-82cd-edd24c698391",
+      "leaseId": "66bdb147-348b-4bf5-a3a5-215203b70983",
+      "amount": 5000.0,
+      "date": "2026-07-21",
+      "method": "Imported",
+      "note": "Legacy reference RCP002910, paid INV002077",
+      "periodLabel": "April 2024",
+      "createdAt": "2026-08-20T08:01:09.605114Z"
+    },
+    {
+      "id": "1c1f2d3f-56d0-4bf1-9df2-5ae21e894228",
+      "leaseId": "3e757854-2da4-4392-b8d9-739a19e090be",
+      "amount": 350.0,
+      "date": "2025-11-06",
+      "method": "Imported",
+      "note": "Legacy reference RCP002719, paid INV002436",
+      "periodLabel": "October 2025",
+      "createdAt": "2026-08-20T08:01:09.605156Z"
+    },
+    {
+      "id": "99539f1c-0669-4e7c-bc72-fe54edd53d68",
+      "leaseId": "3e757854-2da4-4392-b8d9-739a19e090be",
+      "amount": 1200.0,
+      "date": "2026-03-10",
+      "method": "Imported",
+      "note": "Legacy reference RCP002804, paid INV002436",
+      "periodLabel": "October 2025",
+      "createdAt": "2026-08-20T08:01:09.605165Z"
+    },
+    {
+      "id": "dc751c3c-f937-4408-a7b3-f99a2cb7aa77",
+      "leaseId": "3e757854-2da4-4392-b8d9-739a19e090be",
+      "amount": 5600.0,
+      "date": "2026-07-23",
+      "method": "Imported",
+      "note": "Legacy reference RCP002890",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.605182Z"
+    },
+    {
+      "id": "adb191c4-ef69-479d-9947-4aa9b268cb87",
+      "leaseId": "a5e6a524-7763-409b-8352-a66dee1ae065",
+      "amount": 152.04,
+      "date": "2019-02-15",
+      "method": "Imported",
+      "note": "Legacy reference RCP000922, paid INV000923",
+      "periodLabel": "February 2019",
+      "createdAt": "2026-08-20T08:01:09.605217Z"
+    },
+    {
+      "id": "f796e487-8a93-491a-8be9-3a37456b75ec",
+      "leaseId": "a5e6a524-7763-409b-8352-a66dee1ae065",
+      "amount": 1000.0,
+      "date": "2019-04-09",
+      "method": "Imported",
+      "note": "Legacy reference RCP000964",
+      "periodLabel": "April 2019",
+      "createdAt": "2026-08-20T08:01:09.605224Z"
+    },
+    {
+      "id": "5efd26ae-3e0a-4170-a692-bea11bbed9e1",
+      "leaseId": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "amount": 3990.0,
+      "date": "2019-05-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP000973, paid INV000912",
+      "periodLabel": "April 2019",
+      "createdAt": "2026-08-20T08:01:09.605303Z"
+    },
+    {
+      "id": "26a4ce3c-2665-44df-a0b4-263bb0b572bf",
+      "leaseId": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "amount": 0.07,
+      "date": "2025-03-10",
+      "method": "Imported",
+      "note": "Legacy reference RCP002529, paid INV000912",
+      "periodLabel": "April 2019",
+      "createdAt": "2026-08-20T08:01:09.605324Z"
+    },
+    {
+      "id": "854650ba-c5fb-4122-be9d-054979fc4ccd",
+      "leaseId": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "amount": 0.79,
+      "date": "2025-04-14",
+      "method": "Imported",
+      "note": "Legacy reference RCP002554, paid INV000912",
+      "periodLabel": "April 2019",
+      "createdAt": "2026-08-20T08:01:09.605332Z"
+    },
+    {
+      "id": "0953ff02-1958-40d3-8288-5efa06759205",
+      "leaseId": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "amount": 0.11,
+      "date": "2025-05-13",
+      "method": "Imported",
+      "note": "Legacy reference RCP002578, paid INV000912",
+      "periodLabel": "April 2019",
+      "createdAt": "2026-08-20T08:01:09.605341Z"
+    },
+    {
+      "id": "6b8995cb-142b-4e81-90e5-e7fd707df68a",
+      "leaseId": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "amount": 0.45,
+      "date": "2025-06-26",
+      "method": "Imported",
+      "note": "Legacy reference RCP002604, paid INV000912",
+      "periodLabel": "April 2019",
+      "createdAt": "2026-08-20T08:01:09.605349Z"
+    },
+    {
+      "id": "5871cd98-3b93-47bc-bfed-e8280603a6a7",
+      "leaseId": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "amount": 0.11,
+      "date": "2025-07-10",
+      "method": "Imported",
+      "note": "Legacy reference RCP002627, paid INV000912",
+      "periodLabel": "April 2019",
+      "createdAt": "2026-08-20T08:01:09.605357Z"
+    },
+    {
+      "id": "89aa9866-7b96-42af-b695-42ec5b6f9422",
+      "leaseId": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "amount": 0.45,
+      "date": "2025-08-18",
+      "method": "Imported",
+      "note": "Legacy reference RCP002650, paid INV000912",
+      "periodLabel": "April 2019",
+      "createdAt": "2026-08-20T08:01:09.605365Z"
+    },
+    {
+      "id": "2cbb23cc-dd10-47be-bd59-639fcc7e45d6",
+      "leaseId": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "amount": 0.11,
+      "date": "2025-09-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP002670, paid INV000952",
+      "periodLabel": "June 2019",
+      "createdAt": "2026-08-20T08:01:09.605373Z"
+    },
+    {
+      "id": "befa7d67-b622-4c9a-a309-de258bcc6951",
+      "leaseId": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "amount": 0.11,
+      "date": "2025-10-09",
+      "method": "Imported",
+      "note": "Legacy reference RCP002690, paid INV000912",
+      "periodLabel": "April 2019",
+      "createdAt": "2026-08-20T08:01:09.605381Z"
+    },
+    {
+      "id": "2c9d2b21-1c2f-4a7c-afda-8725bf8ba7f7",
+      "leaseId": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "amount": 0.67,
+      "date": "2026-01-09",
+      "method": "Imported",
+      "note": "Legacy reference RCP002780",
+      "periodLabel": "January 2026",
+      "createdAt": "2026-08-20T08:01:09.605388Z"
+    },
+    {
+      "id": "b05e8d45-8854-4e03-aebc-dd3d0b4f91cf",
+      "leaseId": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "amount": 0.43,
+      "date": "2026-02-19",
+      "method": "Imported",
+      "note": "Legacy reference RCP002781",
+      "periodLabel": "February 2026",
+      "createdAt": "2026-08-20T08:01:09.605397Z"
+    },
+    {
+      "id": "c7e1d006-ad4f-4030-b689-e60af800c75a",
+      "leaseId": "00584293-973d-498c-97ad-5a41f7c2b687",
+      "amount": 14145.03,
+      "date": "2022-07-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP001872",
+      "periodLabel": "July 2022",
+      "createdAt": "2026-08-20T08:01:09.605502Z"
+    },
+    {
+      "id": "ad584b4c-4a06-4a60-85e4-ad0d4524a79d",
+      "leaseId": "00584293-973d-498c-97ad-5a41f7c2b687",
+      "amount": 4323.0,
+      "date": "2022-07-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP001874",
+      "periodLabel": "July 2022",
+      "createdAt": "2026-08-20T08:01:09.605510Z"
+    },
+    {
+      "id": "ac70e14a-de05-44cf-bc8e-6cfd6f69ea17",
+      "leaseId": "00584293-973d-498c-97ad-5a41f7c2b687",
+      "amount": 5015.97,
+      "date": "2022-08-02",
+      "method": "Imported",
+      "note": "Legacy reference RCP001889",
+      "periodLabel": "August 2022",
+      "createdAt": "2026-08-20T08:01:09.605517Z"
+    },
+    {
+      "id": "0a1a8e74-7613-4355-92c5-ae878635060f",
+      "leaseId": "00584293-973d-498c-97ad-5a41f7c2b687",
+      "amount": 5240.0,
+      "date": "2022-08-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP001892",
+      "periodLabel": "August 2022",
+      "createdAt": "2026-08-20T08:01:09.605524Z"
+    },
+    {
+      "id": "036cf7c2-84d5-4681-990d-3767cb5edad8",
+      "leaseId": "00584293-973d-498c-97ad-5a41f7c2b687",
+      "amount": 4470.0,
+      "date": "2022-08-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP001893",
+      "periodLabel": "August 2022",
+      "createdAt": "2026-08-20T08:01:09.605531Z"
+    },
+    {
+      "id": "05ac2d34-71d9-4236-b957-5d434c81c596",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 116.27,
+      "date": "2025-07-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002622",
+      "periodLabel": "July 2025",
+      "createdAt": "2026-08-20T08:01:09.605576Z"
+    },
+    {
+      "id": "e02c835f-ab9c-4d00-ba6e-28c691b42675",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 1.37,
+      "date": "2025-07-25",
+      "method": "Imported",
+      "note": "Legacy reference RCP002632",
+      "periodLabel": "July 2025",
+      "createdAt": "2026-08-20T08:01:09.605583Z"
+    },
+    {
+      "id": "7ab38a41-b321-460e-bcf5-14c8eefe88d6",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 0.03,
+      "date": "2025-08-28",
+      "method": "Imported",
+      "note": "Legacy reference RCP002655",
+      "periodLabel": "August 2025",
+      "createdAt": "2026-08-20T08:01:09.605590Z"
+    },
+    {
+      "id": "39ef1cc8-834f-4a60-b9a5-dc76df66722e",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 0.03,
+      "date": "2025-09-25",
+      "method": "Imported",
+      "note": "Legacy reference RCP002676",
+      "periodLabel": "September 2025",
+      "createdAt": "2026-08-20T08:01:09.605597Z"
+    },
+    {
+      "id": "cb400bac-2e71-420b-acbc-260e9469d8cc",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 0.37,
+      "date": "2025-10-30",
+      "method": "Imported",
+      "note": "Legacy reference RCP002698",
+      "periodLabel": "October 2025",
+      "createdAt": "2026-08-20T08:01:09.605604Z"
+    },
+    {
+      "id": "14ad8df4-2085-444b-aaa0-44ef1f119098",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 0.37,
+      "date": "2025-12-02",
+      "method": "Imported",
+      "note": "Legacy reference RCP002722",
+      "periodLabel": "December 2025",
+      "createdAt": "2026-08-20T08:01:09.605610Z"
+    },
+    {
+      "id": "201b34a7-4553-4075-9483-7f1ca8e4941d",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 0.73,
+      "date": "2025-12-22",
+      "method": "Imported",
+      "note": "Legacy reference RCP002745",
+      "periodLabel": "December 2025",
+      "createdAt": "2026-08-20T08:01:09.605617Z"
+    },
+    {
+      "id": "3b8eecbc-7a92-4a06-a8c3-a1cfb844dcbf",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 0.69,
+      "date": "2026-01-29",
+      "method": "Imported",
+      "note": "Legacy reference RCP002768",
+      "periodLabel": "January 2026",
+      "createdAt": "2026-08-20T08:01:09.605623Z"
+    },
+    {
+      "id": "3959f870-71c4-4d38-9893-78b087978e25",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 0.71,
+      "date": "2026-03-17",
+      "method": "Imported",
+      "note": "Legacy reference RCP002790",
+      "periodLabel": "March 2026",
+      "createdAt": "2026-08-20T08:01:09.605630Z"
+    },
+    {
+      "id": "0f1ce027-11e6-4c05-8f06-db0c851c6b0c",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 0.05,
+      "date": "2026-04-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002809",
+      "periodLabel": "April 2026",
+      "createdAt": "2026-08-20T08:01:09.605638Z"
+    },
+    {
+      "id": "5b1d1783-10d2-4da9-8f37-183ff18bb153",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 0.71,
+      "date": "2026-04-30",
+      "method": "Imported",
+      "note": "Legacy reference RCP002833",
+      "periodLabel": "April 2026",
+      "createdAt": "2026-08-20T08:01:09.605645Z"
+    },
+    {
+      "id": "8933000c-7c5c-4d86-9951-a2ecf2869e75",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 1.37,
+      "date": "2026-05-25",
+      "method": "Imported",
+      "note": "Legacy reference RCP002851",
+      "periodLabel": "May 2026",
+      "createdAt": "2026-08-20T08:01:09.605652Z"
+    },
+    {
+      "id": "3c6c74bc-4e43-40ea-974d-10a5a9ce4177",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 0.71,
+      "date": "2026-07-02",
+      "method": "Imported",
+      "note": "Legacy reference RCP002878",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.605658Z"
+    },
+    {
+      "id": "d0100458-507a-4ba5-ad65-409a4b539d41",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 4754.74,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002895, paid INV002626",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.605676Z"
+    },
+    {
+      "id": "a2e5940b-1a3d-4105-8eb4-1328593f3d3a",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "amount": 0.81,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002895, paid INV002626",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.605684Z"
+    },
+    {
+      "id": "7d14efca-f363-4367-a080-2056ceea5c42",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "amount": 37.28,
+      "date": "2025-07-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002621",
+      "periodLabel": "July 2025",
+      "createdAt": "2026-08-20T08:01:09.605718Z"
+    },
+    {
+      "id": "58a40f5d-ccb8-4000-9431-4f5f83605b51",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "amount": 0.5,
+      "date": "2025-08-06",
+      "method": "Imported",
+      "note": "Legacy reference RCP002643",
+      "periodLabel": "August 2025",
+      "createdAt": "2026-08-20T08:01:09.605724Z"
+    },
+    {
+      "id": "6ee2062a-4c75-4bf8-bc50-d6d7171fca47",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "amount": 0.16,
+      "date": "2025-09-09",
+      "method": "Imported",
+      "note": "Legacy reference RCP002666",
+      "periodLabel": "September 2025",
+      "createdAt": "2026-08-20T08:01:09.605732Z"
+    },
+    {
+      "id": "e54b7a22-e833-4307-9370-576ac3da23d3",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "amount": 0.84,
+      "date": "2025-10-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002686",
+      "periodLabel": "October 2025",
+      "createdAt": "2026-08-20T08:01:09.605738Z"
+    },
+    {
+      "id": "7f7febe6-4524-4798-a448-9be3d6796a32",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "amount": 0.5,
+      "date": "2025-11-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP002710",
+      "periodLabel": "November 2025",
+      "createdAt": "2026-08-20T08:01:09.605745Z"
+    },
+    {
+      "id": "f5fdc235-1cfe-4978-ac4d-2ae302e1ad64",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "amount": 0.52,
+      "date": "2025-12-04",
+      "method": "Imported",
+      "note": "Legacy reference RCP002733",
+      "periodLabel": "December 2025",
+      "createdAt": "2026-08-20T08:01:09.605751Z"
+    },
+    {
+      "id": "7c0be60d-b587-4387-b0d9-cda07f7d1c41",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "amount": 0.52,
+      "date": "2026-01-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002754",
+      "periodLabel": "January 2026",
+      "createdAt": "2026-08-20T08:01:09.605759Z"
+    },
+    {
+      "id": "9aba37b8-0537-489e-ad8f-e8affdd701a9",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "amount": 0.16,
+      "date": "2026-02-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP002774",
+      "periodLabel": "February 2026",
+      "createdAt": "2026-08-20T08:01:09.605766Z"
+    },
+    {
+      "id": "a98b0da3-bfff-459a-8e41-9569598daef2",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "amount": 0.18,
+      "date": "2026-03-17",
+      "method": "Imported",
+      "note": "Legacy reference RCP002795",
+      "periodLabel": "March 2026",
+      "createdAt": "2026-08-20T08:01:09.605773Z"
+    },
+    {
+      "id": "e5fa1838-9a35-4b8e-85de-93b30422dab4",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "amount": 0.54,
+      "date": "2026-04-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002818",
+      "periodLabel": "April 2026",
+      "createdAt": "2026-08-20T08:01:09.605779Z"
+    },
+    {
+      "id": "bfcaf397-9a9c-405e-8d83-709039882894",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "amount": 0.52,
+      "date": "2026-05-06",
+      "method": "Imported",
+      "note": "Legacy reference RCP002841",
+      "periodLabel": "May 2026",
+      "createdAt": "2026-08-20T08:01:09.605785Z"
+    },
+    {
+      "id": "0f90d130-37a9-4047-b140-306ed2542fee",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "amount": 0.04,
+      "date": "2026-07-06",
+      "method": "Imported",
+      "note": "Legacy reference RCP002883",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.605792Z"
+    },
+    {
+      "id": "aa70c1ea-8c1c-4a70-9eba-b8dd179b48c5",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "amount": 4693.53,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002902, paid INV002621",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.605809Z"
+    },
+    {
+      "id": "6efb96d2-0d82-4d98-9f3a-1420021ed3c7",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "amount": 0.47,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002902, paid INV002621",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.605817Z"
+    },
+    {
+      "id": "2e3cc3be-3f28-41b4-87a3-526a2d913bc4",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "amount": 1.77,
+      "date": "2025-03-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP002521",
+      "periodLabel": "March 2025",
+      "createdAt": "2026-08-20T08:01:09.605851Z"
+    },
+    {
+      "id": "9443bc98-10dc-4641-b4b0-14e393b3d068",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "amount": 0.22,
+      "date": "2025-05-06",
+      "method": "Imported",
+      "note": "Legacy reference RCP002569",
+      "periodLabel": "May 2025",
+      "createdAt": "2026-08-20T08:01:09.605858Z"
+    },
+    {
+      "id": "94c90cfa-1ad3-4d18-81e4-fda04f01e769",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "amount": 1.44,
+      "date": "2025-06-03",
+      "method": "Imported",
+      "note": "Legacy reference RCP002595",
+      "periodLabel": "June 2025",
+      "createdAt": "2026-08-20T08:01:09.605864Z"
+    },
+    {
+      "id": "14fc89ba-8969-44a1-b20e-3b5da8ac3cb7",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "amount": 0.22,
+      "date": "2025-07-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002615",
+      "periodLabel": "July 2025",
+      "createdAt": "2026-08-20T08:01:09.605871Z"
+    },
+    {
+      "id": "23d76044-4951-493e-9349-88b21b7e8ea5",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "amount": 0.54,
+      "date": "2025-11-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP002711",
+      "periodLabel": "November 2025",
+      "createdAt": "2026-08-20T08:01:09.605877Z"
+    },
+    {
+      "id": "fb286718-eced-409c-96d9-8147a100ebca",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "amount": 1.61,
+      "date": "2026-02-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP002776",
+      "periodLabel": "February 2026",
+      "createdAt": "2026-08-20T08:01:09.605884Z"
+    },
+    {
+      "id": "45e1d963-5bd6-4864-8768-c486139fe7b0",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "amount": 1.65,
+      "date": "2026-03-17",
+      "method": "Imported",
+      "note": "Legacy reference RCP002803",
+      "periodLabel": "March 2026",
+      "createdAt": "2026-08-20T08:01:09.605890Z"
+    },
+    {
+      "id": "0d56dee6-0574-4488-a2a4-0086e2391676",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "amount": 0.3,
+      "date": "2026-04-30",
+      "method": "Imported",
+      "note": "Legacy reference RCP002831",
+      "periodLabel": "April 2026",
+      "createdAt": "2026-08-20T08:01:09.605897Z"
+    },
+    {
+      "id": "1d33f38d-8428-4585-b028-ffd2a7f8b74a",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "amount": 0.29,
+      "date": "2026-06-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP002853",
+      "periodLabel": "June 2026",
+      "createdAt": "2026-08-20T08:01:09.605904Z"
+    },
+    {
+      "id": "f28af3d7-d48b-43fb-8ccd-e726aec345ac",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "amount": 4345.0,
+      "date": "2026-07-02",
+      "method": "Imported",
+      "note": "Legacy reference RCP002874, paid INV002609",
+      "periodLabel": "June 2026",
+      "createdAt": "2026-08-20T08:01:09.605985Z"
+    },
+    {
+      "id": "fefb0d95-2ca0-401a-bab3-cb34c7e2bb0e",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "amount": 0.03,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002897, paid INV002635",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.606003Z"
+    },
+    {
+      "id": "6cdafd7d-8a37-487a-8574-eff6d336647f",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "amount": 4458.38,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002897, paid INV002635",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.606013Z"
+    },
+    {
+      "id": "03a5f1dc-2c93-451d-aada-776c23b9e05e",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "amount": 1.59,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002897, paid INV002635",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.606022Z"
+    },
+    {
+      "id": "9141ccb6-6964-48f5-b1f1-7d0b1b55d1f8",
+      "leaseId": "49f6f2d1-681c-4f1d-82a9-00bde4558781",
+      "amount": 15.13,
+      "date": "2025-07-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002620",
+      "periodLabel": "July 2025",
+      "createdAt": "2026-08-20T08:01:09.606054Z"
+    },
+    {
+      "id": "0a18b7d0-db3a-49bc-85d3-eedcb842cc52",
+      "leaseId": "49f6f2d1-681c-4f1d-82a9-00bde4558781",
+      "amount": 5457.68,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002906, paid INV002622",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.606072Z"
+    },
+    {
+      "id": "1f5e5490-6762-4b6a-9dee-a76631834a98",
+      "leaseId": "fab9c99d-a793-4230-b431-9db632098f1a",
+      "amount": 1.83,
+      "date": "2025-07-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002617",
+      "periodLabel": "July 2025",
+      "createdAt": "2026-08-20T08:01:09.606121Z"
+    },
+    {
+      "id": "2fc9985c-37d9-4523-9eb2-485941c189ef",
+      "leaseId": "fab9c99d-a793-4230-b431-9db632098f1a",
+      "amount": 5.06,
+      "date": "2026-02-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP002771",
+      "periodLabel": "February 2026",
+      "createdAt": "2026-08-20T08:01:09.606128Z"
+    },
+    {
+      "id": "b170409c-64f8-4324-9b57-c4abcf4666a8",
+      "leaseId": "fab9c99d-a793-4230-b431-9db632098f1a",
+      "amount": 6779.87,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002901, paid INV002625",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.606146Z"
+    },
+    {
+      "id": "e0e24ed2-7fbb-47e2-9dc2-39e5f7b2597f",
+      "leaseId": "04912682-a7e1-43de-ba79-97ac199ad3e7",
+      "amount": 2.66,
+      "date": "2026-05-13",
+      "method": "Imported",
+      "note": "Legacy reference RCP002866",
+      "periodLabel": "May 2026",
+      "createdAt": "2026-08-20T08:01:09.606172Z"
+    },
+    {
+      "id": "deb3822e-5291-4546-8491-ad4a8c4f189e",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "amount": 18.55,
+      "date": "2026-01-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002761",
+      "periodLabel": "January 2026",
+      "createdAt": "2026-08-20T08:01:09.606222Z"
+    },
+    {
+      "id": "8322ccc0-c036-4bce-ae52-46df900072cd",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "amount": 7.42,
+      "date": "2026-02-02",
+      "method": "Imported",
+      "note": "Legacy reference RCP002764",
+      "periodLabel": "February 2026",
+      "createdAt": "2026-08-20T08:01:09.606228Z"
+    },
+    {
+      "id": "73497522-f10b-4566-b6ad-d97e13b77f77",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "amount": 5200.0,
+      "date": "2026-03-06",
+      "method": "Imported",
+      "note": "Legacy reference RCP002786, paid INV002534",
+      "periodLabel": "February 2026",
+      "createdAt": "2026-08-20T08:01:09.606246Z"
+    },
+    {
+      "id": "ea74707a-9a65-43e9-8cce-9e20822ada44",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "amount": 5165.0,
+      "date": "2026-04-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002821, paid INV002564",
+      "periodLabel": "March 2026",
+      "createdAt": "2026-08-20T08:01:09.606262Z"
+    },
+    {
+      "id": "dbe46aba-d6ba-4f7a-826f-6cba62fb5487",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "amount": 5200.0,
+      "date": "2026-05-06",
+      "method": "Imported",
+      "note": "Legacy reference RCP002835, paid INV002567",
+      "periodLabel": "April 2026",
+      "createdAt": "2026-08-20T08:01:09.606280Z"
+    },
+    {
+      "id": "8bfc0ef8-4b83-4be7-a33d-de06707ab79f",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "amount": 5200.0,
+      "date": "2026-06-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP002850, paid INV002596",
+      "periodLabel": "May 2026",
+      "createdAt": "2026-08-20T08:01:09.606298Z"
+    },
+    {
+      "id": "db62eda8-3d99-4f80-bf1d-4587d8580e77",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "amount": 5200.0,
+      "date": "2026-07-06",
+      "method": "Imported",
+      "note": "Legacy reference RCP002887, paid INV002616",
+      "periodLabel": "June 2026",
+      "createdAt": "2026-08-20T08:01:09.606315Z"
+    },
+    {
+      "id": "8037151f-469d-4b13-9289-862c36703cd9",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "amount": 5294.15,
+      "date": "2026-08-06",
+      "method": "Imported",
+      "note": "Legacy reference RCP002894, paid INV002630",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.606332Z"
+    },
+    {
+      "id": "d36e8a30-e75c-46b2-9d75-2619e900a6b2",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "amount": 5.85,
+      "date": "2026-08-06",
+      "method": "Imported",
+      "note": "Legacy reference RCP002894, paid INV002630",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.606341Z"
+    },
+    {
+      "id": "dfe328a3-6526-49ae-b970-ee0051cb6d50",
+      "leaseId": "1b046c33-098b-4a8b-b5e3-9815f61bb1ad",
+      "amount": 2194.36,
+      "date": "2026-06-26",
+      "method": "Imported",
+      "note": "Legacy reference RCP002869",
+      "periodLabel": "June 2026",
+      "createdAt": "2026-08-20T08:01:09.606395Z"
+    },
+    {
+      "id": "aa58ad87-7c01-4af1-aebd-e48b43ffe849",
+      "leaseId": "1b046c33-098b-4a8b-b5e3-9815f61bb1ad",
+      "amount": 2704.0,
+      "date": "2026-07-02",
+      "method": "Imported",
+      "note": "Legacy reference RCP002880, paid INV002614",
+      "periodLabel": "June 2026",
+      "createdAt": "2026-08-20T08:01:09.606405Z"
+    },
+    {
+      "id": "ad91d617-cf0f-419f-bb36-e7d2f9c658aa",
+      "leaseId": "1b046c33-098b-4a8b-b5e3-9815f61bb1ad",
+      "amount": 1000.0,
+      "date": "2026-07-27",
+      "method": "Imported",
+      "note": "Legacy reference RCP002893",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.606419Z"
+    },
+    {
+      "id": "2a2a6cba-6fa8-4b4c-ae52-a4175074a49a",
+      "leaseId": "1b046c33-098b-4a8b-b5e3-9815f61bb1ad",
+      "amount": 7106.0,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002900, paid INV002629",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.606428Z"
+    },
+    {
+      "id": "eefd5204-6a08-4e2e-b35a-fb4e49a7fca0",
+      "leaseId": "7e3ce817-0404-47e7-92f2-daafbda3a063",
+      "amount": 1150.0,
+      "date": "2026-04-21",
+      "method": "Imported",
+      "note": "Legacy reference RCP002827, paid INV001780",
+      "periodLabel": "November 2022",
+      "createdAt": "2026-08-20T08:01:09.606495Z"
+    },
+    {
+      "id": "5404a9b5-90bc-4fcf-bf8f-b6196fb16a86",
+      "leaseId": "7e3ce817-0404-47e7-92f2-daafbda3a063",
+      "amount": 6000.0,
+      "date": "2026-05-25",
+      "method": "Imported",
+      "note": "Legacy reference RCP002847",
+      "periodLabel": "May 2026",
+      "createdAt": "2026-08-20T08:01:09.606511Z"
+    },
+    {
+      "id": "a1d4ded7-519e-44c5-a2d0-2a307dee922c",
+      "leaseId": "7e3ce817-0404-47e7-92f2-daafbda3a063",
+      "amount": 6000.0,
+      "date": "2026-06-26",
+      "method": "Imported",
+      "note": "Legacy reference RCP002870",
+      "periodLabel": "June 2026",
+      "createdAt": "2026-08-20T08:01:09.606518Z"
+    },
+    {
+      "id": "df0f0391-2b05-4e4b-9328-ece033c044ee",
+      "leaseId": "7e3ce817-0404-47e7-92f2-daafbda3a063",
+      "amount": 6000.0,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002911, paid INV001780",
+      "periodLabel": "November 2022",
+      "createdAt": "2026-08-20T08:01:09.606541Z"
+    },
+    {
+      "id": "ecb78988-a4bf-41c7-b1cc-e1acf63787b1",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 27.68,
+      "date": "2023-08-03",
+      "method": "Imported",
+      "note": "Legacy reference RCP002113",
+      "periodLabel": "August 2023",
+      "createdAt": "2026-08-20T08:01:09.606577Z"
+    },
+    {
+      "id": "8a34c3b9-6d30-4b51-8af2-efa57177a02f",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 0.08,
+      "date": "2025-06-09",
+      "method": "Imported",
+      "note": "Legacy reference RCP002593",
+      "periodLabel": "June 2025",
+      "createdAt": "2026-08-20T08:01:09.606585Z"
+    },
+    {
+      "id": "82c5d457-1aee-4875-9048-23c1312d70c8",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 0.08,
+      "date": "2025-07-02",
+      "method": "Imported",
+      "note": "Legacy reference RCP002607",
+      "periodLabel": "July 2025",
+      "createdAt": "2026-08-20T08:01:09.606592Z"
+    },
+    {
+      "id": "52c2eef1-80ff-455f-bbc7-b9299c3efb23",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 0.36,
+      "date": "2025-08-04",
+      "method": "Imported",
+      "note": "Legacy reference RCP002636",
+      "periodLabel": "August 2025",
+      "createdAt": "2026-08-20T08:01:09.606599Z"
+    },
+    {
+      "id": "d982f7c8-78d5-46a5-bff6-bece92db2f02",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 0.04,
+      "date": "2025-10-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002687",
+      "periodLabel": "October 2025",
+      "createdAt": "2026-08-20T08:01:09.606605Z"
+    },
+    {
+      "id": "fa3aa69c-708a-4f1b-b1b6-a0f6f5caf792",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 0.7,
+      "date": "2025-11-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP002712",
+      "periodLabel": "November 2025",
+      "createdAt": "2026-08-20T08:01:09.606612Z"
+    },
+    {
+      "id": "53b5a146-3a83-41a0-8119-c9f5a4287448",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 0.22,
+      "date": "2026-01-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002752",
+      "periodLabel": "January 2026",
+      "createdAt": "2026-08-20T08:01:09.606618Z"
+    },
+    {
+      "id": "a9750242-72f3-4ade-8653-4e1d1a0098f2",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 0.02,
+      "date": "2026-02-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP002770",
+      "periodLabel": "February 2026",
+      "createdAt": "2026-08-20T08:01:09.606624Z"
+    },
+    {
+      "id": "0663a8cf-9a0c-4582-b837-d8adf25f40cb",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 0.36,
+      "date": "2026-03-17",
+      "method": "Imported",
+      "note": "Legacy reference RCP002802",
+      "periodLabel": "March 2026",
+      "createdAt": "2026-08-20T08:01:09.606631Z"
+    },
+    {
+      "id": "f93237d5-b719-46e8-a39d-7ea91adc3278",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 0.7,
+      "date": "2026-04-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002811",
+      "periodLabel": "April 2026",
+      "createdAt": "2026-08-20T08:01:09.606637Z"
+    },
+    {
+      "id": "4a7afe12-e51f-4de1-8174-b8f077a67933",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 0.02,
+      "date": "2026-05-06",
+      "method": "Imported",
+      "note": "Legacy reference RCP002842",
+      "periodLabel": "May 2026",
+      "createdAt": "2026-08-20T08:01:09.606644Z"
+    },
+    {
+      "id": "430af523-fbb8-495d-9d5f-9087dc91f1be",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 0.02,
+      "date": "2026-06-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP002856",
+      "periodLabel": "June 2026",
+      "createdAt": "2026-08-20T08:01:09.606650Z"
+    },
+    {
+      "id": "d111f155-642f-42ac-ad05-258b1c0b6d0b",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 0.18,
+      "date": "2026-07-02",
+      "method": "Imported",
+      "note": "Legacy reference RCP002881",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.606657Z"
+    },
+    {
+      "id": "b42874d0-c9f4-4462-ae83-5c581b53128d",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 3230.85,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002907, paid INV002631",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.606675Z"
+    },
+    {
+      "id": "113629ec-1e34-416d-83f7-a39b873ae3be",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "amount": 0.15,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002907, paid INV002631",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.606685Z"
+    },
+    {
+      "id": "bc7d0761-7636-4b95-ab79-ea15bce752b3",
+      "leaseId": "01cc3d39-82b9-47d6-bbb2-e97b7229d4b2",
+      "amount": 19.27,
+      "date": "2026-06-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP002865",
+      "periodLabel": "June 2026",
+      "createdAt": "2026-08-20T08:01:09.606730Z"
+    },
+    {
+      "id": "833a65ff-91bf-4745-ba07-6d722a44ba2c",
+      "leaseId": "01cc3d39-82b9-47d6-bbb2-e97b7229d4b2",
+      "amount": 5628.0,
+      "date": "2026-07-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP002888, paid INV002602",
+      "periodLabel": "June 2026",
+      "createdAt": "2026-08-20T08:01:09.606748Z"
+    },
+    {
+      "id": "4adf91a0-b13a-46af-a8e4-b23946ad034c",
+      "leaseId": "01cc3d39-82b9-47d6-bbb2-e97b7229d4b2",
+      "amount": 0.02,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002904, paid INV002623",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.606765Z"
+    },
+    {
+      "id": "14685886-cfe3-40fe-a385-71edd2db88bb",
+      "leaseId": "01cc3d39-82b9-47d6-bbb2-e97b7229d4b2",
+      "amount": 5892.98,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002904, paid INV002623",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.606775Z"
+    },
+    {
+      "id": "e9504723-d42b-4008-b9ac-d2cf85eefee8",
+      "leaseId": "28a4a038-1271-40fb-b05f-ca52d0a10908",
+      "amount": 4322.51,
+      "date": "2025-11-03",
+      "method": "Imported",
+      "note": "Legacy reference RCP002704, paid INV002428",
+      "periodLabel": "September 2025",
+      "createdAt": "2026-08-20T08:01:09.606820Z"
+    },
+    {
+      "id": "5b368d1e-64cf-4570-b760-97bad69bc60c",
+      "leaseId": "28a4a038-1271-40fb-b05f-ca52d0a10908",
+      "amount": 0.22,
+      "date": "2025-11-04",
+      "method": "Imported",
+      "note": "Legacy reference RCP002706, paid INV002428",
+      "periodLabel": "September 2025",
+      "createdAt": "2026-08-20T08:01:09.606830Z"
+    },
+    {
+      "id": "f79acbf4-97af-4bd6-8739-94f62b17ed42",
+      "leaseId": "0b61b59b-e8a8-4747-b957-6278004da329",
+      "amount": 0.41,
+      "date": "2022-06-13",
+      "method": "Imported",
+      "note": "Legacy reference RCP001854",
+      "periodLabel": "June 2022",
+      "createdAt": "2026-08-20T08:01:09.606866Z"
+    },
+    {
+      "id": "946a0f69-4e79-448a-a2f7-4ddae877a50d",
+      "leaseId": "ef834252-b664-4990-ab95-c8435eb56701",
+      "amount": 45.94,
+      "date": "2023-08-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP002118",
+      "periodLabel": "August 2023",
+      "createdAt": "2026-08-20T08:01:09.606892Z"
+    },
+    {
+      "id": "a97878d6-f271-42c2-a24e-e3d824f1f7c4",
+      "leaseId": "ef834252-b664-4990-ab95-c8435eb56701",
+      "amount": 8.41,
+      "date": "2024-02-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP002237",
+      "periodLabel": "February 2024",
+      "createdAt": "2026-08-20T08:01:09.606899Z"
+    },
+    {
+      "id": "f449ce34-c03d-49a3-b991-64359bdff65e",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 14.89,
+      "date": "2023-08-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP002120",
+      "periodLabel": "August 2023",
+      "createdAt": "2026-08-20T08:01:09.607013Z"
+    },
+    {
+      "id": "4d47edb9-6e0c-4498-a51d-f1031dcfaf62",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 0.33,
+      "date": "2023-10-04",
+      "method": "Imported",
+      "note": "Legacy reference RCP002162",
+      "periodLabel": "October 2023",
+      "createdAt": "2026-08-20T08:01:09.607020Z"
+    },
+    {
+      "id": "5a842ea8-81b9-4028-a740-c7a9388d8d8f",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 1.46,
+      "date": "2024-03-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP002259",
+      "periodLabel": "March 2024",
+      "createdAt": "2026-08-20T08:01:09.607027Z"
+    },
+    {
+      "id": "7cec8107-fa9f-4bf2-afc6-5d19eae37268",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 0.59,
+      "date": "2024-04-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP002280",
+      "periodLabel": "April 2024",
+      "createdAt": "2026-08-20T08:01:09.607034Z"
+    },
+    {
+      "id": "de2ac639-5e37-4f49-9de9-e74e1e53b56b",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 0.7,
+      "date": "2024-06-03",
+      "method": "Imported",
+      "note": "Legacy reference RCP002316",
+      "periodLabel": "June 2024",
+      "createdAt": "2026-08-20T08:01:09.607042Z"
+    },
+    {
+      "id": "0fecde6d-8967-4c69-ac80-16e235559a9c",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 1.22,
+      "date": "2024-07-04",
+      "method": "Imported",
+      "note": "Legacy reference RCP002342",
+      "periodLabel": "July 2024",
+      "createdAt": "2026-08-20T08:01:09.607049Z"
+    },
+    {
+      "id": "941bae2c-4d49-4403-b209-0fa839a509e6",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 2.53,
+      "date": "2024-07-29",
+      "method": "Imported",
+      "note": "Legacy reference RCP002355",
+      "periodLabel": "July 2024",
+      "createdAt": "2026-08-20T08:01:09.607055Z"
+    },
+    {
+      "id": "0934c934-3fc2-4719-ac7c-6cc5a80de83b",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 0.79,
+      "date": "2024-09-03",
+      "method": "Imported",
+      "note": "Legacy reference RCP002384",
+      "periodLabel": "September 2024",
+      "createdAt": "2026-08-20T08:01:09.607062Z"
+    },
+    {
+      "id": "16393d27-2b35-430a-a77b-7cf804f67c4b",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 0.35,
+      "date": "2024-10-02",
+      "method": "Imported",
+      "note": "Legacy reference RCP002398",
+      "periodLabel": "October 2024",
+      "createdAt": "2026-08-20T08:01:09.607069Z"
+    },
+    {
+      "id": "998d7291-c7a8-49e2-910e-30d9f8d49869",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 0.74,
+      "date": "2025-04-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002544",
+      "periodLabel": "April 2025",
+      "createdAt": "2026-08-20T08:01:09.607076Z"
+    },
+    {
+      "id": "5ceed4f8-9230-4cf6-bf0f-83ccf9dc5ca3",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 0.36,
+      "date": "2025-05-06",
+      "method": "Imported",
+      "note": "Legacy reference RCP002567",
+      "periodLabel": "May 2025",
+      "createdAt": "2026-08-20T08:01:09.607082Z"
+    },
+    {
+      "id": "e1461001-d8be-4075-9bd2-b9d38efb6fe0",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 0.5,
+      "date": "2025-08-28",
+      "method": "Imported",
+      "note": "Legacy reference RCP002654",
+      "periodLabel": "August 2025",
+      "createdAt": "2026-08-20T08:01:09.607088Z"
+    },
+    {
+      "id": "7a81429e-7c20-42a6-8f20-6b4b1769cd33",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 2.18,
+      "date": "2025-10-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002677",
+      "periodLabel": "October 2025",
+      "createdAt": "2026-08-20T08:01:09.607095Z"
+    },
+    {
+      "id": "16398526-db9a-4ffa-8d94-6c8326d3782c",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 0.84,
+      "date": "2025-10-30",
+      "method": "Imported",
+      "note": "Legacy reference RCP002700",
+      "periodLabel": "October 2025",
+      "createdAt": "2026-08-20T08:01:09.607102Z"
+    },
+    {
+      "id": "986f4088-914e-4372-b896-3152faad315a",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 0.18,
+      "date": "2025-12-02",
+      "method": "Imported",
+      "note": "Legacy reference RCP002723",
+      "periodLabel": "December 2025",
+      "createdAt": "2026-08-20T08:01:09.607108Z"
+    },
+    {
+      "id": "2596284b-9537-45a2-8b7e-a3768390c70e",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 0.56,
+      "date": "2025-12-29",
+      "method": "Imported",
+      "note": "Legacy reference RCP002749",
+      "periodLabel": "December 2025",
+      "createdAt": "2026-08-20T08:01:09.607115Z"
+    },
+    {
+      "id": "024392a1-0972-46f9-9e9c-d11d0f151940",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 0.54,
+      "date": "2026-02-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP002772",
+      "periodLabel": "February 2026",
+      "createdAt": "2026-08-20T08:01:09.607122Z"
+    },
+    {
+      "id": "43fb41ed-399c-4d38-ba8c-6053ba64d696",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 0.88,
+      "date": "2026-03-17",
+      "method": "Imported",
+      "note": "Legacy reference RCP002793",
+      "periodLabel": "March 2026",
+      "createdAt": "2026-08-20T08:01:09.607129Z"
+    },
+    {
+      "id": "1f262032-e0c1-4934-9b0a-0a7b2f6441a2",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 0.54,
+      "date": "2026-04-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002812",
+      "periodLabel": "April 2026",
+      "createdAt": "2026-08-20T08:01:09.607135Z"
+    },
+    {
+      "id": "5cc88ecc-c388-4b95-b335-e44165d49dfa",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 2.2,
+      "date": "2026-04-30",
+      "method": "Imported",
+      "note": "Legacy reference RCP002830",
+      "periodLabel": "April 2026",
+      "createdAt": "2026-08-20T08:01:09.607142Z"
+    },
+    {
+      "id": "f0770caf-96cb-4017-bb9f-31c54fcffc7a",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 5657.0,
+      "date": "2026-06-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP002852, paid INV002589",
+      "periodLabel": "May 2026",
+      "createdAt": "2026-08-20T08:01:09.607162Z"
+    },
+    {
+      "id": "1fe5d0c5-5f4c-461b-9804-4a50ba307cff",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 5657.0,
+      "date": "2026-07-02",
+      "method": "Imported",
+      "note": "Legacy reference RCP002875, paid INV002603",
+      "periodLabel": "June 2026",
+      "createdAt": "2026-08-20T08:01:09.607181Z"
+    },
+    {
+      "id": "aa7c9079-40a1-4aef-8577-6818f0dfca15",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "amount": 5718.0,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002899, paid INV002620",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.607201Z"
+    },
+    {
+      "id": "19f3c7e0-3035-4d30-b774-7eb1363d2a10",
+      "leaseId": "b5a87359-c03a-4bff-a66b-a5548eaeffca",
+      "amount": 20.42,
+      "date": "2026-04-13",
+      "method": "Imported",
+      "note": "Legacy reference RCP002823",
+      "periodLabel": "April 2026",
+      "createdAt": "2026-08-20T08:01:09.607232Z"
+    },
+    {
+      "id": "33b4b872-202b-4478-8c01-3792e46f24e3",
+      "leaseId": "b5a87359-c03a-4bff-a66b-a5548eaeffca",
+      "amount": 7233.0,
+      "date": "2026-05-06",
+      "method": "Imported",
+      "note": "Legacy reference RCP002837, paid INV002582",
+      "periodLabel": "April 2026",
+      "createdAt": "2026-08-20T08:01:09.607251Z"
+    },
+    {
+      "id": "2940d7a5-18d5-41c9-b88c-073ce35899a9",
+      "leaseId": "b5a87359-c03a-4bff-a66b-a5548eaeffca",
+      "amount": 7233.0,
+      "date": "2026-06-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP002862, paid INV002583",
+      "periodLabel": "May 2026",
+      "createdAt": "2026-08-20T08:01:09.607269Z"
+    },
+    {
+      "id": "781075df-5832-4d65-a92b-107ee3d685b8",
+      "leaseId": "b5a87359-c03a-4bff-a66b-a5548eaeffca",
+      "amount": 7392.9,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002908, paid INV002624",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.607287Z"
+    },
+    {
+      "id": "13b5be43-6386-4308-a6ca-b9e7c44e3950",
+      "leaseId": "b5a87359-c03a-4bff-a66b-a5548eaeffca",
+      "amount": 0.1,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002908, paid INV002624",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.607298Z"
+    },
+    {
+      "id": "5cbb04d0-a010-4883-bdd5-f2c5594c24dc",
+      "leaseId": "a071a0d7-c0db-4bb9-9b03-2d0b5c7a982c",
+      "amount": 1500.0,
+      "date": "2025-04-14",
+      "method": "Imported",
+      "note": "Legacy reference RCP002556",
+      "periodLabel": "April 2025",
+      "createdAt": "2026-08-20T08:01:09.607336Z"
+    },
+    {
+      "id": "9036f839-4f6e-44e6-af26-f4fd85c851e9",
+      "leaseId": "a071a0d7-c0db-4bb9-9b03-2d0b5c7a982c",
+      "amount": 8200.0,
+      "date": "2025-04-14",
+      "method": "Imported",
+      "note": "Legacy reference RCP002557, paid INV002228",
+      "periodLabel": "December 2024",
+      "createdAt": "2026-08-20T08:01:09.607346Z"
+    },
+    {
+      "id": "2952ce3a-1965-423d-8756-fdf523f3357d",
+      "leaseId": "a071a0d7-c0db-4bb9-9b03-2d0b5c7a982c",
+      "amount": 1800.0,
+      "date": "2025-04-25",
+      "method": "Imported",
+      "note": "Legacy reference RCP002559",
+      "periodLabel": "April 2025",
+      "createdAt": "2026-08-20T08:01:09.607354Z"
+    },
+    {
+      "id": "71d14878-5e66-4e94-86d7-248af61b40d0",
+      "leaseId": "a071a0d7-c0db-4bb9-9b03-2d0b5c7a982c",
+      "amount": 374.0,
+      "date": "2025-08-18",
+      "method": "Imported",
+      "note": "Legacy reference RCP002649",
+      "periodLabel": "August 2025",
+      "createdAt": "2026-08-20T08:01:09.607360Z"
+    },
+    {
+      "id": "008c36eb-896d-459e-8a82-4b0a8564744f",
+      "leaseId": "9ed30f0f-1677-467a-afc9-d22342704c4d",
+      "amount": 33.62,
+      "date": "2023-08-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP002115",
+      "periodLabel": "August 2023",
+      "createdAt": "2026-08-20T08:01:09.607385Z"
+    },
+    {
+      "id": "25b50b8d-25a9-4394-b223-510853c7bbf1",
+      "leaseId": "9d35239a-807e-472a-b948-96d510dfe6bd",
+      "amount": 1.6,
+      "date": "2024-08-02",
+      "method": "Imported",
+      "note": "Legacy reference RCP002358",
+      "periodLabel": "August 2024",
+      "createdAt": "2026-08-20T08:01:09.607412Z"
+    },
+    {
+      "id": "7f9a846f-ef27-4def-ac32-8cf38febd343",
+      "leaseId": "9d35239a-807e-472a-b948-96d510dfe6bd",
+      "amount": 0.31,
+      "date": "2025-07-30",
+      "method": "Imported",
+      "note": "Legacy reference RCP002638",
+      "periodLabel": "July 2025",
+      "createdAt": "2026-08-20T08:01:09.607419Z"
+    },
+    {
+      "id": "8c4661d3-a5d7-4ba5-b1d6-e5d2e34d846e",
+      "leaseId": "9d35239a-807e-472a-b948-96d510dfe6bd",
+      "amount": 4589.39,
+      "date": "2026-08-11",
+      "method": "Imported",
+      "note": "Legacy reference RCP002896, paid INV002636",
+      "periodLabel": "July 2026",
+      "createdAt": "2026-08-20T08:01:09.607439Z"
+    },
+    {
+      "id": "369fafd4-ba67-4cef-ac45-f9a2fd9e83d1",
+      "leaseId": "4f2986de-3002-412e-8a32-aaf635832f36",
+      "amount": 15.51,
+      "date": "2023-08-08",
+      "method": "Imported",
+      "note": "Legacy reference RCP002116",
+      "periodLabel": "August 2023",
+      "createdAt": "2026-08-20T08:01:09.607465Z"
+    },
+    {
+      "id": "b6bfff5e-fd02-43a7-b614-52c4bcdf2f06",
+      "leaseId": "566e8e45-d060-48dc-8bea-6f8ac7dfead8",
+      "amount": 1725.25,
+      "date": "2023-03-07",
+      "method": "Imported",
+      "note": "Legacy reference RCP002032, paid INV001836",
+      "periodLabel": "February 2023",
+      "createdAt": "2026-08-20T08:01:09.607511Z"
+    },
+    {
+      "id": "791e14fc-28df-4ca6-8b28-83992c23fd9e",
+      "leaseId": "566e8e45-d060-48dc-8bea-6f8ac7dfead8",
+      "amount": 2000.0,
+      "date": "2023-03-30",
+      "method": "Imported",
+      "note": "Legacy reference RCP002040, paid INV001870",
+      "periodLabel": "March 2023",
+      "createdAt": "2026-08-20T08:01:09.607530Z"
+    },
+    {
+      "id": "dd895e79-0736-4b69-b89f-d0fa885cb78e",
+      "leaseId": "566e8e45-d060-48dc-8bea-6f8ac7dfead8",
+      "amount": 3031.74,
+      "date": "2023-05-03",
+      "method": "Imported",
+      "note": "Legacy reference RCP002063, paid INV001874",
+      "periodLabel": "April 2023",
+      "createdAt": "2026-08-20T08:01:09.607554Z"
+    },
+    {
+      "id": "d0640046-933b-42fe-8417-639d6876091f",
+      "leaseId": "566e8e45-d060-48dc-8bea-6f8ac7dfead8",
+      "amount": 3000.0,
+      "date": "2023-06-30",
+      "method": "Imported",
+      "note": "Legacy reference RCP002100, paid INV001892",
+      "periodLabel": "June 2023",
+      "createdAt": "2026-08-20T08:01:09.607603Z"
+    },
+    {
+      "id": "2e95c3f4-e3a6-40d0-acbb-b5bffc39bda6",
+      "leaseId": "566e8e45-d060-48dc-8bea-6f8ac7dfead8",
+      "amount": 6000.0,
+      "date": "2023-08-02",
+      "method": "Imported",
+      "note": "Legacy reference RCP002112, paid INV001910",
+      "periodLabel": "July 2023",
+      "createdAt": "2026-08-20T08:01:09.607624Z"
+    },
+    {
+      "id": "25cec8e6-394e-4e28-b4df-5d37cc6ffb85",
+      "leaseId": "566e8e45-d060-48dc-8bea-6f8ac7dfead8",
+      "amount": 3000.0,
+      "date": "2023-09-05",
+      "method": "Imported",
+      "note": "Legacy reference RCP002140, paid INV001929",
+      "periodLabel": "August 2023",
+      "createdAt": "2026-08-20T08:01:09.607643Z"
+    }
+  ],
+  "maintenanceRequests": [],
+  "expenses": [],
+  "invoices": [
+    {
+      "id": "e10d4c3b-2244-4bfd-afdc-cfe007537919",
+      "tenantId": "49be52ae-d9ee-4c6c-8303-260bf18fbf7f",
+      "leaseId": "ddbc142d-4982-40b6-aad1-f5219ef71caa",
+      "propertyId": "63b1ff56-fb0c-4fca-a33c-8269ada37bfa",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5755.69
+        }
+      ],
+      "total": 5755.69,
+      "note": "Imported from legacy system, reference INV002634.",
+      "invoiceNumber": "LEGACY-INV002634",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.604377Z"
+    },
+    {
+      "id": "5ed59e88-1e3c-4f3d-974f-7f0ac82cf3e9",
+      "tenantId": "74e1ddd1-8d2e-4a73-b6e6-f142c1c7c959",
+      "leaseId": "0b4bc556-fbc3-4239-8526-51dd2eb55137",
+      "propertyId": "d51e3105-1c90-4e95-91d9-7ce5fe887f38",
+      "date": "2026-06-26",
+      "dueDate": "2026-06-01",
+      "periodLabel": "June 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 4716.99
+        }
+      ],
+      "total": 4716.99,
+      "note": "Imported from legacy system, reference INV002607.",
+      "invoiceNumber": "LEGACY-INV002607",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.604444Z"
+    },
+    {
+      "id": "a1a4a547-17ab-4505-b7f5-d59bbde6a919",
+      "tenantId": "74e1ddd1-8d2e-4a73-b6e6-f142c1c7c959",
+      "leaseId": "0b4bc556-fbc3-4239-8526-51dd2eb55137",
+      "propertyId": "d51e3105-1c90-4e95-91d9-7ce5fe887f38",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 4885.75
+        }
+      ],
+      "total": 4885.75,
+      "note": "Imported from legacy system, reference INV002627.",
+      "invoiceNumber": "LEGACY-INV002627",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.604455Z"
+    },
+    {
+      "id": "c9feaed6-73e6-4e27-94bc-97d39cf0ffc1",
+      "tenantId": "ad52b6f7-a13d-49d3-bfea-9babdaa3bd3e",
+      "leaseId": "2766d066-5bcc-475a-91f7-48b05854821c",
+      "propertyId": "fa70d6c9-3169-47f4-9660-eb94c5dfc536",
+      "date": "2026-06-26",
+      "dueDate": "2026-06-01",
+      "periodLabel": "June 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 937.08
+        }
+      ],
+      "total": 937.08,
+      "note": "Imported from legacy system, reference INV002612.",
+      "invoiceNumber": "LEGACY-INV002612",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.604509Z"
+    },
+    {
+      "id": "3a85a7e4-1389-4f00-9772-1017593ad504",
+      "tenantId": "0a57757a-7c28-4ae0-a24e-48feef397f6d",
+      "leaseId": "aadbd6a2-7dcd-4ba5-8754-65e4883f8d78",
+      "propertyId": "1c39eda4-809e-41b8-a3a1-4a129c69ef4d",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5712.02
+        }
+      ],
+      "total": 5712.02,
+      "note": "Imported from legacy system, reference INV002633.",
+      "invoiceNumber": "LEGACY-INV002633",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.604650Z"
+    },
+    {
+      "id": "187439d9-7997-47e3-a2f1-05a01785a8d7",
+      "tenantId": "b1c603a8-6fc4-4948-89dc-dce918c2cb0e",
+      "leaseId": "70004484-2ca2-4e73-be16-99bc40f786d4",
+      "propertyId": "8bcbbcb4-11d4-4304-accf-793aa5871176",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5799.36
+        }
+      ],
+      "total": 5799.36,
+      "note": "Imported from legacy system, reference INV002632.",
+      "invoiceNumber": "LEGACY-INV002632",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.604732Z"
+    },
+    {
+      "id": "d516c888-e1dc-41d6-8988-82f88bbbfb5a",
+      "tenantId": "43c0e189-12a0-432f-92fc-694e95965cb6",
+      "leaseId": "c58bfaad-cc7f-44df-8f26-5cb5c7ab8c59",
+      "propertyId": "f49a3472-f62e-4304-a2ec-4ed39595d6f9",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 6664.84
+        }
+      ],
+      "total": 6664.84,
+      "note": "Imported from legacy system, reference INV002628.",
+      "invoiceNumber": "LEGACY-INV002628",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.604786Z"
+    },
+    {
+      "id": "a01e7312-0dc8-46c6-9a92-672862c70b0d",
+      "tenantId": "748812d1-3681-40b4-bec6-d6c529a0d437",
+      "leaseId": "138c4176-1639-4f6b-8de2-e76461b6084d",
+      "propertyId": "a50dfa1e-1554-4337-afff-e3e9deb66a5f",
+      "date": "2022-10-05",
+      "dueDate": "2022-10-01",
+      "periodLabel": "October 2022",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 3900.0
+        }
+      ],
+      "total": 3900.0,
+      "note": "Imported from legacy system, reference INV001759.",
+      "invoiceNumber": "LEGACY-INV001759",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.604843Z"
+    },
+    {
+      "id": "7739ef0d-2228-451c-8920-6187cbf9f49a",
+      "tenantId": "748812d1-3681-40b4-bec6-d6c529a0d437",
+      "leaseId": "138c4176-1639-4f6b-8de2-e76461b6084d",
+      "propertyId": "a50dfa1e-1554-4337-afff-e3e9deb66a5f",
+      "date": "2022-10-05",
+      "dueDate": "2022-10-01",
+      "periodLabel": "October 2022",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 3900.0
+        }
+      ],
+      "total": 3900.0,
+      "note": "Imported from legacy system, reference INV001760.",
+      "invoiceNumber": "LEGACY-INV001760",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.604861Z"
+    },
+    {
+      "id": "c43aace0-eaaa-4112-a194-0d12d299c539",
+      "tenantId": "748812d1-3681-40b4-bec6-d6c529a0d437",
+      "leaseId": "138c4176-1639-4f6b-8de2-e76461b6084d",
+      "propertyId": "a50dfa1e-1554-4337-afff-e3e9deb66a5f",
+      "date": "2023-02-27",
+      "dueDate": "2023-02-01",
+      "periodLabel": "February 2023",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 375.43
+        }
+      ],
+      "total": 375.43,
+      "note": "Imported from legacy system, reference INV001849.",
+      "invoiceNumber": "LEGACY-INV001849",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.604896Z"
+    },
+    {
+      "id": "61d565bd-1636-4552-99a2-2aa6403ef5d3",
+      "tenantId": "593cd6af-9fa6-4259-b654-7786c4299bcc",
+      "leaseId": "66bdb147-348b-4bf5-a3a5-215203b70983",
+      "propertyId": "dbae4296-5e1c-41de-a414-5bfe9fc00242",
+      "date": "2024-04-19",
+      "dueDate": "2024-04-01",
+      "periodLabel": "April 2024",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 100000.0
+        }
+      ],
+      "total": 100000.0,
+      "note": "Imported from legacy system, reference INV002077.",
+      "invoiceNumber": "LEGACY-INV002077",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605032Z"
+    },
+    {
+      "id": "37daa52d-4e90-4776-b640-7bc98afe6009",
+      "tenantId": "593cd6af-9fa6-4259-b654-7786c4299bcc",
+      "leaseId": "66bdb147-348b-4bf5-a3a5-215203b70983",
+      "propertyId": "dbae4296-5e1c-41de-a414-5bfe9fc00242",
+      "date": "2024-06-28",
+      "dueDate": "2024-06-01",
+      "periodLabel": "June 2024",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 50000.0
+        }
+      ],
+      "total": 50000.0,
+      "note": "Imported from legacy system, reference INV002133.",
+      "invoiceNumber": "LEGACY-INV002133",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605042Z"
+    },
+    {
+      "id": "34f3a466-decf-45d1-8d86-e8fdddc73a17",
+      "tenantId": "593cd6af-9fa6-4259-b654-7786c4299bcc",
+      "leaseId": "66bdb147-348b-4bf5-a3a5-215203b70983",
+      "propertyId": "dbae4296-5e1c-41de-a414-5bfe9fc00242",
+      "date": "2024-09-06",
+      "dueDate": "2024-09-01",
+      "periodLabel": "September 2024",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 50000.0
+        }
+      ],
+      "total": 50000.0,
+      "note": "Imported from legacy system, reference INV002171.",
+      "invoiceNumber": "LEGACY-INV002171",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605050Z"
+    },
+    {
+      "id": "a03d960a-11b6-4ff3-94cc-06aa2ef7a4e3",
+      "tenantId": "593cd6af-9fa6-4259-b654-7786c4299bcc",
+      "leaseId": "66bdb147-348b-4bf5-a3a5-215203b70983",
+      "propertyId": "dbae4296-5e1c-41de-a414-5bfe9fc00242",
+      "date": "2024-12-14",
+      "dueDate": "2024-12-01",
+      "periodLabel": "December 2024",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 10000.0
+        }
+      ],
+      "total": 10000.0,
+      "note": "Imported from legacy system, reference INV002245.",
+      "invoiceNumber": "LEGACY-INV002245",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605058Z"
+    },
+    {
+      "id": "eaaff10f-6f65-4b42-86bf-db6c4b63c810",
+      "tenantId": "593cd6af-9fa6-4259-b654-7786c4299bcc",
+      "leaseId": "66bdb147-348b-4bf5-a3a5-215203b70983",
+      "propertyId": "dbae4296-5e1c-41de-a414-5bfe9fc00242",
+      "date": "2025-06-09",
+      "dueDate": "2025-06-01",
+      "periodLabel": "June 2025",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 20000.0
+        }
+      ],
+      "total": 20000.0,
+      "note": "Imported from legacy system, reference INV002334.",
+      "invoiceNumber": "LEGACY-INV002334",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605088Z"
+    },
+    {
+      "id": "1169974c-2a92-42e5-8018-62ff87447a0e",
+      "tenantId": "c93695c3-459d-4187-9d72-efb38ade17c0",
+      "leaseId": "3e757854-2da4-4392-b8d9-739a19e090be",
+      "propertyId": "ce1c1f3b-2fcd-4e64-bbd1-1e33ae4a3eae",
+      "date": "2025-10-10",
+      "dueDate": "2025-10-01",
+      "periodLabel": "October 2025",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 3000.0
+        }
+      ],
+      "total": 3000.0,
+      "note": "Imported from legacy system, reference INV002436.",
+      "invoiceNumber": "LEGACY-INV002436",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605148Z"
+    },
+    {
+      "id": "3f12557f-2003-4668-bf23-d016ebcd76e2",
+      "tenantId": "c93695c3-459d-4187-9d72-efb38ade17c0",
+      "leaseId": "3e757854-2da4-4392-b8d9-739a19e090be",
+      "propertyId": "ce1c1f3b-2fcd-4e64-bbd1-1e33ae4a3eae",
+      "date": "2026-04-08",
+      "dueDate": "2026-04-01",
+      "periodLabel": "April 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 10000.0
+        }
+      ],
+      "total": 10000.0,
+      "note": "Imported from legacy system, reference INV002566.",
+      "invoiceNumber": "LEGACY-INV002566",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605173Z"
+    },
+    {
+      "id": "9b8cd354-b076-4856-b849-21052d0014e6",
+      "tenantId": "80290cdf-e24e-4b39-95cb-898b1f45451d",
+      "leaseId": "a5e6a524-7763-409b-8352-a66dee1ae065",
+      "propertyId": "1ff1bd62-ad7a-4ca1-9908-925c097e94e0",
+      "date": "2019-04-26",
+      "dueDate": "2019-04-01",
+      "periodLabel": "April 2019",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 6462.06
+        }
+      ],
+      "total": 6462.06,
+      "note": "Imported from legacy system, reference INV000923.",
+      "invoiceNumber": "LEGACY-INV000923",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605236Z"
+    },
+    {
+      "id": "fd3a7297-77f9-48de-a054-9b082db28921",
+      "tenantId": "8839bb78-94be-4678-80a4-99e148d31f8e",
+      "leaseId": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "propertyId": "eedc2049-02f8-491b-b4df-cc5e3eadaa15",
+      "date": "2019-04-25",
+      "dueDate": "2019-04-01",
+      "periodLabel": "April 2019",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 3993.12
+        }
+      ],
+      "total": 3993.12,
+      "note": "Imported from legacy system, reference INV000912.",
+      "invoiceNumber": "LEGACY-INV000912",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605293Z"
+    },
+    {
+      "id": "6c4c25d6-ed72-44c8-b55c-963705d56bd7",
+      "tenantId": "8839bb78-94be-4678-80a4-99e148d31f8e",
+      "leaseId": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "propertyId": "eedc2049-02f8-491b-b4df-cc5e3eadaa15",
+      "date": "2019-06-25",
+      "dueDate": "2019-06-01",
+      "periodLabel": "June 2019",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 393.12
+        }
+      ],
+      "total": 393.12,
+      "note": "Imported from legacy system, reference INV000952.",
+      "invoiceNumber": "LEGACY-INV000952",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605311Z"
+    },
+    {
+      "id": "2cd603f8-b881-446e-ae5e-8891de78c2ff",
+      "tenantId": "8839bb78-94be-4678-80a4-99e148d31f8e",
+      "leaseId": "50b26cac-e59a-4b57-9bc8-99471327826d",
+      "propertyId": "eedc2049-02f8-491b-b4df-cc5e3eadaa15",
+      "date": "2026-02-26",
+      "dueDate": "2026-02-01",
+      "periodLabel": "February 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 725.78
+        }
+      ],
+      "total": 725.78,
+      "note": "Imported from legacy system, reference INV002532.",
+      "invoiceNumber": "LEGACY-INV002532",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605406Z"
+    },
+    {
+      "id": "1f31a7a8-1540-4701-8f04-9b9555c30c9f",
+      "tenantId": "600aa942-3405-4380-b0d3-ac1139fdbd83",
+      "leaseId": "54925145-29c3-42c4-a8a0-a7a8070a7de9",
+      "propertyId": "02ba2c71-ed5a-4eab-a664-924fbb6d117f",
+      "date": "2018-09-26",
+      "dueDate": "2018-09-01",
+      "periodLabel": "September 2018",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 16563.02
+        }
+      ],
+      "total": 16563.02,
+      "note": "Imported from legacy system, reference INV000703.",
+      "invoiceNumber": "LEGACY-INV000703",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605471Z"
+    },
+    {
+      "id": "63d30cbd-953a-4b00-8b81-2febdb2e9102",
+      "tenantId": "ae32080e-0ed1-44b9-bd5a-bb539d2f83ae",
+      "leaseId": "eaa6c189-e675-464a-a730-70268e4c313b",
+      "propertyId": "a987e631-ca23-44e8-a172-832e9982bd78",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 4754.74
+        }
+      ],
+      "total": 4754.74,
+      "note": "Imported from legacy system, reference INV002626.",
+      "invoiceNumber": "LEGACY-INV002626",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605666Z"
+    },
+    {
+      "id": "daa073ab-5588-4c27-959c-dd31cefb9b3e",
+      "tenantId": "17f377a1-3ade-497b-99a2-dee50b160d9a",
+      "leaseId": "f6d75362-fb60-4f07-b08b-10b30f5f165c",
+      "propertyId": "b7f57076-274a-482f-9e30-cbfc06c0c60c",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 4693.53
+        }
+      ],
+      "total": 4693.53,
+      "note": "Imported from legacy system, reference INV002621.",
+      "invoiceNumber": "LEGACY-INV002621",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605800Z"
+    },
+    {
+      "id": "4616794f-8e1a-4bee-9e9d-c4849ca8bb06",
+      "tenantId": "9072fe99-1140-49f4-b4ae-ced6104778fd",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "propertyId": "243c57c0-66be-419e-8f29-2415af7bb47b",
+      "date": "2026-06-26",
+      "dueDate": "2026-06-01",
+      "periodLabel": "June 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 4345.03
+        }
+      ],
+      "total": 4345.03,
+      "note": "Imported from legacy system, reference INV002609.",
+      "invoiceNumber": "LEGACY-INV002609",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605968Z"
+    },
+    {
+      "id": "a15f77b7-be2b-48e4-9519-710359dc364e",
+      "tenantId": "9072fe99-1140-49f4-b4ae-ced6104778fd",
+      "leaseId": "a09d2259-6d70-417d-954f-8a43891dc466",
+      "propertyId": "243c57c0-66be-419e-8f29-2415af7bb47b",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 4458.38
+        }
+      ],
+      "total": 4458.38,
+      "note": "Imported from legacy system, reference INV002635.",
+      "invoiceNumber": "LEGACY-INV002635",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.605994Z"
+    },
+    {
+      "id": "506c6c25-aff3-461d-b376-c47c51f870ee",
+      "tenantId": "7e579904-7552-4bff-b730-3b56f11acc5d",
+      "leaseId": "49f6f2d1-681c-4f1d-82a9-00bde4558781",
+      "propertyId": "6c2c8f62-45c6-4592-8e4b-2c7c69306140",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5457.68
+        }
+      ],
+      "total": 5457.68,
+      "note": "Imported from legacy system, reference INV002622.",
+      "invoiceNumber": "LEGACY-INV002622",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606062Z"
+    },
+    {
+      "id": "50202514-bcec-4ba3-99f8-65799f2dd25e",
+      "tenantId": "29a68742-c2e1-4699-947c-c7072e0803d3",
+      "leaseId": "fab9c99d-a793-4230-b431-9db632098f1a",
+      "propertyId": "e4c471fb-093a-4495-b074-a941bb79cdff",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 6779.87
+        }
+      ],
+      "total": 6779.87,
+      "note": "Imported from legacy system, reference INV002625.",
+      "invoiceNumber": "LEGACY-INV002625",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606136Z"
+    },
+    {
+      "id": "a66a7757-33ec-4b88-83ef-686601d37d6b",
+      "tenantId": "11ccca3d-5ea8-4ce6-9b47-0b0643c8e4bd",
+      "leaseId": "04912682-a7e1-43de-ba79-97ac199ad3e7",
+      "propertyId": "7beea329-97b5-4ce3-94ab-469314765fe7",
+      "date": "2026-08-18",
+      "dueDate": "2026-08-01",
+      "periodLabel": "August 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 2000.0
+        }
+      ],
+      "total": 2000.0,
+      "note": "Imported from legacy system, reference INV002639.",
+      "invoiceNumber": "LEGACY-INV002639",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606180Z"
+    },
+    {
+      "id": "7d6b836d-0279-4cd9-b8fc-5f932d647095",
+      "tenantId": "11ccca3d-5ea8-4ce6-9b47-0b0643c8e4bd",
+      "leaseId": "04912682-a7e1-43de-ba79-97ac199ad3e7",
+      "propertyId": "7beea329-97b5-4ce3-94ab-469314765fe7",
+      "date": "2026-08-18",
+      "dueDate": "2026-08-01",
+      "periodLabel": "August 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5193.1
+        }
+      ],
+      "total": 5193.1,
+      "note": "Imported from legacy system, reference INV002640.",
+      "invoiceNumber": "LEGACY-INV002640",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606188Z"
+    },
+    {
+      "id": "907b5c87-79fd-48f2-bc80-71c4b7a6033f",
+      "tenantId": "20ab2c15-aec4-4147-bda1-a7e5e80fbd1c",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "propertyId": "78f43ee5-6531-4f83-8ec5-922e30fb6459",
+      "date": "2026-02-27",
+      "dueDate": "2026-02-01",
+      "periodLabel": "February 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5204.24
+        }
+      ],
+      "total": 5204.24,
+      "note": "Imported from legacy system, reference INV002534.",
+      "invoiceNumber": "LEGACY-INV002534",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606236Z"
+    },
+    {
+      "id": "04dfbca0-2c5e-45b7-a65b-ac9d426188ec",
+      "tenantId": "20ab2c15-aec4-4147-bda1-a7e5e80fbd1c",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "propertyId": "78f43ee5-6531-4f83-8ec5-922e30fb6459",
+      "date": "2026-03-27",
+      "dueDate": "2026-03-01",
+      "periodLabel": "March 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5165.9
+        }
+      ],
+      "total": 5165.9,
+      "note": "Imported from legacy system, reference INV002564.",
+      "invoiceNumber": "LEGACY-INV002564",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606253Z"
+    },
+    {
+      "id": "20581e79-946c-45b8-8163-072e227d30c4",
+      "tenantId": "20ab2c15-aec4-4147-bda1-a7e5e80fbd1c",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "propertyId": "78f43ee5-6531-4f83-8ec5-922e30fb6459",
+      "date": "2026-04-28",
+      "dueDate": "2026-04-01",
+      "periodLabel": "April 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5204.24
+        }
+      ],
+      "total": 5204.24,
+      "note": "Imported from legacy system, reference INV002567.",
+      "invoiceNumber": "LEGACY-INV002567",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606270Z"
+    },
+    {
+      "id": "aed7bdc1-0be5-429c-9028-4f59797f19c3",
+      "tenantId": "20ab2c15-aec4-4147-bda1-a7e5e80fbd1c",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "propertyId": "78f43ee5-6531-4f83-8ec5-922e30fb6459",
+      "date": "2026-05-26",
+      "dueDate": "2026-05-01",
+      "periodLabel": "May 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5204.24
+        }
+      ],
+      "total": 5204.24,
+      "note": "Imported from legacy system, reference INV002596.",
+      "invoiceNumber": "LEGACY-INV002596",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606289Z"
+    },
+    {
+      "id": "00c20698-3f8a-43d6-be01-cec7e03c1a62",
+      "tenantId": "20ab2c15-aec4-4147-bda1-a7e5e80fbd1c",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "propertyId": "78f43ee5-6531-4f83-8ec5-922e30fb6459",
+      "date": "2026-06-29",
+      "dueDate": "2026-06-01",
+      "periodLabel": "June 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5204.24
+        }
+      ],
+      "total": 5204.24,
+      "note": "Imported from legacy system, reference INV002616.",
+      "invoiceNumber": "LEGACY-INV002616",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606306Z"
+    },
+    {
+      "id": "abbbb728-0f58-4bc4-8dba-9fb31faf8576",
+      "tenantId": "20ab2c15-aec4-4147-bda1-a7e5e80fbd1c",
+      "leaseId": "74e28bf3-706e-43bd-b8a4-a046e2a18757",
+      "propertyId": "78f43ee5-6531-4f83-8ec5-922e30fb6459",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5294.15
+        }
+      ],
+      "total": 5294.15,
+      "note": "Imported from legacy system, reference INV002630.",
+      "invoiceNumber": "LEGACY-INV002630",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606323Z"
+    },
+    {
+      "id": "b457f376-adf3-4608-9487-a90159288b0e",
+      "tenantId": "52015eea-986a-4316-afa4-2f4585a30408",
+      "leaseId": "1b046c33-098b-4a8b-b5e3-9815f61bb1ad",
+      "propertyId": "d6d6337e-c9e4-42d3-a911-aba41aa37a8b",
+      "date": "2026-06-26",
+      "dueDate": "2026-06-01",
+      "periodLabel": "June 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 4898.02
+        }
+      ],
+      "total": 4898.02,
+      "note": "Imported from legacy system, reference INV002614.",
+      "invoiceNumber": "LEGACY-INV002614",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606388Z"
+    },
+    {
+      "id": "fa1ba834-7bfb-41d8-9384-3f8aa9331791",
+      "tenantId": "52015eea-986a-4316-afa4-2f4585a30408",
+      "leaseId": "1b046c33-098b-4a8b-b5e3-9815f61bb1ad",
+      "propertyId": "d6d6337e-c9e4-42d3-a911-aba41aa37a8b",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 8107.12
+        }
+      ],
+      "total": 8107.12,
+      "note": "Imported from legacy system, reference INV002629.",
+      "invoiceNumber": "LEGACY-INV002629",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606412Z"
+    },
+    {
+      "id": "ca0a4e03-fd44-404b-884a-798a495f853e",
+      "tenantId": "5395391b-0a22-41be-bb4e-be875f5b90e9",
+      "leaseId": "7e3ce817-0404-47e7-92f2-daafbda3a063",
+      "propertyId": "215523cf-30d3-4031-9be8-812f05cffa0c",
+      "date": "2022-11-25",
+      "dueDate": "2022-11-01",
+      "periodLabel": "November 2022",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 150000.0
+        }
+      ],
+      "total": 150000.0,
+      "note": "Imported from legacy system, reference INV001780.",
+      "invoiceNumber": "LEGACY-INV001780",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606460Z"
+    },
+    {
+      "id": "0017b788-4216-4d6f-b7c4-696ffd30376d",
+      "tenantId": "5395391b-0a22-41be-bb4e-be875f5b90e9",
+      "leaseId": "7e3ce817-0404-47e7-92f2-daafbda3a063",
+      "propertyId": "215523cf-30d3-4031-9be8-812f05cffa0c",
+      "date": "2023-04-13",
+      "dueDate": "2023-04-01",
+      "periodLabel": "April 2023",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 20000.0
+        }
+      ],
+      "total": 20000.0,
+      "note": "Imported from legacy system, reference INV001872.",
+      "invoiceNumber": "LEGACY-INV001872",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606469Z"
+    },
+    {
+      "id": "daf26ea3-f749-4dd1-b8e5-deced48bb0c6",
+      "tenantId": "5395391b-0a22-41be-bb4e-be875f5b90e9",
+      "leaseId": "7e3ce817-0404-47e7-92f2-daafbda3a063",
+      "propertyId": "215523cf-30d3-4031-9be8-812f05cffa0c",
+      "date": "2025-05-07",
+      "dueDate": "2025-05-01",
+      "periodLabel": "May 2025",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 46000.0
+        }
+      ],
+      "total": 46000.0,
+      "note": "Imported from legacy system, reference INV002316.",
+      "invoiceNumber": "LEGACY-INV002316",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606477Z"
+    },
+    {
+      "id": "078a25c5-56b0-49d3-9090-bb9e6872a20b",
+      "tenantId": "5395391b-0a22-41be-bb4e-be875f5b90e9",
+      "leaseId": "7e3ce817-0404-47e7-92f2-daafbda3a063",
+      "propertyId": "215523cf-30d3-4031-9be8-812f05cffa0c",
+      "date": "2025-07-28",
+      "dueDate": "2025-07-01",
+      "periodLabel": "July 2025",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 60000.0
+        }
+      ],
+      "total": 60000.0,
+      "note": "Imported from legacy system, reference INV002388.",
+      "invoiceNumber": "LEGACY-INV002388",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606486Z"
+    },
+    {
+      "id": "58b4cfd2-9335-462c-af0e-73e33c2b3251",
+      "tenantId": "5395391b-0a22-41be-bb4e-be875f5b90e9",
+      "leaseId": "7e3ce817-0404-47e7-92f2-daafbda3a063",
+      "propertyId": "215523cf-30d3-4031-9be8-812f05cffa0c",
+      "date": "2026-05-25",
+      "dueDate": "2026-05-01",
+      "periodLabel": "May 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 28000.0
+        }
+      ],
+      "total": 28000.0,
+      "note": "Imported from legacy system, reference INV002584.",
+      "invoiceNumber": "LEGACY-INV002584",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606504Z"
+    },
+    {
+      "id": "c659f2bd-1bde-4dd7-aaf6-54217c6c229f",
+      "tenantId": "5395391b-0a22-41be-bb4e-be875f5b90e9",
+      "leaseId": "7e3ce817-0404-47e7-92f2-daafbda3a063",
+      "propertyId": "215523cf-30d3-4031-9be8-812f05cffa0c",
+      "date": "2026-07-31",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 20000.0
+        }
+      ],
+      "total": 20000.0,
+      "note": "Imported from legacy system, reference INV002637.",
+      "invoiceNumber": "LEGACY-INV002637",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606526Z"
+    },
+    {
+      "id": "6f5c6eaa-8c8f-4bb8-851a-b384012708a7",
+      "tenantId": "1ec67d4f-6646-4fba-9984-78206ac7f995",
+      "leaseId": "c5260c8e-046a-49c6-8d56-6ab57a6eaad7",
+      "propertyId": "83b6180c-50d2-44e5-bd1d-cd87bb8d4ced",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 3230.85
+        }
+      ],
+      "total": 3230.85,
+      "note": "Imported from legacy system, reference INV002631.",
+      "invoiceNumber": "LEGACY-INV002631",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606665Z"
+    },
+    {
+      "id": "85709a98-464a-4eb5-84de-3b119c3f5850",
+      "tenantId": "60446d7d-5434-4e3a-a696-d1bda3ad7386",
+      "leaseId": "01cc3d39-82b9-47d6-bbb2-e97b7229d4b2",
+      "propertyId": "7fae8635-bd04-4713-ade2-3f054f46c8e5",
+      "date": "2026-06-26",
+      "dueDate": "2026-06-01",
+      "periodLabel": "June 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5628.11
+        }
+      ],
+      "total": 5628.11,
+      "note": "Imported from legacy system, reference INV002602.",
+      "invoiceNumber": "LEGACY-INV002602",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606738Z"
+    },
+    {
+      "id": "c7bf2b69-3608-4b61-98bc-ddb477df6f18",
+      "tenantId": "60446d7d-5434-4e3a-a696-d1bda3ad7386",
+      "leaseId": "01cc3d39-82b9-47d6-bbb2-e97b7229d4b2",
+      "propertyId": "7fae8635-bd04-4713-ade2-3f054f46c8e5",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5892.98
+        }
+      ],
+      "total": 5892.98,
+      "note": "Imported from legacy system, reference INV002623.",
+      "invoiceNumber": "LEGACY-INV002623",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606755Z"
+    },
+    {
+      "id": "ed2e2deb-1f65-446a-b0d5-4c0d0b1ce8be",
+      "tenantId": "95f41ed8-c0a6-4f21-9845-b14ea77eb8c3",
+      "leaseId": "28a4a038-1271-40fb-b05f-ca52d0a10908",
+      "propertyId": "a840520d-cbb6-45ff-8367-8c7fb2f4c840",
+      "date": "2025-09-25",
+      "dueDate": "2025-09-01",
+      "periodLabel": "September 2025",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5803.49
+        }
+      ],
+      "total": 5803.49,
+      "note": "Imported from legacy system, reference INV002428.",
+      "invoiceNumber": "LEGACY-INV002428",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606802Z"
+    },
+    {
+      "id": "022f3495-b789-4d6d-8b87-b719ae820b97",
+      "tenantId": "95f41ed8-c0a6-4f21-9845-b14ea77eb8c3",
+      "leaseId": "28a4a038-1271-40fb-b05f-ca52d0a10908",
+      "propertyId": "a840520d-cbb6-45ff-8367-8c7fb2f4c840",
+      "date": "2025-10-28",
+      "dueDate": "2025-10-01",
+      "periodLabel": "October 2025",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 775.24
+        }
+      ],
+      "total": 775.24,
+      "note": "Imported from legacy system, reference INV002465.",
+      "invoiceNumber": "LEGACY-INV002465",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606810Z"
+    },
+    {
+      "id": "62c12e52-8e82-4dce-8f77-0fedf272b033",
+      "tenantId": "bb929b6b-752a-4242-95a1-b1dad299d915",
+      "leaseId": "0b61b59b-e8a8-4747-b957-6278004da329",
+      "propertyId": "38d1ffae-1203-4b3f-8a43-4b5af2ff2cf5",
+      "date": "2018-08-27",
+      "dueDate": "2018-08-01",
+      "periodLabel": "August 2018",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 18084.16
+        }
+      ],
+      "total": 18084.16,
+      "note": "Imported from legacy system, reference INV000673.",
+      "invoiceNumber": "LEGACY-INV000673",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606859Z"
+    },
+    {
+      "id": "e151ea21-d38d-467d-b61e-905966ddd19c",
+      "tenantId": "5422d760-5c39-40a7-811e-b35f9816355c",
+      "leaseId": "ef834252-b664-4990-ab95-c8435eb56701",
+      "propertyId": "15a591f2-598d-4b11-b817-438e77c63209",
+      "date": "2024-02-27",
+      "dueDate": "2024-02-01",
+      "periodLabel": "February 2024",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 4320.28
+        }
+      ],
+      "total": 4320.28,
+      "note": "Imported from legacy system, reference INV002055.",
+      "invoiceNumber": "LEGACY-INV002055",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606907Z"
+    },
+    {
+      "id": "8aa37dcd-17ce-4a8e-b037-029ae02af5e3",
+      "tenantId": "39c9dec0-fe94-4749-af7d-d2af17426708",
+      "leaseId": "a494ae85-867a-4abc-8df9-fe10af74394e",
+      "propertyId": "07130db2-8bfe-4a21-aa0f-b6556aea1113",
+      "date": "2026-08-18",
+      "dueDate": "2026-08-01",
+      "periodLabel": "August 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 4000.0
+        }
+      ],
+      "total": 4000.0,
+      "note": "Imported from legacy system, reference INV002638.",
+      "invoiceNumber": "LEGACY-INV002638",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.606969Z"
+    },
+    {
+      "id": "6023709f-0a52-4cd1-a521-bb6aa5a7eb52",
+      "tenantId": "2257b013-c320-4346-afba-5bd9dc8d8c16",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "propertyId": "9495ef85-931f-4d12-8e79-bbee6048b207",
+      "date": "2026-05-25",
+      "dueDate": "2026-05-01",
+      "periodLabel": "May 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5657.8
+        }
+      ],
+      "total": 5657.8,
+      "note": "Imported from legacy system, reference INV002589.",
+      "invoiceNumber": "LEGACY-INV002589",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607150Z"
+    },
+    {
+      "id": "d37da863-e434-404d-b41f-d7743014e2a8",
+      "tenantId": "2257b013-c320-4346-afba-5bd9dc8d8c16",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "propertyId": "9495ef85-931f-4d12-8e79-bbee6048b207",
+      "date": "2026-06-26",
+      "dueDate": "2026-06-01",
+      "periodLabel": "June 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5657.8
+        }
+      ],
+      "total": 5657.8,
+      "note": "Imported from legacy system, reference INV002603.",
+      "invoiceNumber": "LEGACY-INV002603",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607170Z"
+    },
+    {
+      "id": "ac727e4c-b2b2-4509-88fe-81a799ca3b20",
+      "tenantId": "2257b013-c320-4346-afba-5bd9dc8d8c16",
+      "leaseId": "d673e2a0-1c53-40b5-ab27-ca9e6e470f1f",
+      "propertyId": "9495ef85-931f-4d12-8e79-bbee6048b207",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 5718.85
+        }
+      ],
+      "total": 5718.85,
+      "note": "Imported from legacy system, reference INV002620.",
+      "invoiceNumber": "LEGACY-INV002620",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607190Z"
+    },
+    {
+      "id": "cce66592-b097-4120-97c5-846fb6bdf268",
+      "tenantId": "dcde6d36-0d7a-4085-85f7-235a5faa551e",
+      "leaseId": "b5a87359-c03a-4bff-a66b-a5548eaeffca",
+      "propertyId": "9e5f22b5-2b5a-40d7-ae61-4ea15818df7a",
+      "date": "2026-04-28",
+      "dueDate": "2026-04-01",
+      "periodLabel": "April 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 7233.73
+        }
+      ],
+      "total": 7233.73,
+      "note": "Imported from legacy system, reference INV002582.",
+      "invoiceNumber": "LEGACY-INV002582",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607240Z"
+    },
+    {
+      "id": "28d35477-3470-4f6f-8475-dfb8303c2cec",
+      "tenantId": "dcde6d36-0d7a-4085-85f7-235a5faa551e",
+      "leaseId": "b5a87359-c03a-4bff-a66b-a5548eaeffca",
+      "propertyId": "9e5f22b5-2b5a-40d7-ae61-4ea15818df7a",
+      "date": "2026-05-25",
+      "dueDate": "2026-05-01",
+      "periodLabel": "May 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 7233.73
+        }
+      ],
+      "total": 7233.73,
+      "note": "Imported from legacy system, reference INV002583.",
+      "invoiceNumber": "LEGACY-INV002583",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607258Z"
+    },
+    {
+      "id": "26b55284-4212-4a0a-a301-0a9b0b6e92b5",
+      "tenantId": "dcde6d36-0d7a-4085-85f7-235a5faa551e",
+      "leaseId": "b5a87359-c03a-4bff-a66b-a5548eaeffca",
+      "propertyId": "9e5f22b5-2b5a-40d7-ae61-4ea15818df7a",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 7392.9
+        }
+      ],
+      "total": 7392.9,
+      "note": "Imported from legacy system, reference INV002624.",
+      "invoiceNumber": "LEGACY-INV002624",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607277Z"
+    },
+    {
+      "id": "d7b3ccdf-605a-4737-a499-8d54d3dd2e9a",
+      "tenantId": "1cc57819-1106-486c-a518-a5f1191458df",
+      "leaseId": "a071a0d7-c0db-4bb9-9b03-2d0b5c7a982c",
+      "propertyId": "119cb651-f20f-4350-929f-d89abf3e6912",
+      "date": "2024-12-05",
+      "dueDate": "2024-12-01",
+      "periodLabel": "December 2024",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 12000.0
+        }
+      ],
+      "total": 12000.0,
+      "note": "Imported from legacy system, reference INV002228.",
+      "invoiceNumber": "LEGACY-INV002228",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607329Z"
+    },
+    {
+      "id": "96c434cd-82c0-424a-94d2-f8ed43652f4c",
+      "tenantId": "37afe59f-2f4d-4786-8244-cf968c95c942",
+      "leaseId": "9d35239a-807e-472a-b948-96d510dfe6bd",
+      "propertyId": "df71c3b2-4b89-45e8-88f1-4efb3c55d5d6",
+      "date": "2026-07-27",
+      "dueDate": "2026-07-01",
+      "periodLabel": "July 2026",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 4589.39
+        }
+      ],
+      "total": 4589.39,
+      "note": "Imported from legacy system, reference INV002636.",
+      "invoiceNumber": "LEGACY-INV002636",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607427Z"
+    },
+    {
+      "id": "0979a296-a8e3-4b86-9048-b22f984c4d0f",
+      "tenantId": "bf187e29-860a-4d7b-a1c9-052f2892e978",
+      "leaseId": "566e8e45-d060-48dc-8bea-6f8ac7dfead8",
+      "propertyId": "ad775619-cc7f-424a-b5f0-f32c65b3a60a",
+      "date": "2023-02-27",
+      "dueDate": "2023-02-01",
+      "periodLabel": "February 2023",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 11725.25
+        }
+      ],
+      "total": 11725.25,
+      "note": "Imported from legacy system, reference INV001836.",
+      "invoiceNumber": "LEGACY-INV001836",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607500Z"
+    },
+    {
+      "id": "d4dca90a-9f9f-4b92-aca6-3966d7c673e9",
+      "tenantId": "bf187e29-860a-4d7b-a1c9-052f2892e978",
+      "leaseId": "566e8e45-d060-48dc-8bea-6f8ac7dfead8",
+      "propertyId": "ad775619-cc7f-424a-b5f0-f32c65b3a60a",
+      "date": "2023-03-28",
+      "dueDate": "2023-03-01",
+      "periodLabel": "March 2023",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 11761.18
+        }
+      ],
+      "total": 11761.18,
+      "note": "Imported from legacy system, reference INV001870.",
+      "invoiceNumber": "LEGACY-INV001870",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607519Z"
+    },
+    {
+      "id": "e8b3a7fc-aae2-4f53-955e-503909b0836c",
+      "tenantId": "bf187e29-860a-4d7b-a1c9-052f2892e978",
+      "leaseId": "566e8e45-d060-48dc-8bea-6f8ac7dfead8",
+      "propertyId": "ad775619-cc7f-424a-b5f0-f32c65b3a60a",
+      "date": "2023-04-25",
+      "dueDate": "2023-04-01",
+      "periodLabel": "April 2023",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 13031.74
+        }
+      ],
+      "total": 13031.74,
+      "note": "Imported from legacy system, reference INV001874.",
+      "invoiceNumber": "LEGACY-INV001874",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607543Z"
+    },
+    {
+      "id": "6547af0b-6028-4f5d-9076-0820d467af57",
+      "tenantId": "bf187e29-860a-4d7b-a1c9-052f2892e978",
+      "leaseId": "566e8e45-d060-48dc-8bea-6f8ac7dfead8",
+      "propertyId": "ad775619-cc7f-424a-b5f0-f32c65b3a60a",
+      "date": "2023-06-28",
+      "dueDate": "2023-06-01",
+      "periodLabel": "June 2023",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 12449.25
+        }
+      ],
+      "total": 12449.25,
+      "note": "Imported from legacy system, reference INV001892.",
+      "invoiceNumber": "LEGACY-INV001892",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607586Z"
+    },
+    {
+      "id": "b88d7690-e2e5-4458-bc6a-75afc7102706",
+      "tenantId": "bf187e29-860a-4d7b-a1c9-052f2892e978",
+      "leaseId": "566e8e45-d060-48dc-8bea-6f8ac7dfead8",
+      "propertyId": "ad775619-cc7f-424a-b5f0-f32c65b3a60a",
+      "date": "2023-07-25",
+      "dueDate": "2023-07-01",
+      "periodLabel": "July 2023",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 12590.05
+        }
+      ],
+      "total": 12590.05,
+      "note": "Imported from legacy system, reference INV001910.",
+      "invoiceNumber": "LEGACY-INV001910",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607612Z"
+    },
+    {
+      "id": "86f71f6f-50a5-419c-a303-1175a8472f84",
+      "tenantId": "bf187e29-860a-4d7b-a1c9-052f2892e978",
+      "leaseId": "566e8e45-d060-48dc-8bea-6f8ac7dfead8",
+      "propertyId": "ad775619-cc7f-424a-b5f0-f32c65b3a60a",
+      "date": "2023-08-25",
+      "dueDate": "2023-08-01",
+      "periodLabel": "August 2023",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 12531.61
+        }
+      ],
+      "total": 12531.61,
+      "note": "Imported from legacy system, reference INV001929.",
+      "invoiceNumber": "LEGACY-INV001929",
+      "paid": true,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607632Z"
+    },
+    {
+      "id": "edfc7f53-fb98-42bf-8e49-dded72995c88",
+      "tenantId": "bf187e29-860a-4d7b-a1c9-052f2892e978",
+      "leaseId": "566e8e45-d060-48dc-8bea-6f8ac7dfead8",
+      "propertyId": "ad775619-cc7f-424a-b5f0-f32c65b3a60a",
+      "date": "2023-09-27",
+      "dueDate": "2023-09-01",
+      "periodLabel": "September 2023",
+      "lineItems": [
+        {
+          "description": "Tax Invoice",
+          "amount": 7548.09
+        }
+      ],
+      "total": 7548.09,
+      "note": "Imported from legacy system, reference INV001963.",
+      "invoiceNumber": "LEGACY-INV001963",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.607657Z"
+    },
+    {
+      "id": "6162a8b8-fe67-4b5a-99c6-9b2bcd17c06c",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2013-04-25",
+      "dueDate": "2013-04-01",
+      "periodLabel": "April 2013",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 6500.0
+        }
+      ],
+      "total": 6500.0,
+      "note": "Imported from legacy .bak sample export, reference INV000001. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000001",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728133Z"
+    },
+    {
+      "id": "c2d2c75f-c1b8-4f5f-bb7e-671cf26cb5fd",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2013-05-24",
+      "dueDate": "2013-05-01",
+      "periodLabel": "May 2013",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 6500.0
+        }
+      ],
+      "total": 6500.0,
+      "note": "Imported from legacy .bak sample export, reference INV000002. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000002",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728176Z"
+    },
+    {
+      "id": "3f4d72cf-a8b1-41cb-a73a-f23f79f65d4e",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2013-05-27",
+      "dueDate": "2013-05-01",
+      "periodLabel": "May 2013",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 166.13
+        }
+      ],
+      "total": 166.13,
+      "note": "Imported from legacy .bak sample export, reference INV000003. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000003",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728187Z"
+    },
+    {
+      "id": "d88489ba-0188-45c2-8138-b6b8bc513a5b",
+      "tenantId": "80290cdf-e24e-4b39-95cb-898b1f45451d",
+      "leaseId": "a5e6a524-7763-409b-8352-a66dee1ae065",
+      "propertyId": "1ff1bd62-ad7a-4ca1-9908-925c097e94e0",
+      "date": "2013-06-13",
+      "dueDate": "2013-06-01",
+      "periodLabel": "June 2013",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 100000.0
+        }
+      ],
+      "total": 100000.0,
+      "note": "Imported from legacy .bak sample export, reference INV000004. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000004",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728201Z"
+    },
+    {
+      "id": "df017c1e-8b08-471c-8e34-8810d98e0797",
+      "tenantId": "80290cdf-e24e-4b39-95cb-898b1f45451d",
+      "leaseId": "a5e6a524-7763-409b-8352-a66dee1ae065",
+      "propertyId": "1ff1bd62-ad7a-4ca1-9908-925c097e94e0",
+      "date": "2013-06-20",
+      "dueDate": "2013-06-01",
+      "periodLabel": "June 2013",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 20000.0
+        }
+      ],
+      "total": 20000.0,
+      "note": "Imported from legacy .bak sample export, reference INV000005. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000005",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728213Z"
+    },
+    {
+      "id": "26cb76d1-9ed3-462c-a941-264ea22f2a28",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2013-06-26",
+      "dueDate": "2013-06-01",
+      "periodLabel": "June 2013",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 8680.49
+        }
+      ],
+      "total": 8680.49,
+      "note": "Imported from legacy .bak sample export, reference INV000006. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000006",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728222Z"
+    },
+    {
+      "id": "6f7f5a1d-1ffc-4973-a44f-49fbbcd0389f",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2013-07-22",
+      "dueDate": "2013-07-01",
+      "periodLabel": "July 2013",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 8299.59
+        }
+      ],
+      "total": 8299.59,
+      "note": "Imported from legacy .bak sample export, reference INV000007. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000007",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728230Z"
+    },
+    {
+      "id": "ab07a9c7-b238-4750-949e-f3d3c8a59487",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2013-09-02",
+      "dueDate": "2013-09-01",
+      "periodLabel": "September 2013",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 6500.0
+        }
+      ],
+      "total": 6500.0,
+      "note": "Imported from legacy .bak sample export, reference INV000008. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000008",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728245Z"
+    },
+    {
+      "id": "e464edda-893d-4a6f-bc27-a8bcb35dfa9e",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2013-09-03",
+      "dueDate": "2013-09-01",
+      "periodLabel": "September 2013",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 2767.07
+        }
+      ],
+      "total": 2767.07,
+      "note": "Imported from legacy .bak sample export, reference INV000009. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000009",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728258Z"
+    },
+    {
+      "id": "24fae96e-f54e-41f9-aedc-3df5f0ade3a1",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2013-09-23",
+      "dueDate": "2013-09-01",
+      "periodLabel": "September 2013",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 8752.53
+        }
+      ],
+      "total": 8752.53,
+      "note": "Imported from legacy .bak sample export, reference INV000010. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000010",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728269Z"
+    },
+    {
+      "id": "eb57240e-4550-460f-b4c7-438528a1af66",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2013-10-21",
+      "dueDate": "2013-10-01",
+      "periodLabel": "October 2013",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 8629.54
+        }
+      ],
+      "total": 8629.54,
+      "note": "Imported from legacy .bak sample export, reference INV000011. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000011",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728277Z"
+    },
+    {
+      "id": "65f3e99d-4392-4b51-9d6e-c9b8af2e608d",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2013-11-25",
+      "dueDate": "2013-11-01",
+      "periodLabel": "November 2013",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 7287.51
+        }
+      ],
+      "total": 7287.51,
+      "note": "Imported from legacy .bak sample export, reference INV000012. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000012",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728284Z"
+    },
+    {
+      "id": "30c1576e-9101-4d49-8825-727d131fa839",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2014-01-16",
+      "dueDate": "2014-01-01",
+      "periodLabel": "January 2014",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 6500.0
+        }
+      ],
+      "total": 6500.0,
+      "note": "Imported from legacy .bak sample export, reference INV000013. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000013",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728295Z"
+    },
+    {
+      "id": "fb862ab8-20a7-4b5f-9565-60c9452cd7b9",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2014-01-16",
+      "dueDate": "2014-01-01",
+      "periodLabel": "January 2014",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 1048.18
+        }
+      ],
+      "total": 1048.18,
+      "note": "Imported from legacy .bak sample export, reference INV000014. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000014",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728304Z"
+    },
+    {
+      "id": "1cfa3478-4704-40f7-b641-94a79e1368dc",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2014-01-23",
+      "dueDate": "2014-01-01",
+      "periodLabel": "January 2014",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 7739.82
+        }
+      ],
+      "total": 7739.82,
+      "note": "Imported from legacy .bak sample export, reference INV000015. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000015",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728311Z"
+    },
+    {
+      "id": "0b225d9b-fad1-4bb0-ab60-30a836a8a47b",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2014-03-05",
+      "dueDate": "2014-03-01",
+      "periodLabel": "March 2014",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 7583.34
+        }
+      ],
+      "total": 7583.34,
+      "note": "Imported from legacy .bak sample export, reference INV000016. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000016",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728319Z"
+    },
+    {
+      "id": "6f8e33c2-443f-4e37-98f0-f1631a0da413",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2014-03-20",
+      "dueDate": "2014-03-01",
+      "periodLabel": "March 2014",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 7380.16
+        }
+      ],
+      "total": 7380.16,
+      "note": "Imported from legacy .bak sample export, reference INV000017. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000017",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728327Z"
+    },
+    {
+      "id": "f4f4be1a-3faa-4797-88b4-d12b763a9b21",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2014-04-22",
+      "dueDate": "2014-04-01",
+      "periodLabel": "April 2014",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 7468.64
+        }
+      ],
+      "total": 7468.64,
+      "note": "Imported from legacy .bak sample export, reference INV000018. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000018",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728334Z"
+    },
+    {
+      "id": "3905826a-3a12-427c-bd4f-e3bf871cf6b4",
+      "tenantId": "0d38c915-280b-45f3-938d-403e53bdad92",
+      "leaseId": "3de0be01-43f8-4a4a-a506-3c5538b36960",
+      "propertyId": "1a014be7-29c3-499c-b280-20074eedb602",
+      "date": "2014-05-22",
+      "dueDate": "2014-05-01",
+      "periodLabel": "May 2014",
+      "lineItems": [
+        {
+          "description": "Charges (imported from legacy sample data, not itemized)",
+          "amount": 7023.28
+        }
+      ],
+      "total": 7023.28,
+      "note": "Imported from legacy .bak sample export, reference INV000019. Payment status unknown -- this data source has no receipt records, so this could already have been paid at the time. Verify with the landlord before treating as outstanding.",
+      "invoiceNumber": "LEGACY-INV000019",
+      "paid": false,
+      "paidDate": null,
+      "createdAt": "2026-08-20T08:01:09.728341Z"
+    }
+  ],
+  "settings": {
+    "landlordName": "SHRIYA & YATIKA INVESTMENTS",
+    "address": "Ck:2010/108693/23, P O Box 675, Lenasia, 1820",
+    "phone": "011-852-3799",
+    "email": "kishan@astconsultants.co.za",
+    "currency": "ZAR"
+  }
+}
